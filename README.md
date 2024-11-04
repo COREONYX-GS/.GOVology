@@ -16,3 +16,5 @@ Note Site Scanning Data is used more for _ad hoc_ analysis at this time. The .GO
 
 ### References:
     * **List of National Monuments**: https://geojango.com/pages/list-of-national-monuments
+    * **TTS Site Scanning Analysis**: https://github.com/CivicActions/site-evaluation-tools/blob/main/digital.gov-scan-upload.js.md
+        - [Direct Link to Spreadsheet](https://docs.google.com/spreadsheets/d/1CsXAzCzghYYwXzGCcrJqrsWpr5f7MbID2Qw6vQvi3sQ/edit?gid=497600811#gid=497600811)
