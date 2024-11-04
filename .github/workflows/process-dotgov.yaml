@@ -1,0 +1,81 @@
+name: Analyze Download - GET.gov Data (CISA)
+
+on:
+    workflow_dispatch:
+    workflow_call:
+
+concurrency:
+    group: gov.gov-analysis
+    cancel-in-progress: true
+
+env:
+    FILENAME: federal-domains.csv
+    ANALYSIS_OUTPUT: analysis_output.txt
+
+jobs:
+    process-data:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: ${{ github.event_name == 'pull_request' && 2 || 0 }}
+
+        - name: Configure git
+          run: |
+            git config user.name "Automated"
+            git config user.email "actions@users.noreply.github.com"
+        
+        - name: Install python Dependencies
+          uses: py-actions/py-dependency-install@v4
+          with:
+            path: "requirements.txt"
+            update-pip: false
+            update-setuptools: false
+            update-wheel: false
+                    
+        - name: Analysis - General
+          run: |
+            rm -f ${{ env.ANALYSIS_OUTPUT }} # Ensuring we start fresh, but shouldn't be necessary
+            touch ${{ env.ANALYSIS_OUTPUT }}
+            python dotgov/general_stats.py "data/${{ env.FILENAME }}" | tee -a ${{ env.ANALYSIS_OUTPUT }}
+      
+        - name: Analysis - Delta
+          env:
+            CURR_FILE: ${{ format('data/current_{0}', env.FILENAME) }}
+            PREV_FILE: ${{ format('data/previous_{0}', env.FILENAME) }}
+            
+          run: |
+            mv "${{ format('data/{0}', env.FILENAME) }}" "${{ env.CURR_FILE }}"
+            cd data
+            git checkout $(git log -n 1 --pretty=format:%H -- ${{ env.FILENAME }}) -- ${{ env.FILENAME }}
+            cd ..
+            mv "${{ format('data/{0}', env.FILENAME) }}" "${{ env.PREV_FILE }}"            
+            python dotgov/compare_data.py | tee -a ${{ env.ANALYSIS_OUTPUT }}
+
+        - name: Capture issue body content
+          id: capture-issue-body
+          run: |
+            # Base64 encode the analysis output
+            ISSUE_BODY=$(cat ${{ env.ANALYSIS_OUTPUT }} | base64 -w 0)
+            # Store the base64-encoded string in the ISSUE_BODY environment variable
+            echo "ISSUE_BODY=$ISSUE_BODY" >> $GITHUB_OUTPUT
+
+        - name: Create Issue
+          uses: actions/github-script@v7
+          id: my-create-issue-script
+          env:
+            ISSUE_BODY: ${{ steps.capture-issue-body.outputs.ISSUE_BODY }}
+          with:
+            result-encoding: string
+            retries: 1
+            script: |
+              const issueBody = Buffer.from(process.env.ISSUE_BODY || '', 'base64').toString('utf-8'); // Decode the base64-encoded string
+              github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `DNS Analysis - ${new Date().toISOString().replace('T', ' ').split('.')[0]}`,
+                body: issueBody,
+                labels: ['analysis']
+              });
