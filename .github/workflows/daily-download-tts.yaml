@@ -1,0 +1,63 @@
+name: GOV.gov - Daily Download (TTS)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *'  # Runs every day at 3 AM
+
+concurrency:
+  group: gov.gov-download
+  cancel-in-progress: true
+
+env:
+  DATA_DIR: ./data
+  
+jobs:
+  download-tts:
+    env:
+      FILENAME: tts-weekly-snapshot-all.csv
+      URL: https://api.gsa.gov/technology/site-scanning/data/weekly-snapshot-all.csv # NOTE: let's grab all sites for now
+    runs-on: ubuntu-latest
+    outputs:
+        CHANGES_DETECTED: ${{ steps.commit-and-push.outputs.CHANGES_DETECTED }}
+    permissions:
+      contents: write
+      issues: write
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: ${{ github.event_name == 'pull_request' && 2 || 0 }}
+
+    - name: Configure git
+      run: |
+        git config user.name "Automated"
+        git config user.email "actions@users.noreply.github.com"
+        
+    - name: Download Data
+      working-directory: ${{ env.DATA_DIR }}
+      run: wget -O ${{ env.FILENAME }} ${{ env.URL }}
+
+    - name: Review for Changes
+      id: commit-and-push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      working-directory: ${{ env.DATA_DIR }}
+      run: |
+        git add -A ${{ env.FILENAME }}
+        if git diff --cached --quiet; then
+            echo "No changes to commit from TTS Site Scanning dataset"
+            echo "CHANGES_DETECTED=false" >> "$GITHUB_OUTPUT"
+        else
+            echo "Changes Detected in TTS Site Scanning dataset"
+            echo "CHANGES_DETECTED=true" >> "$GITHUB_OUTPUT"
+            git commit -m "Latest TTS data: $(date -u)"
+            git push
+        fi   
+
+  kickoff-tts-analysis:
+    needs: download-tts
+    if: ${{ needs.download-tts.outputs.CHANGES_DETECTED == 'true' }}
+    uses: ./.github/workflows/process-tts.yaml
+    secrets: inherit
