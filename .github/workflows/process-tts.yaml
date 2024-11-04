@@ -1,0 +1,42 @@
+name: Analyze Download - TTS Site Scanning Data
+
+on:
+    workflow_dispatch:
+    workflow_call:
+
+concurrency:
+    group: gov.tts-analysis
+    cancel-in-progress: true
+
+env:
+    FILENAME: tts-weekly-snapshot-all.csv
+    ANALYSIS_OUTPUT: analysis_output.txt
+
+jobs:
+    process-data:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: ${{ github.event_name == 'pull_request' && 2 || 0 }}
+
+        - name: Configure git
+          run: |
+            git config user.name "Automated"
+            git config user.email "actions@users.noreply.github.com"
+        
+        - name: Install python Dependencies
+          uses: py-actions/py-dependency-install@v4
+          with:
+            path: "requirements.txt"
+            update-pip: false
+            update-setuptools: false
+            update-wheel: false
+                    
+        - name: Analysis - General
+          run: |
+            rm -f ${{ env.ANALYSIS_OUTPUT }} # Ensuring we start fresh, but shouldn't be necessary
+            touch ${{ env.ANALYSIS_OUTPUT }}
+            echo "TODO: Insert Analysis Script Here"
