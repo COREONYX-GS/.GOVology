@@ -1,0 +1,95 @@
+name: GOV.gov - Daily Download (CISA)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'  # Runs every day at midnight
+
+concurrency:
+  group: gov.gov-download
+  cancel-in-progress: true
+
+env:
+  DATA_DIR: ./data
+  
+jobs:
+  download-gov:
+    env:
+      FILENAME: federal-domains.csv
+      URL: https://raw.githubusercontent.com/cisagov/dotgov-data/refs/heads/main/current-federal.csv
+    runs-on: ubuntu-latest
+    outputs:
+      CHANGES_DETECTED: ${{ steps.commit-and-push.outputs.CHANGES_DETECTED }}
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: ${{ github.event_name == 'pull_request' && 2 || 0 }}
+
+    - name: Configure git
+      run: |
+        git config user.name "Automated"
+        git config user.email "actions@users.noreply.github.com"
+      
+    - name: Download Data
+      working-directory: ${{ env.DATA_DIR }}
+      run: wget -O ${{ env.FILENAME }} ${{ env.URL }}
+
+    - name: Review for Changes
+      id: commit-and-push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      working-directory: ${{ env.DATA_DIR }}
+      run: |
+        git add -A ${{ env.FILENAME }}
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+          echo "CHANGES_DETECTED=false" >> "$GITHUB_OUTPUT"
+        else
+          echo "Changes Detected"
+          echo "CHANGES_DETECTED=true" >> "$GITHUB_OUTPUT"
+          git diff --cached -- ${{ env.FILENAME }} &> issue_body.txt
+          git commit -m "Latest CISA data: $(date -u)"
+          git push
+        fi
+
+    - name: Capture Issue
+      if: steps.commit-and-push.outputs.CHANGES_DETECTED == 'true'
+      id: capture-issue-body
+      working-directory: ${{ env.DATA_DIR }}
+      run: |
+        ISSUE_BODY=$(cat issue_body.txt | base64 -w 0)
+        echo "ISSUE_BODY=$ISSUE_BODY" >> $GITHUB_OUTPUT
+        echo $ISSUE_BODY
+
+    - name: Summarize Changes (AI - HALLUCINATION WARNING)
+      if: steps.commit-and-push.outputs.CHANGES_DETECTED == 'true'
+      working-directory: "utils"
+      run: |
+        python chatgpt_summarize_gov_diffs.py
+
+    - name: Create Issue
+      if: steps.commit-and-push.outputs.CHANGES_DETECTED == 'true'
+      uses: actions/github-script@v7
+      id: my-create-issue-script
+      env:
+        ISSUE_BODY: ${{ steps.capture-issue-body.outputs.ISSUE_BODY }}
+      with:
+        result-encoding: string
+        retries: 1
+        script: |
+          const issueBody = Buffer.from(process.env.ISSUE_BODY || '', 'base64').toString('utf-8'); // Decode the base64-encoded string
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: `.GOV DNS Changes - ${new Date().toISOString().split('T')[0]}`,
+            body: issueBody,
+            labels: ['diff']
+          });
+
+  kickoff-gov-analysis:
+    needs: download-gov
+    if: ${{ needs.download-gov.outputs.CHANGES_DETECTED == 'true' }}
+    uses: ./.github/workflows/process-dotgov.yaml
+    secrets: inherit
