@@ -1,0 +1,12 @@
+Please summarize this diff in Markdown format, using these sections in order:
+
+## Domains Added (only completely new domains should be listed here)
+
+## Domains Removed (only completely removed domains should be listed here)
+
+## Interesting Observations (such as changes in a domain's information).
+
+For each section please utlize one bullet `*` per observation
+If there are no additions or deletions, write `None` in that section without using bullets
+
+{{DIFF}}
