@@ -1,0 +1,6 @@
+pandas
+tabulate
+openpyxl
+fuzzywuzzy
+python-Levenshtein
+openai
