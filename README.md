@@ -1,4 +1,7 @@
 # .GOVology
+
+![.GOVology Logo](static/.govology-logo.png)
+
 Studying Data from the US Government's .gov Domain Registry
 
 Utilizing [the data available](https://get.gov/about/data/) for the .GOV registry as well as [TTS' Site Scanning Program](https://digital.gov/guides/site-scanning/) I've started taking a look at some of the forms and functions that seem to be represented in the data.
