@@ -113,7 +113,7 @@ ntia.gov,Federal - Executive,Department of Commerce,National Telecommunications 
 ntis.gov,Federal - Executive,Department of Commerce,National Technical Information Service,Alexandria,VA,security@ntis.gov
 nwirp.gov,Federal - Executive,Department of Commerce,National Institute of Standards and Technology,Gaithersburg,MD,siirt@nist.gov
 ofcm.gov,Federal - Executive,Department of Commerce,Office of the Federal Coordinator for Meteorolgy,Silver Spring,MD,security@noaa.gov
-papahanaumokuakea.gov,Federal - Executive,Department of Commerce,National Oceanic and Atmospheric Administration,Silver Spring,MD,james.cooperman@noaa.gov
+papahanaumokuakea.gov,Federal - Executive,Department of Commerce,National Oceanic and Atmospheric Administration,Silver Spring,MD,security@noaa.gov
 privacyshield.gov,Federal - Executive,Department of Commerce,International Trade Administration,Washington,DC,OpSec@trade.gov
 pscr.gov,Federal - Executive,Department of Commerce,National Institute of Standards and Technology,Gaithersburg,MD,siirt@nist.gov
 sdr.gov,Federal - Executive,Department of Commerce,National Science and Technology Council,Washington,DC,security@noaa.gov
@@ -127,8 +127,9 @@ stopfakes.gov,Federal - Executive,Department of Commerce,International Trade Adm
 sworm.gov,Federal - Executive,Department of Commerce,NOAA/Space Weather Prediction Center,Boulder,CO,security@noaa.gov
 tasefiling.gov,Federal - Executive,Department of Commerce,International Trade Administration,Washington,DC,OpSec@trade.gov
 techhubs.gov,Federal - Executive,Department of Commerce,Department of Commerce,Washington,DC,esoc@doc.gov
+thetrilliondollardinner.gov,Federal - Executive,Department of Commerce,OS OCIO,Washington,DC,(blank)
 time.gov,Federal - Executive,Department of Commerce,National Institute of Standards and Technology,Boulder,CO,siirt@nist.gov
-tracss.gov,Federal - Executive,Department of Commerce,National Oceanic and Atmospheric Administration,Silver Spring,MD,(blank)
+tracss.gov,Federal - Executive,Department of Commerce,National Oceanic and Atmospheric Administration,Silver Spring,MD,security@noaa.gov
 trade.gov,Federal - Executive,Department of Commerce,International Trade Administration,Washington,DC,OpSec@trade.gov
 tsunami.gov,Federal - Executive,Department of Commerce,West Coast & Alaska Tsunami Warning Center,Palmer,AK,security@noaa.gov
 usicecenter.gov,Federal - Executive,Department of Commerce,U. S. National Ice Center,Suitland,MD,security@noaa.gov
@@ -173,7 +174,7 @@ nsa.gov,Federal - Executive,Department of Defense,National Security Agency,Fort 
 nsep.gov,Federal - Executive,Department of Defense,National Security Education Program (NSEP) at DLNSEO,Alexandria,VA,nsep@nsep.gov
 oea.gov,Federal - Executive,Department of Defense,Office of Economic Adjustment,Arlington,VA,james.v.evans29.civ@mail.mil
 oldcc.gov,Federal - Executive,Department of Defense,Office of Local Defense Community Cooperation,Arlington,VA,oea.ncr.OEA.mbx.oea-it-security@mail.mil
-oneaftac.gov,Federal - Executive,Department of Defense,Air Force Technical Applications Center,Patrick SFB,FL,dco@aftac.gov
+oneaftac.gov,Federal - Executive,Department of Defense,Air Force Technical Applications Center,Patrick SFB,FL,abuse@aftac.gov
 tak.gov,Federal - Executive,Department of Defense,TAK Product Center,Fort Belvoir,VA,security@tak.gov
 tswg.gov,Federal - Executive,Department of Defense,Irregular Warfare Technical Support Directorate,Alexandria,VA,webmanager@iwtsd.gov
 ukraineoversight.gov,Federal - Executive,Department of Defense,Department of Defense Office of Inspector General,Alexandria,VA,(blank)
@@ -250,7 +251,7 @@ solardecathlon.gov,Federal - Executive,Department of Energy,Office of Energy Eff
 srnl.gov,Federal - Executive,Department of Energy,Savannah River National Lab,Aiken,SC,srnl-cyber@srnl.doe.gov
 srs.gov,Federal - Executive,Department of Energy,Savannah River Nuclear Solutions (SRNS),Aiken,SC,netsec@srs.gov
 swpa.gov,Federal - Executive,Department of Energy,Southwestern Power Administration,Tulsa,OK,CyberSecurityTeam@swpa.gov
-unnpp.gov,Federal - Executive,Department of Energy,"Bechtel Bettis, Inc.",West Mifflin,PA,SecurityOperationsCenter@unnpp.gov
+unnpp.gov,Federal - Executive,Department of Energy,"Fluor Marine Propulsion, LLC",West Mifflin,PA,SecurityOperationsCenter@unnpp.gov
 unrpnet.gov,Federal - Executive,Department of Energy,Office of Naval Reactors,Washington,DC,CorporateCommunications@unnpp.onmicrosoft.com
 wapa.gov,Federal - Executive,Department of Energy,Western Area Power Administration,Lakewood,CO,NETMGMT@wapa.gov
 ymp.gov,Federal - Executive,Department of Energy,Office of Legacy Management,Las Vegas,NV,cybersoc@lm.doe.gov
@@ -266,8 +267,8 @@ ahrq.gov,Federal - Executive,Department of Health and Human Services,Agency for 
 aids.gov,Federal - Executive,Department of Health and Human Services,"Office of the Assistant Secretary for Health, Office of the Secretary",Washington,DC,responsibledisclosure@hhs.gov
 alzheimers.gov,Federal - Executive,Department of Health and Human Services,"National Institutes on Aging, NIH",Bethesda,MD,ResponsibleDisclosure@hhs.gov
 aoa.gov,Federal - Executive,Department of Health and Human Services,Administration for Community Living,Washington,DC,responsibledisclosure@hhs.gov
-arpa-h.gov,Federal - Executive,Department of Health and Human Services,National Institutes of Health,Bethesda,MD,jim.matala@nih.gov
-arpah.gov,Federal - Executive,Department of Health and Human Services,National Institutes of Health,Bethesda,MD,jim.matala@nih.gov
+arpa-h.gov,Federal - Executive,Department of Health and Human Services,Advanced Research Projects Agency for Health (ARPA-H),Washington,DC,cybersecurity@arpa-h.gov
+arpah.gov,Federal - Executive,Department of Health and Human Services,Advanced Research Projects Agency for Health (ARPA-H),Washington,DC,cybersecurity@arpa-h.gov
 aspr.gov,Federal - Executive,Department of Health and Human Services,Administration for Strategic Preparedness and Response,Washington,DC,ASPRITHelp@hhs.gov
 bam.gov,Federal - Executive,Department of Health and Human Services,Centers for Disease Control and Prevention,Atlanta,GA,ResponsibleDisclosure@hhs.gov
 betobaccofree.gov,Federal - Executive,Department of Health and Human Services,U. S. Food and Drug Administration,Silver Spring,MD,ResponsibleDisclosure@hhs.gov
@@ -286,9 +287,6 @@ clinicaltrials.gov,Federal - Executive,Department of Health and Human Services,"
 cms.gov,Federal - Executive,Department of Health and Human Services,Centers for Medicare and Medicaid Services,Baltimore,MD,responsibledisclosure@hhs.gov
 collegedrinkingprevention.gov,Federal - Executive,Department of Health and Human Services,"National Institute on Alcohol Abuse and Alcoholism, NIH",Bethesda,MD,responsibledisclosure@hhs.gov
 coronavirus.gov,Federal - Executive,Department of Health and Human Services,Centers for Disease Control and Prevention,Atlanta,GA,(blank)
-covid.gov,Federal - Executive,Department of Health and Human Services,Department of Health and Human Services,Washington,DC,responsibledisclosure@hhs.gov
-covidtest.gov,Federal - Executive,Department of Health and Human Services,Assistant Secretary for Preparedness and Response Office of the Secretary,washington,DC,responsibledisclosure@hhs.gov
-covidtests.gov,Federal - Executive,Department of Health and Human Services,Assistant Secretary for Preparedness and Response Office of the Secretary,Washington,DC,responsibledisclosure@hhs.gov
 cuidadodesalud.gov,Federal - Executive,Department of Health and Human Services,Centers for Medicare and Medicaid Services,Baltimore,MD,responsibledisclosure@hhs.gov
 dhhs.gov,Federal - Executive,Department of Health and Human Services,Office of the Secretary,Washington,DC,responsibledisclosure@hhs.gov
 diabetescommittee.gov,Federal - Executive,Department of Health and Human Services,"National Institutes of Diabetes and Digestive and Kidney Diseases, NIH",Bethesda,MD,responsibledisclosure@hhs.gov
@@ -393,8 +391,8 @@ cyber.gov,Federal - Executive,Department of Homeland Security,Cybersecurity and 
 cybersecurity.gov,Federal - Executive,Department of Homeland Security,Cybersecurity and Infrastructure Security Agency,Washington,DC,postmaster@dhs.gov
 dhs.gov,Federal - Executive,Department of Homeland Security,Headquarters,Washington,DC,postmaster@dhs.gov
 disasterassistance.gov,Federal - Executive,Department of Homeland Security,Federal Emergency Management Agency,Bluemont,VA,fema-nosc-cyber@fema.dhs.gov
-dns.gov,Federal - Executive,Department of Homeland Security,Cybersecurity and Infrastructure Security Agency,Arlington,VA,dotgov@cloudflare.com
-dotgov.gov,Federal - Executive,Department of Homeland Security,Cybersecurity and Infrastructure Security Agency,Arlington,VA,help@get.gov
+dns.gov,Federal - Executive,Department of Homeland Security,Cybersecurity and Infrastructure Security Agency,Arlington,VA,(blank)
+dotgov.gov,Federal - Executive,Department of Homeland Security,Cybersecurity and Infrastructure Security Agency,Arlington,VA,(blank)
 e-verify.gov,Federal - Executive,Department of Homeland Security,USCIS,Washington,DC,jeffrey.y.oppong@uscis.dhs.gov
 everify.gov,Federal - Executive,Department of Homeland Security,USCIS,Washington,DC,jeffrey.y.oppong@uscis.dhs.gov
 evus.gov,Federal - Executive,Department of Homeland Security,U.S. Customs and Border Protection,Washington,DC,cbpsoc@cbp.dhs.gov
@@ -403,7 +401,7 @@ firstrespondertraining.gov,Federal - Executive,Department of Homeland Security,O
 fleta.gov,Federal - Executive,Department of Homeland Security,Federal Law Enforcement Training Center,Glynco,GA,FLETCCSIRC@fletc.dhs.gov
 fletc.gov,Federal - Executive,Department of Homeland Security,Federal Law Enforcement Training Center,Glynco,GA,FLETCCSIRC@fletc.dhs.gov
 floodsmart.gov,Federal - Executive,Department of Homeland Security,Federal Emergency Management Agency,Bluemont,VA,fema-nosc-cyber@fema.dhs.gov
-get.gov,Federal - Executive,Department of Homeland Security,Cybersecurity and Infrastructure Security Agency,Arlington,VA,help@get.gov
+get.gov,Federal - Executive,Department of Homeland Security,Cybersecurity and Infrastructure Security Agency,Arlington,VA,(blank)
 globalentry.gov,Federal - Executive,Department of Homeland Security,U.S. Customs and Border Protection,Washington,DC,CBPSOC@cbp.dhs.gov
 homelandsecurity.gov,Federal - Executive,Department of Homeland Security,Headquarters,Washington,DC,postmaster@dhs.gov
 hsi.gov,Federal - Executive,Department of Homeland Security,Office of the Chief Information Officer,Washington,DC,postmaster@dhs.gov
@@ -411,7 +409,7 @@ ice.gov,Federal - Executive,Department of Homeland Security,U.S. Immigration and
 juntos.gov,Federal - Executive,Department of Homeland Security,Headquarters,Washington,DC,postmaster@dhs.gov
 know2protect.gov,Federal - Executive,Department of Homeland Security,CIO Headquarters,Springfield,VA,postmaster@dhs.gov
 listo.gov,Federal - Executive,Department of Homeland Security,Office of Public Affairs,Washington,DC,fema-nosc-cyber@fema.dhs.gov
-nic.gov,Federal - Executive,Department of Homeland Security,Cybersecurity and Infrastructure Security Agency,Arlington,VA,help@get.gov
+nic.gov,Federal - Executive,Department of Homeland Security,Cybersecurity and Infrastructure Security Agency,Arlington,VA,(blank)
 niem.gov,Federal - Executive,Department of Homeland Security,"Department of Homeland Security, Office of the Chief Information Officer",Washington,DC,postmaster@dhs.gov
 nmsc.gov,Federal - Executive,Department of Homeland Security,National Marine Center,St Augustine,FL,bertram.dobrie@cbp.dhs.gov
 ns.gov,Federal - Executive,Department of Homeland Security,Cybersecurity and Infrastructure Security Agency,Arlington,VA,dotgov@cloudflare.com
@@ -444,7 +442,6 @@ opportunityzones.gov,Federal - Executive,Department of Housing and Urban Develop
 ada.gov,Federal - Executive,Department of Justice,Civil Rights Division,Washington,DC,Responsible_Disclosure@usdoj.gov
 amberalert.gov,Federal - Executive,Department of Justice,Office of Justice Programs,Washington,DC,Responsible_Disclosure@usdoj.gov
 atf.gov,Federal - Executive,Department of Justice,"Bureau of Alcohol, Tobacco, Firearms and Explosives",Washington,DC,Responsible_Disclosure@usdoj.gov
-atfonline.gov,Federal - Executive,Department of Justice,"Bureau of Alcohol, Tobacco, Firearms and Explosives",Washington,DC,Responsible_Disclosure@usdoj.gov
 bats.gov,Federal - Executive,Department of Justice,Department of Justice,Potomac,MD,Responsible_Disclosure@usdoj.gov
 biometriccoe.gov,Federal - Executive,Department of Justice,FBI CJIS,Clarksburg,WV,Responsible_Disclosure@usdoj.gov
 bja.gov,Federal - Executive,Department of Justice,Office of Justice Programs,Washington ,DC,Responsible_Disclosure@usdoj.gov
@@ -493,7 +490,6 @@ ncjrs.gov,Federal - Executive,Department of Justice,Department of Justice,Potoma
 nicic.gov,Federal - Executive,Department of Justice,"Department of Justice, National Institute of Corrections",Washington,DC,Responsible_Disclosure@usdoj.gov
 nicsezcheckfbi.gov,Federal - Executive,Department of Justice,Federal Bureau of Investigation,Washington,DC,Responsible_Disclosure@usdoj.gov
 nij.gov,Federal - Executive,Department of Justice,Office of Justice Programs ,Washington,DC,Responsible_Disclosure@usdoj.gov
-nlead.gov,Federal - Executive,Department of Justice,Department of Justice,Washington,DC,Responsible_Disclosure@usdoj.gov
 nmvtis.gov,Federal - Executive,Department of Justice,Office of Justice Programs,Washington,DC,Responsible_Disclosure@usdoj.gov
 nsopr.gov,Federal - Executive,Department of Justice,Office of Justice Programs,Washington,DC,Responsible_Disclosure@usdoj.gov
 nsopw.gov,Federal - Executive,Department of Justice,Office of Justice Programs,Washington,DC,Responsible_Disclosure@usdoj.gov
@@ -535,7 +531,7 @@ migrantworker.gov,Federal - Executive,Department of Labor,Bureau of Internationa
 msha.gov,Federal - Executive,Department of Labor,Office of the Chief Information Officer,Arlington,VA,m-DOLCSIRC@dol.gov
 mshastanddown.gov,Federal - Executive,Department of Labor,Mine Safety and Health Administration,Washington,DC,m-dolscirc@dol.gov
 osha.gov,Federal - Executive,Department of Labor,Office of the Chief Information Officer,Washington,DC,m-DOLCSIRC@dol.gov
-persuader-reports.gov,Federal - Executive,Department of Labor,Office of the Chief Information Officer,Washington,DC,moritz.russell@dol.gov
+persuader-reports.gov,Federal - Executive,Department of Labor,Office of the Chief Information Officer,Washington,DC,m-DOLCSIRC@dol.gov
 trabajadormigrante.gov,Federal - Executive,Department of Labor,Bureau of International Labor Affairs,Washington,DC,m-dolscirc@dol.gov
 trainingproviderresults.gov,Federal - Executive,Department of Labor,Office of the Chief Information Officer,Washington,DC,m-DOLCSIRC@dol.gov
 ui.gov,Federal - Executive,Department of Labor,Office of the Chief Information Officer,Washington,DC,M-DOLSCIRC@DOL.GOV
@@ -549,6 +545,7 @@ wrp.gov,Federal - Executive,Department of Labor,Office of the Chief Information 
 youthrules.gov,Federal - Executive,Department of Labor,Office of the Chief Information Officer,Washington,DC,m-DOLCSIRC@dol.gov
 america.gov,Federal - Executive,Department of State,Bureau of Global Public Affairs (GPA),Washington,DC,VDPSubmission@state.gov
 devtestfan1.gov,Federal - Executive,Department of State,Bureau of Information Resources Management (IRM),Washington,DC,VDPSubmission@state.gov
+dfafacts.gov,Federal - Executive,Department of State,Office of the Director of U.S. Foreign Assistance,Washington,DC,VDP@usaid.gov
 fan.gov,Federal - Executive,Department of State,Bureau of Information Resources Management (IRM),Washington,DC,VDPSubmission@state.gov
 fsgb.gov,Federal - Executive,Department of State,Foreign Service Grievance Board (S/FSGB),Washington,DC,VDPSubmission@state.gov
 iawg.gov,Federal - Executive,Department of State,Bureau of East Asian and Pacific Affairs (EAP),Washington,DC,VDPSubmission@state.gov
@@ -592,7 +589,7 @@ firenet.gov,Federal - Executive,Department of the Interior,National Wildfire Coo
 firescience.gov,Federal - Executive,Department of the Interior,Joint Fire Science Program,Boise,ID,blm_it_security@blm.gov
 fws.gov,Federal - Executive,Department of the Interior,U.S. Fish and Wildlife Service,Lakewood,CO,soc@fws.gov
 gcmrc.gov,Federal - Executive,Department of the Interior,U.S. Geological Survey,Flagstaff,AZ,security@doi.gov
-geoplatform.gov,Federal - Executive,Department of the Interior,Department of the Interior,Washington,DC,humberto_salazar@ios.doi.gov
+geoplatform.gov,Federal - Executive,Department of the Interior,Department of the Interior,Washington,DC,security@geoplatform.gov
 iat.gov,Federal - Executive,Department of the Interior,Office of Aviation Services,Boise,ID,security@doi.gov
 indianaffairs.gov,Federal - Executive,Department of the Interior,Bureau of Indian Affairs,Reston,VA,bia_cirt@bia.gov
 interior.gov,Federal - Executive,Department of the Interior,National Business Center,Washington,DC,security@doi.gov
@@ -657,7 +654,7 @@ eyenote.gov,Federal - Executive,Department of the Treasury,Bureau of Engraving a
 federalinvestments.gov,Federal - Executive,Department of the Treasury,Bureau of the Fiscal Service,Pakersburg,WV,domainsecurity@treasury.gov
 federalspending.gov,Federal - Executive,Department of the Treasury,Bureau of the Fiscal Service,Washington,DC,domainsecurity@treasury.gov
 fedinvest.gov,Federal - Executive,Department of the Treasury,Bureau of the Fiscal Service,Parkersburg,WV,domainsecurity@treasury.gov
-ffb.gov,Federal - Executive,Department of the Treasury,Departmental Offices ,Washington,DC,domainsecurity@treasury.gov
+ffb.gov,Federal - Executive,Department of the Treasury,Departmental Offices,Washington,DC,domainsecurity@treasury.gov
 financialresearch.gov,Federal - Executive,Department of the Treasury,Office of Financial Research (OFR),Washington,DC,OFR_infosec@ofr.treasury.gov
 financialstability.gov,Federal - Executive,Department of the Treasury,Department of the Treasury - DO,Washington,DC,domainsecurity@treasury.gov
 fincen.gov,Federal - Executive,Department of the Treasury,Department of the Treasury - FINCEN,Vienna,VA,domainsecurity@treasury.gov
@@ -768,7 +765,7 @@ osis.gov,Federal - Executive,Director of National Intelligence,Office of Directo
 ugov.gov,Federal - Executive,Director of National Intelligence,Office of Director of National Intelligence - CIO (ICES),Fort Meade,MD,ismc-networkadmin@ugov.gov
 eac.gov,Federal - Executive,Election Assistance Commission,Election Assistance Commission,Silver Spring,MD,security@eac.gov
 helpamericavote.gov,Federal - Executive,Election Assistance Commission,Election Assistance Commission,Silver Spring,MD,security@eac.gov
-votebymail.gov,Federal - Executive,Election Assistance Commission,Election Assistance Commission,Washington DC,DC,dkaristai@eac.gov
+votebymail.gov,Federal - Executive,Election Assistance Commission,Election Assistance Commission,Washington DC,DC,security@eac.gov
 airknowledge.gov,Federal - Executive,Environmental Protection Agency,Environmental Protection Agency,Durham,NC,infosec@epa.gov
 airnow.gov,Federal - Executive,Environmental Protection Agency,Environmental Protection Agency,Durham,NC,infosec@epa.gov
 cbi-epa.gov,Federal - Executive,Environmental Protection Agency,Environmental Protection Agency,Durham,NC,infosec@epa.gov
@@ -776,7 +773,7 @@ energystar.gov,Federal - Executive,Environmental Protection Agency,Environmental
 epa.gov,Federal - Executive,Environmental Protection Agency,Environmental Protection Agency,Research Triangle Park,NC,infosec@epa.gov
 epaoig.gov,Federal - Executive,Environmental Protection Agency,EPA OIG,Washington,DC,OIG-OIT-IT-Security@epa.gov
 fedcenter.gov,Federal - Executive,Environmental Protection Agency,Environmental Protection Agency,Washington,DC,infosec@epa.gov
-frtr.gov,Federal - Executive,Environmental Protection Agency,Federal Remediation Roundtable,Omaha,NE,infosec@epa.gov
+frtr.gov,Federal - Executive,Environmental Protection Agency,Federal Remediation Technology Roundtable,Washington,DC,infosec@epa.gov
 glnpo.gov,Federal - Executive,Environmental Protection Agency,"US EPA, Great Lakes National Program Office",Chicago,IL,infosec@epa.gov
 glri.gov,Federal - Executive,Environmental Protection Agency,US EPA Region 5,Chicago,IL,Infosec@epa.gov
 greengov.gov,Federal - Executive,Environmental Protection Agency,Office of Federal Sustainability,Washington,DC,infosec@epa.gov
@@ -786,20 +783,14 @@ urbanwaters.gov,Federal - Executive,Environmental Protection Agency,Environmenta
 eeoc.gov,Federal - Executive,Equal Employment Opportunity Commission,Equal Employment Opportunity Commission,Washington,DC,vdp.disclosure@eeoc.gov
 ai.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,dl.eop.cloudadmin@eop.gov
 budget.gov,Federal - Executive,Executive Office of the President,Office of Management and Budget,Washington,DC,dl.eop.cloudadmin@eop.gov
-buildbackbetter.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,"Washington,",DC,dl.eop.cloudadmin@eop.gov
-build.gov,Federal - Executive,Executive Office of the President,Office of Administration,Washington,DC,dl.eop.cloudadmin@eop.gov
-childtaxcredit.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,dl.eop.cloudadmin@eop.gov
-cleanenergy.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,dl.eop.cloudadmin@eop.gov
-crisisnextdoor.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,dl.eop.cloudadmin@eop.gov
+covid.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,,DC,dl.eop.cloudadmin@eop.gov
+covidtest.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,,DC,dl.eop.cloudadmin@eop.gov
+covidtests.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,,DC,dl.eop.cloudadmin@eop.gov
+creators.gov,Federal - Executive,Executive Office of the President,White House Office,Washington,DC,dl.eop.cloudadmin@eop.gov
+dei.gov,Federal - Executive,Executive Office of the President,White House Office,Washington,DC,dl.eop.cloudadmin@eop.gov
+doge.gov,Federal - Executive,Executive Office of the President,White House Office,Washington,DC,(blank)
 earmarks.gov,Federal - Executive,Executive Office of the President,Office of Management and Budget,Washington,DC,DL.OMB.NetSecurity@omb.eop.gov
-economicopportunity.gov,Federal - Executive,Executive Office of the President,White House,Washington,DC,dl.eop.cloudadmin@eop.gov
-ej.gov,Federal - Executive,Executive Office of the President,White House Council on Environmental Quality (CEQ),Washington,DC,dl.eop.cloudadmin@eop.gov
-environmentaljustice.gov,Federal - Executive,Executive Office of the President,White House Council on Environmental Quality (CEQ),Washington,DC,environmentaljustice_security@ceq.eop.gov
 eop.gov,Federal - Executive,Executive Office of the President,Office of Administration,Washington,DC,dl.eop.cloudadmin@eop.gov
-invertir.gov,Federal - Executive,Executive Office of the President,White House Office,Washington,DC,dl.eop.cloudadmin@eop.gov
-invest.gov,Federal - Executive,Executive Office of the President,White House Office,Washington,DC,dl.eop.cloudadmin@eop.gov
-investinamerica.gov,Federal - Executive,Executive Office of the President,White House Office,Washington,DC,dl.eop.cloudadmin@eop.gov
-investinginamerica.gov,Federal - Executive,Executive Office of the President,White House Office,Washington,DC,dl.eop.cloudadmin@eop.gov
 max.gov,Federal - Executive,Executive Office of the President,Office of Management and Budget,Washington,DC,DL.OMB.NetSecurity@omb.eop.gov
 nano.gov,Federal - Executive,Executive Office of the President,National Nanotechnology Coordination Office,ALEXANDRIA,VA,security@nnco.nano.gov
 nepa.gov,Federal - Executive,Executive Office of the President,Council on Environmental Quality,Washington,DC,dl.eop.cloudadmin@eop.gov
@@ -809,19 +800,14 @@ ostp.gov,Federal - Executive,Executive Office of the President,Office of Science
 pci.gov,Federal - Executive,Executive Office of the President,Presidential Community of Interest,Washington,DC,dl.eop.cloudadmin@eop.gov
 pitc.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,dl.eop.cloudadmin@eop.gov
 pitctestdomain.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,dl.eop.cloudadmin@eop.gov
-pslf.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,dl.eop.cloudadmin@eop.gov
-publicserviceloanforgiveness.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,dl.eop.cloudadmin@eop.gov
 quantum.gov,Federal - Executive,Executive Office of the President,National Quantum Coordination Office (NQCO),Washington,DC,ramia@nitrd.gov
-reproaccess.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DE,dl.eop.cloudadmin@eop.gov
-reproductiveaccess.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,dl.eop.cloudadmin@eop.gov
-reproductiverights.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,dl.eop.cloudadmin@eop.gov
-reprorights.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,(blank)
-unitedwestand.gov,Federal - Executive,Executive Office of the President,Domestic Policy Council,Washington,DC,dl.eop.cloudadmin@eop.gov
-usdigitalservice.gov,Federal - Executive,Executive Office of the President,United States Digital Service,Washington,DC,security@usds.gov
-usds.gov,Federal - Executive,Executive Office of the President,United States Digital Service,Washington,DC,security@usds.gov
+trumpcard.gov,Federal - Executive,Executive Office of the President,DOGE,Washington,DC,(blank)
+usdigitalservice.gov,Federal - Executive,Executive Office of the President,United States Digital Service,Washington,DC,dl.eop.cloudadmin@eop.gov
+usds.gov,Federal - Executive,Executive Office of the President,United States Digital Service,Washington,DC,dl.eop.cloudadmin@eop.gov
 ustr.gov,Federal - Executive,Executive Office of the President,United States Trade Representative,Washington,DC,dl.eop.cloudadmin@eop.gov
+waste.gov,Federal - Executive,Executive Office of the President,White House Office,Washington,DC,(blank)
+whes.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,(blank)
 wh.gov,Federal - Executive,Executive Office of the President,Office of Administration,Washington,DC,dl.eop.cloudadmin@eop.gov
-whitehousedrugpolicy.gov,Federal - Executive,Executive Office of the President,Executive Office of the President,Washington,DC,dl.eop.cloudadmin@eop.gov
 whitehouse.gov,Federal - Executive,Executive Office of the President,White House,Washington,DC,dl.eop.cloudadmin@eop.gov
 exim.gov,Federal - Executive,Export-Import Bank of the United States,Export-Import Bank of the United States,Washington,DC,soc_alerts@exim.gov
 fca.gov,Federal - Executive,Farm Credit Administration,Office of Information Technology,McLean,VA,security_vdp@fca.gov
@@ -831,8 +817,7 @@ acpbenefit.gov,Federal - Executive,Federal Communications Commission,Office of t
 affordableconnectivity.gov,Federal - Executive,Federal Communications Commission,Office of the Managing Director,Washington,DC,nsoc-monitor@fcc.gov
 broadbandmap.gov,Federal - Executive,Federal Communications Commission,Federal Communications Commission,Washington,DC,nsoc-monitor@fcc.gov
 fcc.gov,Federal - Executive,Federal Communications Commission,Federal Communications Commission,Washington,DC,nsoc-monitor@fcc.gov
-getinternet.gov,Federal - Executive,Federal Communications Commission,Federal Communications Commission,Washington,DC,Russell.A.Barnes@oa.eop.gov
-economicinclusion.gov,Federal - Executive,Federal Deposit Insurance Corporation,Federal Deposit Insurance Corporation,Arlington,VA,NetworkOps@fdic.gov
+getinternet.gov,Federal - Executive,Federal Communications Commission,Federal Communications Commission,Washington,DC,nsoc-monitor@fcc.gov
 fdicconnect.gov,Federal - Executive,Federal Deposit Insurance Corporation,Federal Deposit Insurance Corporation,Arlington,VA,NetworkOps@fdic.gov
 fdic.gov,Federal - Executive,Federal Deposit Insurance Corporation,Federal Deposit Insurance Corporation,Arlington,VA,NetworkOps@fdic.gov
 fdicig.gov,Federal - Executive,Federal Deposit Insurance Corporation,Federal Deposit Insurance Corporation,Arlington,VA,NetworkOps@fdic.gov
@@ -862,7 +847,7 @@ ffiec.gov,Federal - Executive,Federal Reserve Board of Governors,Federal Financi
 frb.gov,Federal - Executive,Federal Reserve Board of Governors,Federal Reserve Board of Governors,Washington,DC,charles.b.young@frb.gov
 frs.gov,Federal - Executive,Federal Reserve Board of Governors,Federal Reserve Board of Governors,Washington,DC,charles.b.young@frb.gov
 newmoney.gov,Federal - Executive,Federal Reserve Board of Governors,Federal Reserve Board of Governors,Washington,DC,charles.b.young@frb.gov
-oasis.gov,Federal - Executive,Federal Reserve Board of Governors,Federal Reserve Board of Governors,Washington,DC,(blank)
+oasis.gov,Federal - Executive,Federal Reserve Board of Governors,Federal Reserve Board of Governors,Washington,DC,charles.b.young@frb.gov
 uscurrency.gov,Federal - Executive,Federal Reserve Board of Governors,Federal Reserve Board of Governors,Washington,DC,external.incident.reporting@frb.gov
 alertaenlinea.gov,Federal - Executive,Federal Trade Commission,Division of Consumer & Business Education (DCBE),Washington,DC,security@ftc.gov
 consumer.gov,Federal - Executive,Federal Trade Commission,Division of Consumer & Business Education (DCBE),Washington,DC,security@ftc.gov
@@ -985,11 +970,11 @@ us.gov,Federal - Executive,General Services Administration,"GSA,FAS,Technology T
 ussm.gov,Federal - Executive,General Services Administration,"GSA, OGP, Web Portfolio",Washington,DC,gsa-vulnerability-reports@gsa.gov
 vote.gov,Federal - Executive,General Services Administration,"GSA,FAS,Technology Transformation Service",Washington,DC,gsa-vulnerability-reports@gsa.gov
 ata.gov,Federal - Executive,gov Administration,.gov Administration,Arlington,VA,(blank)
-domainops.gov,Federal - Executive,gov Administration,.gov Administration,Arlington,VA,help@get.gov
+domainops.gov,Federal - Executive,gov Administration,.gov Administration,Arlington,VA,(blank)
 ecfc.gov,Federal - Executive,gov Administration,.gov Administration,Arlington,VA,(blank)
 erpo.gov,Federal - Executive,gov Administration,.gov Administration,Arlington,VA,(blank)
 fraho.gov,Federal - Executive,gov Administration,.gov Administration,Arlington,VA,(blank)
-igorville.gov,Federal - Executive,gov Administration,Igorville Village,Igorville,IA,help@get.gov
+igorville.gov,Federal - Executive,gov Administration,Igorville Village,Igorville,IA,(blank)
 jpo.gov,Federal - Executive,gov Administration,.gov Administration,Arlington,VA,(blank)
 nrpo.gov,Federal - Executive,gov Administration,.gov Administration,Arlington,VA,(blank)
 osdls.gov,Federal - Executive,gov Administration,.gov Administration,Washington,DC,(blank)
@@ -1136,14 +1121,13 @@ tvaoig.gov,Federal - Executive,Tennessee Valley Authority,Tennessee Valley Autho
 ptf.gov,Federal - Executive,The Intelligence Community,Prosecution Task Force,Washington,DC,(blank)
 worldwar1centennial.gov,Federal - Executive,The United States World War One Centennial Commission,The United States World War One Centennial Commission,Washington,DC,chris.christopher@worldwar1centennial.gov
 childreninadversity.gov,Federal - Executive,U.S. Agency for International Development,USAID/GH.CECA,Washington,DC,VDP@usaid.gov
-dfafacts.gov,Federal - Executive,U.S. Agency for International Development,Office of the Director of U.S. Foreign Assistance,Washington,DC,VDP@usaid.gov
 feedthefuture.gov,Federal - Executive,U.S. Agency for International Development,Bureau for Resilience and Food Security (RFS),Washington,DC,VDP@USAID.GOV
 foreignassistance.gov,Federal - Executive,U.S. Agency for International Development,Foreign Assistance Office (F/PPS),Washington,DC,VDP@usaid.gov
 neglecteddiseases.gov,Federal - Executive,U.S. Agency for International Development,Bureau for Global Health,Washington,DC,VDP@USAID.GOV
 pmi.gov,Federal - Executive,U.S. Agency for International Development,Bureau for Global Health,Washington,DC,VDP@USAID.GOV
 prosperafrica.gov,Federal - Executive,U.S. Agency for International Development,U.S. Agency for International Development,Washington,DC,vdp@usaid.gov
 usaid.gov,Federal - Executive,U.S. Agency for International Development,M/CIO,Washington,DC,VDP@USAID.GOV
-workwithusaid.gov,Federal - Executive,U.S. Agency for International Development,U.S. Agency for International Development,Washington,DC,vdp@usaid.gov
+workwithusaid.gov,Federal - Executive,U.S. Agency for International Development,United States Agency for International Development,Washington,DC,vdp@usaid.gov
 csb.gov,Federal - Executive,U.S. Chemical Safety Board,U.S. Chemical Safety and Hazard Investigation Board,Washington,DC,andrew.staddon@csb.gov
 safetyvideos.gov,Federal - Executive,U.S. Chemical Safety Board,U.S. Chemical Safety and Hazard Investigation Board,Washington,DC,andrew.staddon@csb.gov
 heritageabroad.gov,Federal - Executive,U.S. Commission for the Preservation of Americas Heritage Abroad,USCPAHA,Washington,DC,ari@thetechmensch.com
@@ -1201,7 +1185,7 @@ voa.gov,Federal - Executive,United States Agency for Global Media,VOA,,,it-secur
 globalchange.gov,Federal - Executive,United States Global Change Research Program,U.S. Global Change Research Program,Washington,DC,(blank)
 ipcc-wg3.gov,Federal - Executive,United States Global Change Research Program,U.S. Global Change Research Program,Washington,DC,admin@usgcrp.gov
 usgcrp.gov,Federal - Executive,United States Global Change Research Program,U.S. Global Change Research Program,Washington,DC,(blank)
-ushmm.gov,Federal - Executive,United States Holocaust Memorial Museum,United States Holocaust Memorial Museum,Washington,DC,chandra@ushmm.org
+ushmm.gov,Federal - Executive,United States Holocaust Memorial Museum,United States Holocaust Memorial Museum,Washington,DC,mtrofi@ushmm.org
 usip.gov,Federal - Executive,United States Institute of Peace,GSA/United States Institute of Peace,Washington,DC,mrich@usip.gov
 dfc.gov,Federal - Executive,United States International Development Finance Corporation,US International Development Finance Corporation,Washington,DC,ciso@dfc.gov
 idfc.gov,Federal - Executive,United States International Development Finance Corporation,US International Development Finance Corporation,Washington,DC,ciso@dfc.gov
@@ -1209,7 +1193,7 @@ opic.gov,Federal - Executive,United States International Development Finance Cor
 usdfc.gov,Federal - Executive,United States International Development Finance Corporation,US International Development Finance Corporation,washington,DC,ciso@dfc.gov
 usidfc.gov,Federal - Executive,United States International Development Finance Corporation,US International Development Finance Corporation,Washington,DC,ciso@dfc.gov
 usitc.gov,Federal - Executive,United States International Trade Commission,OCIO,Washington,DC,vdp@usitc.gov
-usitcoig.gov,Federal - Executive,United States International Trade Commission,USITC Office of Inspector General,Washington,DC,(blank)
+usitcoig.gov,Federal - Executive,United States International Trade Commission,USITC Office of Inspector General,Washington,DC,reports@usitc.gov
 changeofaddress.gov,Federal - Executive,United States Postal Service,U.S. Postal Service,Washington,DC,(blank)
 mail.gov,Federal - Executive,United States Postal Service,U.S. Postal Service,Raleigh,NC,(blank)
 myusps.gov,Federal - Executive,United States Postal Service,U.S. Postal Service,Raleigh,NC,(blank)
@@ -1362,7 +1346,7 @@ tmdbhouse.gov,Federal - Legislative,The Legislative Branch,US House of Represent
 ushouse.gov,Federal - Legislative,The Legislative Branch,US House of Representatives,Washington,DC,richard.martins@mail.house.gov
 ushr.gov,Federal - Legislative,The Legislative Branch,US House of Representatives,Washington,DC,richard.martins@mail.house.gov
 uscapitolpolice.gov,Federal - Legislative,U.S. Capitol Police,U.S. Capitol Police,Washington,DC,OIS-Security@uscp.gov
-uscp.gov,Federal - Legislative,U.S. Capitol Police,U.S. Capitol Police,Washington,DC,(blank)
+uscp.gov,Federal - Legislative,U.S. Capitol Police,U.S. Capitol Police,Washington,DC,OIS-Security@uscp.gov
 uscirf.gov,Federal - Legislative,U.S. Commission on International Religious Freedom,U.S. Commission on International Religious Freedom,Washington,DC,tkraemer@uscirf.gov
 america250.gov,Federal - Legislative,U.S. Semiquincentennial Commission,United States Semiquincentennial Commission,Alexandria,VA,domain_security@america250.gov
 usa250.gov,Federal - Legislative,U.S. Semiquincentennial Commission,United States Semiquincentennial Commission,Alexandria,VA,domain_security@america250.gov
