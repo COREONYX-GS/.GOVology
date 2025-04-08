@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Periodic Table Visualization</title>
+  <style>
+    /* Fixed search bar styling */
+    #search-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      border-bottom: 1px solid #ccc;
+      z-index: 3000;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    #search-input {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+    }
+    /* Autocomplete dropdown styling */
+    #autocomplete-container {
+      position: absolute;
+      top: 50px; /* below the search bar */
+      left: 10px;
+      background: #fff;
+      border: 1px solid #ccc;
+      width: calc(100% - 20px);
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      z-index: 3100;
+    }
+    .autocomplete-item {
+      padding: 8px;
+      cursor: pointer;
+    }
+    .autocomplete-item:hover,
+    .autocomplete-item.active {
+      background: #ddd;
+    }
+    /* Reset body margins */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    /* Push the grid down so it's not overlapped by the search bar */
+    svg {
+      margin-top: 60px;
+    }
+    /* Basic styling for the cells */
+    .cell {
+      stroke: #333;
+      fill: #ccc;
+      transition: fill 0.3s;
+    }
+    .cell:hover {
+      fill: orange;
+    }
+    /* Text styling */
+    text {
+      pointer-events: none;
+      font-size: 14px;
+      fill: #000;
+    }
+    /* Tooltip styling */
+    #tooltip {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid #333;
+      padding: 10px;
+      font-size: 14px;
+      pointer-events: none;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    /* Detail Card (Modal) styling */
+    #detail-card {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border: 2px solid #333;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      display: none;
+      z-index: 2000;
+      max-width: 90%;
+    }
+    #detail-card h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+    #detail-card p {
+      font-size: 16px;
+    }
+    #detail-card button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Fixed Search Bar -->
+  <div id="search-container">
+    <input id="search-input" type="text" placeholder="Search domains... (e.g., agency:&quot;Department of Energy&quot; org:&quot;Some Org&quot;)" />
+    <div id="autocomplete-container"></div>
+  </div>
+  
+  <svg id="visualization"></svg>
+  
+  <!-- Tooltip for hover interactions -->
+  <div id="tooltip"></div>
+  
+  <!-- Detail Card for click interactions -->
+  <div id="detail-card">
+    <h2 id="card-title"></h2>
+    <p id="card-content"></p>
+    <button id="close-card">Close</button>
+  </div>
+  
+  <!-- d3.js from a CDN -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    const cellSize = 120;  // Fixed cell size
+    const padding = 5;     // Padding around grid
+    const maxCharsPerLine = 15;  // For wrapping text
+
+    let uniqueAgencies = [];
+    let uniqueOrgs = [];
+    let globalData;
+    let currentSuggestionIndex = -1;  // Track the current autocomplete selection
+
+    // Wrap text inside cells.
+    function wrapText(textSelection, textStr) {
+      textSelection.text("");
+      if (textStr.length <= maxCharsPerLine) {
+        textSelection.append("tspan").text(textStr);
+      } else {
+        const numLines = Math.ceil(textStr.length / maxCharsPerLine);
+        for (let i = 0; i < numLines; i++) {
+          const start = i * maxCharsPerLine;
+          const line = textStr.substring(start, start + maxCharsPerLine);
+          textSelection.append("tspan")
+            .attr("x", textSelection.attr("x"))
+            .attr("dy", i === 0 ? "0em" : "1.2em")
+            .text(line);
+        }
+      }
+    }
+
+    // Filter function supporting free text, agency:"", and org:"" filters.
+    function filterData(query, data) {
+      query = query.toLowerCase();
+      // Regex to match tokens (including quoted values)
+      const tokens = query.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
+      const freeTokens = [];
+      const agencyTokens = [];
+      const orgTokens = [];
+      const isTokens = [];
+      
+      tokens.forEach(token => {
+        const cleaned = token.replace(/"/g, '');
+        if (cleaned.startsWith("agency:")) {
+          const val = cleaned.slice("agency:".length).trim();
+          if (val) agencyTokens.push(val);
+        } else if (cleaned.startsWith("org:")) {
+          const val = cleaned.slice("org:".length).trim();
+          if (val) orgTokens.push(val);
+        } 
+        else if (cleaned.startsWith("is:")) {
+            const val = cleaned.slice("is:".length).trim();
+            if (val) isTokens.push(val);
+        }
+        else {
+          freeTokens.push(cleaned);
+        }
+      });
+      
+      return data.filter(d => {
+        const domain = (d.domain || "").toLowerCase();
+        const agency = (d.agency || "").toLowerCase();
+        const org = (d.org || "").toLowerCase();
+        const isMatch = isTokens.every(token => d[token] === true);
+        const freeMatch = freeTokens.every(token => domain.includes(token));
+        const agencyMatch = agencyTokens.length === 0 || agencyTokens.some(token => agency.includes(token));
+        const orgMatch = orgTokens.length === 0 || orgTokens.some(token => org.includes(token));
+        return freeMatch && agencyMatch && orgMatch && isMatch;
+      });
+    }
+
+    // Draw or redraw grid based on provided data.
+    function drawGrid(data) {
+      const svg = d3.select("#visualization");
+      svg.selectAll("*").remove();
+      const availableWidth = window.innerWidth - (padding * 2);
+      const numColumns = Math.floor(availableWidth / cellSize);
+      const numRows = Math.ceil(data.length / numColumns);
+      const svgWidth = (cellSize * numColumns) + padding * 2;
+      const svgHeight = (cellSize * numRows) + padding * 2;
+      svg.attr("width", svgWidth).attr("height", svgHeight);
+      const tooltip = d3.select("#tooltip");
+      svg.selectAll("rect")
+         .data(data)
+         .enter()
+         .append("rect")
+         .attr("class", "cell")
+         .attr("x", (d, i) => padding + (i % numColumns) * cellSize)
+         .attr("y", (d, i) => padding + Math.floor(i / numColumns) * cellSize)
+         .attr("width", cellSize)
+         .attr("height", cellSize)
+         .on("mouseover", function(event, d) {
+           tooltip.style("display", "block")
+                  .html(`<strong>${d.domain}</strong><br>Agency: ${d.agency}<br>Organization: ${d.org}`);
+         })
+         .on("mousemove", function(event) {
+           tooltip.style("left", (event.pageX + 10) + "px")
+                  .style("top", (event.pageY + 10) + "px");
+         })
+         .on("mouseout", function() {
+           tooltip.style("display", "none");
+         })
+         .on("click", function(event, d) {
+           d3.select("#card-title").text(d.domain);
+           d3.select("#card-content").html(
+             `<strong>Agency:</strong> ${d.agency}<br><strong>Organization:</strong> ${d.org}`
+           );
+           d3.select("#detail-card").style("display", "block");
+         });
+      svg.selectAll("text")
+         .data(data)
+         .enter()
+         .append("text")
+         .attr("x", (d, i) => padding + (i % numColumns) * cellSize + cellSize / 2)
+         .attr("y", (d, i) => padding + Math.floor(i / numColumns) * cellSize + cellSize / 2)
+         .attr("text-anchor", "middle")
+         .each(function(d) {
+           const textEl = d3.select(this);
+           wrapText(textEl, d.domain || "");
+         });
+    }
+
+    // Build unique lists of agencies and organizations.
+    function buildUniqueLists(data) {
+      const agencies = new Set();
+      const orgs = new Set();
+      data.forEach(d => {
+        if (d.agency) agencies.add(d.agency);
+        if (d.org) orgs.add(d.org);
+      });
+      uniqueAgencies = Array.from(agencies);
+      uniqueOrgs = Array.from(orgs);
+    }
+
+    // Show autocomplete suggestions for a given filter type ("agency" or "org")
+    function showAutocomplete(filterType, partial) {
+      const container = d3.select("#autocomplete-container");
+      let suggestions = [];
+      if (filterType === "agency") {
+        suggestions = uniqueAgencies.filter(a => a.toLowerCase().includes(partial.toLowerCase()));
+      } else if (filterType === "org") {
+        suggestions = uniqueOrgs.filter(o => o.toLowerCase().includes(partial.toLowerCase()));
+      }
+      if (suggestions.length === 0) {
+        container.style("display", "none");
+        currentSuggestionIndex = -1;
+        return;
+      }
+      container.style("display", "block");
+      container.html(""); // Clear previous suggestions.
+      suggestions.forEach((suggestion, index) => {
+        container.append("div")
+          .attr("class", "autocomplete-item")
+          .attr("data-index", index)
+          .text(suggestion)
+          .on("click", () => {
+            completeFilter(filterType, suggestion);
+          });
+      });
+      // Reset selection index when new suggestions are shown.
+      currentSuggestionIndex = -1;
+    }
+
+    // Helper function to update the visual highlight of autocomplete items.
+    function updateActiveSuggestion(suggestions, index) {
+      suggestions.each(function(d, i) {
+        d3.select(this).classed("active", i === index);
+      });
+    }
+
+    // Complete the filter token using the provided suggestion.
+    function completeFilter(filterType, suggestion) {
+      let current = d3.select("#search-input").property("value");
+      const regex = new RegExp(`(${filterType}:"?)([^"]*)$`, "i");
+      current = current.replace(regex, `$1${suggestion}"`);
+      d3.select("#search-input").property("value", current);
+      d3.select("#autocomplete-container").style("display", "none");
+      const filteredData = filterData(current, globalData);
+      drawGrid(filteredData);
+      currentSuggestionIndex = -1;
+    }
+
+    // Auto-insert matching quotes for agency: and org: filters.
+    function autoInsertQuotes(e) {
+      const input = e.target;
+      let value = input.value;
+      // const agencyPattern = /agency:(?!")(\S+)/i;
+      const agencyPattern = /agency:([^\s"]*)$/i;
+      if (agencyPattern.test(value)) {
+        value = value.replace(agencyPattern, 'agency:"$1');
+        input.value = value;
+      }
+      // const orgPattern = /org:(?!")(\S+)/i;
+      const orgPattern = /org:([^\s"]*)$/i;
+      if (orgPattern.test(value)) {
+        value = value.replace(orgPattern, 'org:"$1');
+        input.value = value;
+      }
+    }
+
+    const searchInput = d3.select("#search-input");
+    searchInput
+      .on("input", function(event) {
+        autoInsertQuotes(event);
+        const query = this.value;
+        // Check for agency filter.
+        const agencyMatch = query.match(/agency:"([^"]*)$/i);
+        if (agencyMatch) {
+          showAutocomplete("agency", agencyMatch[1]);
+        } else {
+          const orgMatch = query.match(/org:"([^"]*)$/i);
+          if (orgMatch) {
+            showAutocomplete("org", orgMatch[1]);
+          } else {
+            d3.select("#autocomplete-container").style("display", "none");
+            currentSuggestionIndex = -1;
+          }
+        }
+        const filteredData = query.trim() === ""
+          ? globalData
+          : filterData(query, globalData);
+        drawGrid(filteredData);
+      })
+      .on("keydown", function(event) {
+        const container = d3.select("#autocomplete-container");
+        if (container.style("display") !== "none") {
+          const suggestions = container.selectAll(".autocomplete-item");
+          if (event.key === "ArrowDown") {
+            const count = suggestions.size();
+            currentSuggestionIndex = (currentSuggestionIndex + 1) % count;
+            updateActiveSuggestion(suggestions, currentSuggestionIndex);
+            event.preventDefault();
+          } else if (event.key === "ArrowUp") {
+            const count = suggestions.size();
+            currentSuggestionIndex = (currentSuggestionIndex - 1 + count) % count;
+            updateActiveSuggestion(suggestions, currentSuggestionIndex);
+            event.preventDefault();
+          } else if (event.key === "Enter" || event.key === "Tab") {
+            if (currentSuggestionIndex !== -1) {
+              const firstSuggestion = suggestions.filter((d, i) => i === currentSuggestionIndex).text();
+              if (firstSuggestion) {
+                // Determine filter type based on current query.
+                let current = d3.select(this).property("value");
+                let filterType = "";
+                if (/agency:"[^"]*$/.test(current)) {
+                  filterType = "agency";
+                } else if (/org:"[^"]*$/.test(current)) {
+                  filterType = "org";
+                }
+                if (filterType) {
+                  completeFilter(filterType, firstSuggestion);
+                  event.preventDefault();
+                }
+              }
+            }
+          }
+        }
+      });
+
+    // Close autocomplete if clicking outside the search input.
+    d3.select("body").on("click", function(event) {
+      if (event.target.id !== "search-input") {
+        d3.select("#autocomplete-container").style("display", "none");
+        currentSuggestionIndex = -1;
+      }
+    });
+
+    // Load data and initialize.
+    d3.json("../data/gov-elements.json").then(data => {
+      globalData = data;
+      buildUniqueLists(globalData);
+      drawGrid(globalData);
+    }).catch(error => {
+      console.error("Error loading data:", error);
+    });
+
+    window.addEventListener("resize", () => {
+      if (globalData) drawGrid(globalData);
+    });
+
+    d3.select("#close-card").on("click", () => {
+      d3.select("#detail-card").style("display", "none");
+    });
+  </script>
+</body>
+</html>
