@@ -65,7 +65,6 @@ def generate_data(FILE_IN):
     return data
 
 def save_data(data, json_filename = "gov-elements.json"):
-
     with open(json_filename, 'w', encoding='utf-8') as out:
         json.dump(data, out, indent=4)
     
