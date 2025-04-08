@@ -170,10 +170,13 @@
         if (cleaned.startsWith("agency:")) {
           const val = cleaned.slice("agency:".length).trim();
           if (val) agencyTokens.push(val);
-        } else if (cleaned.startsWith("org:")) {
+        }
+        
+        else if (cleaned.startsWith("org:")) {
           const val = cleaned.slice("org:".length).trim();
           if (val) orgTokens.push(val);
         } 
+        
         else if (cleaned.startsWith("is:")) {
             const val = cleaned.slice("is:".length).trim();
             if (val) isTokens.push(val);
