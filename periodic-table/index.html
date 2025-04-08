@@ -190,7 +190,7 @@
         const domain = (d.domain || "").toLowerCase();
         const agency = (d.agency || "").toLowerCase();
         const org = (d.org || "").toLowerCase();
-        const isMatch = isTokens.every(token => d[token] === true);
+        const isMatch = isTokens.every(token => d[`is_${token}`]);
         const freeMatch = freeTokens.every(token => domain.includes(token));
         const agencyMatch = agencyTokens.length === 0 || agencyTokens.some(token => agency.includes(token));
         const orgMatch = orgTokens.length === 0 || orgTokens.some(token => org.includes(token));
