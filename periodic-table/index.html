@@ -183,7 +183,8 @@
   <!-- d3.js from a CDN -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script>
-    const cellSize = 120;  // Fixed cell size
+    const cellWidth = 140;
+    const cellHeight = 50;
     const padding = 5;     // Padding around grid
     const maxCharsPerLine = 15;  // For wrapping text
 
@@ -261,16 +262,15 @@
 
     // Draw or redraw grid based on provided data.
     function drawGrid(data) {
-      // Update the URL based on the current query.
-      updateSearchURL();
+      updateSearchURL(); // Update the URL based on the current query.
 
       const svg = d3.select("#visualization");
       svg.selectAll("*").remove();
       const availableWidth = window.innerWidth - (padding * 2);
-      const numColumns = Math.floor(availableWidth / cellSize);
+      const numColumns = Math.floor(availableWidth / cellWidth);
       const numRows = Math.ceil(data.length / numColumns);
-      const svgWidth = (cellSize * numColumns) + padding * 2;
-      const svgHeight = (cellSize * numRows) + padding * 2;
+      const svgWidth = (cellWidth * numColumns) + padding * 2;
+      const svgHeight = (cellHeight * numRows) + padding * 2;
       svg.attr("width", svgWidth).attr("height", svgHeight);
       const tooltip = d3.select("#tooltip");
       svg.selectAll("rect")
@@ -278,11 +278,12 @@
          .enter()
          .append("rect")
          .attr("class", "cell")
-         .attr("x", (d, i) => padding + (i % numColumns) * cellSize)
+         .attr("x", (d, i) => padding + (i % numColumns) * cellWidth)
+         .attr("y", (d, i) => padding + Math.floor(i / numColumns) * cellHeight)
          .attr("rx", 8)
          .attr("ry", 8)
-         .attr("width", cellSize)
-         .attr("height", cellSize)
+         .attr("width", cellWidth)
+         .attr("height", cellHeight)
          .on("mouseover", function(event, d) {
            const isAttributes = Object.keys(d)
          .filter(key => key.startsWith("is_"))
@@ -338,8 +339,8 @@
          .data(data)
          .enter()
          .append("text")
-         .attr("x", (d, i) => padding + (i % numColumns) * cellSize + cellSize / 2)
-         .attr("y", (d, i) => padding + Math.floor(i / numColumns) * cellSize + cellSize / 2)
+         .attr("x", (d, i) => padding + (i % numColumns) * cellWidth + cellWidth / 2)
+         .attr("y", (d, i) => padding + Math.floor(i / numColumns) * cellHeight + cellHeight / 2)
          .attr("text-anchor", "middle")
          .each(function(d) {
            const textEl = d3.select(this);
