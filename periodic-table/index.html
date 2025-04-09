@@ -279,10 +279,25 @@
          .append("rect")
          .attr("class", "cell")
          .attr("x", (d, i) => padding + (i % numColumns) * cellSize)
-         .attr("y", (d, i) => padding + Math.floor(i / numColumns) * cellSize)
          .attr("width", cellSize)
          .attr("height", cellSize)
          .on("mouseover", function(event, d) {
+           const isAttributes = Object.keys(d)
+         .filter(key => key.startsWith("is_"))
+         .map(key => {
+             if (Array.isArray(d[key])) {
+              const items = d[key].join(", ");
+              return `<strong>${key}:</strong> [${items}]`;
+             } else if (typeof d[key] === "object") {
+              const words = Object.entries(d[key])
+              .map(([k, v]) => `${k} (${v})`)
+              .join(", ");
+              return `<strong>${key}:</strong> ${words}`;
+             } else {
+           return `<strong>${key}:</strong> ${d[key]}`;
+           }
+         })
+         .join("<br>");
            tooltip.style("display", "block")
                   .html(`<strong>${d.domain}</strong><br>Agency: ${d.agency}<br>Organization: ${d.org}`);
          })
