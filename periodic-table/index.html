@@ -245,7 +245,13 @@
         const domain = (d.domain || "").toLowerCase();
         const agency = (d.agency || "").toLowerCase();
         const org = (d.org || "").toLowerCase();
-        const isMatch = isTokens.every(token => d[`is_${token}`]);
+        const isMatch = isTokens.every(token => {
+          const value = d[`is_${token}`];
+          if (typeof value === "object" && value !== null) {
+            return Object.keys(value).length > 0; // Check if the object has keys
+          }
+          return !!value; // Handle non-object values
+        });
         const freeMatch = freeTokens.every(token => domain.includes(token));
         const agencyMatch = agencyTokens.length === 0 || agencyTokens.some(token => agency.includes(token));
         const orgMatch = orgTokens.length === 0 || orgTokens.some(token => org.includes(token));
