@@ -194,6 +194,26 @@
     let globalData;
     let currentSuggestionIndex = -1;  // Track the current autocomplete selection
 
+    function parseLengthFilter(input) {
+      const match = input.match(/^([!<>]?)(\d+)$/);
+      if (!match) return null;
+      return {
+        operator: match[1],
+        value: parseInt(match[2], 10)
+      };
+    }
+
+    function matchesLength(domain, { operator, value }) {
+      const len = domain.length;
+      switch (operator) {
+        case "":  return len === value;
+        case "!": return len !== value;
+        case "<": return len < value;
+        case ">": return len > value;
+        default:  return true;
+      }
+    }
+
     // Filter function supporting free text, agency:"", and org:"" filters.
     function filterData(query, data) {
       query = query.toLowerCase();
