@@ -194,24 +194,6 @@
     let globalData;
     let currentSuggestionIndex = -1;  // Track the current autocomplete selection
 
-    // Wrap text inside cells.
-    function wrapText(textSelection, textStr) {
-      textSelection.text("");
-      if (textStr.length <= maxCharsPerLine) {
-        textSelection.append("tspan").text(textStr);
-      } else {
-        const numLines = Math.ceil(textStr.length / maxCharsPerLine);
-        for (let i = 0; i < numLines; i++) {
-          const start = i * maxCharsPerLine;
-          const line = textStr.substring(start, start + maxCharsPerLine);
-          textSelection.append("tspan")
-            .attr("x", textSelection.attr("x"))
-            .attr("dy", i === 0 ? "0em" : "1.2em")
-            .text(line);
-        }
-      }
-    }
-
     // Filter function supporting free text, agency:"", and org:"" filters.
     function filterData(query, data) {
       query = query.toLowerCase();
@@ -337,16 +319,20 @@
            d3.select("#detail-card").style("display", "block");
          });
       svg.selectAll("text")
-         .data(data)
-         .enter()
-         .append("text")
-         .attr("x", (d, i) => padding + (i % numColumns) * cellWidth + cellWidth / 2)
-         .attr("y", (d, i) => padding + Math.floor(i / numColumns) * cellHeight + cellHeight / 2)
-         .attr("text-anchor", "middle")
-         .each(function(d) {
-           const textEl = d3.select(this);
-           wrapText(textEl, d.domain || "");
-         });
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", (d, i) => padding + (i % numColumns) * cellWidth + cellWidth / 2)
+        .attr("y", (d, i) => padding + Math.floor(i / numColumns) * cellHeight + cellHeight / 2)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "middle")
+        .style("font-size", d => {
+          const len = d.domain.length;
+          return len > 18 ? "10px"
+                : len > 14 ? "12px"
+                : "14px";
+        })
+        .text(d => d.domain);
     }
 
     // Build unique lists of agencies and organizations.
