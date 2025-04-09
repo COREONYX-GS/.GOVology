@@ -311,7 +311,24 @@
            tooltip.style("display", "none");
          })
          .on("click", function(event, d) {
-           d3.select("#card-title").text(d.domain);
+           const isAttributes = Object.keys(d)
+         .filter(key => key.startsWith("is_"))
+         .map(key => {
+             if (Array.isArray(d[key])) {
+              const items = d[key].join(", ");
+              return `<strong>${key}:</strong> [${items}]`;
+             } else if (typeof d[key] === "object") {
+              const words = Object.entries(d[key])
+              .map(([k, v]) => `${k} (${v})`)
+              .join(", ");
+              return `<strong>${key}:</strong> ${words}`;
+             } else {
+           return `<strong>${key}:</strong> ${d[key]}`;
+           }
+         })
+         .join("<br>");
+           d3.select("#card-title")
+         .html(`<a href="https://${d.domain}.gov" target="_blank">${d.domain}.gov</a>`);
            d3.select("#card-content").html(
              `<strong>Agency:</strong> ${d.agency}<br><strong>Organization:</strong> ${d.org}`
            );
