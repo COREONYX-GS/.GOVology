@@ -424,7 +424,8 @@
       .on("input", function(event) {
         autoInsertQuotes(event);
         const query = this.value;
-        // Check for agency filter.
+
+        // Check for filters
         const agencyMatch = query.match(/agency:"([^"]*)$/i);
         if (agencyMatch) {
           showAutocomplete("agency", agencyMatch[1]);
