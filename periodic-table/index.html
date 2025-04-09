@@ -559,7 +559,7 @@ function applyURLParameters() {
 
   // Example callback for the "About" item.
   d3.select("#menu-about").on("click", function() {
-    alert("This project visualizes government domains using D3.js.\n\nIt features a grid view (Cubes) and, soon, a Sankey view to show data flows. Visit GitHub for more info.");
+    alert("This project visualizes government domains.\n\nSupported search syntax includes:\n- agency:\"...\" (e.g., agency:\"Department of Energy\")\n- org:\"...\" (e.g., org:\"Some Org\")\n- is:... (e.g., is:acronym)\n\nNote: Quotation marks are required for multi-word values.\n\nPlease visit GitHub for more info or to suggest updates.");
     d3.select("#hamburger-menu").style("display", "none");
   });
 
