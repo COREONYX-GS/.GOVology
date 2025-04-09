@@ -279,6 +279,8 @@
          .append("rect")
          .attr("class", "cell")
          .attr("x", (d, i) => padding + (i % numColumns) * cellSize)
+         .attr("rx", 8)
+         .attr("ry", 8)
          .attr("width", cellSize)
          .attr("height", cellSize)
          .on("mouseover", function(event, d) {
