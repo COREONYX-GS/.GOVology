@@ -223,6 +223,7 @@
       const agencyTokens = [];
       const orgTokens = [];
       const isTokens = [];
+      const lengthTokens = []
       
       tokens.forEach(token => {
         const cleaned = token.replace(/"/g, '');
@@ -239,6 +240,10 @@
         else if (cleaned.startsWith("is:")) {
             const val = cleaned.slice("is:".length).trim();
             if (val) isTokens.push(val);
+        }
+        else if (cleaned.startsWith("length:")) {
+            const val = cleaned.slice("length:".length).trim();
+            if (val) lengthTokens.push(val);
         }
         else {
           freeTokens.push(cleaned);
