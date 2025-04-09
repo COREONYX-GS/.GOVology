@@ -536,6 +536,20 @@ function applyURLParameters() {
     }
   }
 
+  function updateSearchURL() {
+    const query = d3.select("#search-input").property("value");
+    const url = new URL(window.location.href);
+    if (query.trim() === "") {
+      // Remove the search parameter if the query is empty.
+      url.searchParams.delete("search");
+    } else {
+      // Set the search parameter to the input value.
+      url.searchParams.set("search", query);
+    }
+    // Update the URL without reloading the page.
+    window.history.replaceState({}, '', url);
+  }
+
   /// Toggle hamburger menu when clicking the icon.
   d3.select("#hamburger-menu-icon").on("click", function() {
     const menu = d3.select("#hamburger-menu");
