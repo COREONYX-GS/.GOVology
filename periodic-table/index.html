@@ -399,6 +399,7 @@
       globalData = data;
       buildUniqueLists(globalData);
       drawGrid(globalData);
+      applyURLParameters();
     }).catch(error => {
       console.error("Error loading data:", error);
     });
@@ -410,6 +411,39 @@
     d3.select("#close-card").on("click", () => {
       d3.select("#detail-card").style("display", "none");
     });
+
+    // Check for query parameters on page load and trigger a search accordingly.
+function applyURLParameters() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let query = "";
+    
+    // If a 'search' parameter is provided, use it as the starting query.
+    const searchParam = urlParams.get("search");
+    if (searchParam) {
+      query += searchParam;
+    }
+    
+    // If an 'agency' parameter is provided, append it with the proper syntax.
+    const agencyParam = urlParams.get("agency");
+    if (agencyParam) {
+      // If query isn’t empty, add a space first.
+      query += (query ? " " : "") + `agency:"${agencyParam}"`;
+    }
+    
+    // Similarly, check for an 'org' parameter.
+    const orgParam = urlParams.get("org");
+    if (orgParam) {
+      query += (query ? " " : "") + `org:"${orgParam}"`;
+    }
+    
+    // If the query is not empty, set the search input's value and trigger filtering.
+    if (query.trim() !== "") {
+      d3.select("#search-input").property("value", query.trim());
+      // Trigger the input event to update the grid based on the query.
+      d3.select("#search-input").dispatch("input");
+    }
+  }
+
   </script>
 </body>
 </html>
