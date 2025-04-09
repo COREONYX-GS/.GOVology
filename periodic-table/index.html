@@ -197,6 +197,8 @@
     function parseLengthFilter(input) {
       const match = input.match(/^([!<>]?)(\d+)$/);
       if (!match) return null;
+      // FIXME: This regexp needs to treat operator as optional 
+      // FIXME: Can you set default values in regexp? like if operator is "" use "="
       return {
         operator: match[1],
         value: parseInt(match[2], 10)
