@@ -301,7 +301,7 @@
          })
          .join("<br>");
            tooltip.style("display", "block")
-                  .html(`<strong>${d.domain}</strong><br>Agency: ${d.agency}<br>Organization: ${d.org}`);
+          .html(`<strong>${d.domain}.gov</strong><br>Agency: ${d.agency}<br>Organization: ${d.org}<br>${isAttributes}`);
          })
          .on("mousemove", function(event) {
            tooltip.style("left", (event.pageX + 10) + "px")
