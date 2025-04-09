@@ -446,6 +446,36 @@ function applyURLParameters() {
     }
   }
 
+  /// Toggle hamburger menu when clicking the icon.
+  d3.select("#hamburger-menu-icon").on("click", function() {
+    const menu = d3.select("#hamburger-menu");
+    const currentDisplay = menu.style("display");
+    menu.style("display", currentDisplay === "none" || currentDisplay === "" ? "block" : "none");
+  });
+
+  // Example callback for the "About" item.
+  d3.select("#menu-about").on("click", function() {
+    alert("This project visualizes government domains using D3.js.\n\nIt features a grid view (Cubes) and, soon, a Sankey view to show data flows. Visit GitHub for more info.");
+    d3.select("#hamburger-menu").style("display", "none");
+  });
+
+  // Callback for the "Sankey" menu item.
+  d3.select("#menu-sankey").on("click", function() {
+    if (globalData) {
+      drawSankey(globalData);
+    }
+    d3.select("#hamburger-menu").style("display", "none");
+  });
+
+  // Callback for the "Cubes" menu item (resets to current grid view).
+  d3.select("#menu-cubes").on("click", function() {
+    if (globalData) {
+      drawGrid(globalData);
+    }
+    d3.select("#hamburger-menu").style("display", "none");
+  });
+
+
   </script>
 </body>
 </html>
