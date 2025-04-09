@@ -105,6 +105,49 @@
       font-size: 14px;
     }
 
+   /* Hamburger container: fixed at top left with a reserved width */
+   #hamburger-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50px;  /* Adjust as needed */
+    background: #fff;
+    padding: 10px;
+    border-right: 1px solid #ccc;
+    z-index: 3100;
+    box-sizing: border-box;
+   }
+
+   /* Hamburger icon styling (stays the same) */
+   #hamburger-menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+   }
+
+   /* Hamburger dropdown styling (stays the same) */
+   #hamburger-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 40px;  /* Adjust based on your icon size; this positions it below the icon */
+    left: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 3200;
+   }
+
+   /* Hamburger menu link styling */
+   #hamburger-menu a {
+    display: block;
+    padding: 8px 0;
+    color: #000;
+    text-decoration: none;
+   }
+
+   #hamburger-menu a:hover {
+    background: #ddd;
+   }
+
    /* Adjust the search container so it doesn’t overlap the hamburger container */
    #search-container {
     position: fixed;
