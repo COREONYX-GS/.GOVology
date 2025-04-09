@@ -207,6 +207,7 @@
       const len = domain.length;
       switch (operator) {
         case "":  return len === value;
+        case "=":  return len === value;
         case "!": return len !== value;
         case "<": return len < value;
         case ">": return len > value;
