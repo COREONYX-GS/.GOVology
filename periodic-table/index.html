@@ -104,31 +104,40 @@
       padding: 5px 10px;
       font-size: 14px;
     }
-    /* Search container styling */
-    #search-container {
-      flex: 1;
-    }
 
-    /* Search input styling */
-    #search-input {
-      width: 100%;
-      padding: 8px;
-      font-size: 16px;
-    }
-      
-    /* Autocomplete dropdown styling */
-    #autocomplete-container {
-      position: absolute;
-      top: 50px; /* Adjust if needed based on header height */
-      left: 10px;
-      background: #fff;
-      border: 1px solid #ccc;
-      width: calc(100% - 20px);
-      max-height: 200px;
-      overflow-y: auto;
-      display: none;
-      z-index: 3200;
-    }
+   /* Adjust the search container so it doesn’t overlap the hamburger container */
+   #search-container {
+    position: fixed;
+    top: 0;
+    left: 60px; /* Offset by the hamburger container width plus a little margin */
+    width: calc(100% - 60px); /* Adjust width accordingly */
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+    z-index: 3000;
+    padding: 10px;
+    box-sizing: border-box;
+   }
+
+   /* Search input styling remains the same */
+   #search-input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+   }
+
+   /* Autocomplete dropdown styling remains unchanged */
+   #autocomplete-container {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    width: calc(100% - 20px);
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    z-index: 3200;
+   }
 
   </style>
 </head>
