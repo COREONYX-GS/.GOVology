@@ -330,7 +330,7 @@
            d3.select("#card-title")
          .html(`<a href="https://${d.domain}.gov" target="_blank">${d.domain}.gov</a>`);
            d3.select("#card-content").html(
-             `<strong>Agency:</strong> ${d.agency}<br><strong>Organization:</strong> ${d.org}`
+         `<strong>Agency:</strong> ${d.agency}<br><strong>Organization:</strong> ${d.org}<br>${isAttributes}`
            );
            d3.select("#detail-card").style("display", "block");
          });
