@@ -31,8 +31,8 @@
     z-index: 3200;
 }
 .autocomplete-item {
-  padding: 8px;
-  cursor: pointer;
+    padding: 8px;
+    cursor: pointer;
 }
 .autocomplete-item:hover,
 .autocomplete-item.active {
