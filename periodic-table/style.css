@@ -18,16 +18,17 @@
 }
 /* Autocomplete dropdown styling */
 #autocomplete-container {
-  position: absolute;
-  top: 50px; /* below the search bar */
-  left: 10px;
-  background: #fff;
-  border: 1px solid #ccc;
-  width: calc(100% - 20px);
-  max-height: 200px;
-  overflow-y: auto;
-  display: none;
-  z-index: 3200;
+    position: absolute;
+    top: 50px; /* below the search bar */
+    left: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* Added for consistency */
+    width: calc(100% - 20px);
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    z-index: 3200;
 }
 .autocomplete-item {
   padding: 8px;
