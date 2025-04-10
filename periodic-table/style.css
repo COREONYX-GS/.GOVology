@@ -68,15 +68,15 @@ text {
 
 /* Tooltip styling */
 #tooltip {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid #333;
-  padding: 10px;
-  font-size: 14px;
-  pointer-events: none;
-  display: none;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #333;
+    padding: 10px;
+    font-size: 14px;
+    pointer-events: none;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 /* Detail Card (Modal) styling */
 #detail-card {
