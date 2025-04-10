@@ -36,7 +36,7 @@
 }
 .autocomplete-item:hover,
 .autocomplete-item.active {
-  background: #ddd;
+    background: #ddd;
 }
 /* Reset body margins */
 body {
