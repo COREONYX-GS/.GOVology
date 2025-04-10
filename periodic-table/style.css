@@ -59,11 +59,11 @@ svg {
 
 /* Text styling */
 text {
-  pointer-events: none;
-  font-size: 14px;
-  fill: #000;
-  font-weight: bold;  
-  dominant-baseline: middle;
+    pointer-events: none;
+    font-size: 14px;
+    fill: #000;
+    font-weight: bold;  
+    dominant-baseline: middle;
 }
 
 /* Tooltip styling */
