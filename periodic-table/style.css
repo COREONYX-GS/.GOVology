@@ -40,8 +40,8 @@
 }
 /* Reset body margins */
 body {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 /* Push the grid down so it's not overlapped by the search bar */
 svg {
