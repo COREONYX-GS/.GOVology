@@ -1,0 +1,144 @@
+/* Fixed search bar styling */
+#search-container {
+  position: fixed;
+  top: 0;
+  left: 50px; /* Offset by the hamburger container width plus a little margin */
+  right: 0;
+  width: calc(100% - 96px); /* Adjust width accordingly */
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+  z-index: 3000;
+  padding: 10px;
+  box-sizing: border-box;
+}
+#search-input {
+  padding: 8px;
+  font-size: 16px;
+  width: 100%;
+}
+/* Autocomplete dropdown styling */
+#autocomplete-container {
+  position: absolute;
+  top: 50px; /* below the search bar */
+  left: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  width: calc(100% - 20px);
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+  z-index: 3200;
+}
+.autocomplete-item {
+  padding: 8px;
+  cursor: pointer;
+}
+.autocomplete-item:hover,
+.autocomplete-item.active {
+  background: #ddd;
+}
+/* Reset body margins */
+body {
+  margin: 0;
+  padding: 0;
+}
+/* Push the grid down so it's not overlapped by the search bar */
+svg {
+  margin-top: 60px;
+}
+/* Basic styling for the cells */
+.cell {
+  stroke: #333;
+  fill: #cfd8dc; /* light blue-grey */
+  transition: fill 0.3s;
+}
+.cell:hover {
+  fill: #538fad; /* medium steel blue */
+}
+
+/* Text styling */
+text {
+  pointer-events: none;
+  font-size: 14px;
+  fill: #000;
+  font-weight: bold;  
+  dominant-baseline: middle;
+}
+
+/* Tooltip styling */
+#tooltip {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #333;
+  padding: 10px;
+  font-size: 14px;
+  pointer-events: none;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+/* Detail Card (Modal) styling */
+#detail-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 2px solid #333;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 2000;
+  max-width: 90%;
+}
+#detail-card h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+#detail-card p {
+  font-size: 16px;
+}
+#detail-card button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+/* Hamburger container: fixed at top left with a reserved width */
+#hamburger-container {
+position: fixed;
+top: 0;
+left: 0;
+width: 50px;  /* Adjust as needed */
+background: #fff;
+padding: 10px;
+border-right: 1px solid #ccc;
+z-index: 3100;
+box-sizing: border-box;
+}
+/* Hamburger icon styling (stays the same) */
+#hamburger-menu-icon {
+font-size: 24px;
+cursor: pointer;
+}
+/* Hamburger dropdown styling (stays the same) */
+#hamburger-menu {
+display: none; /* Hidden by default */
+position: absolute;
+top: 40px;  /* Adjust based on your icon size; this positions it below the icon */
+left: 0;
+background: #fff;
+border: 1px solid #ccc;
+padding: 10px;
+z-index: 3200;
+}
+/* Hamburger menu link styling */
+#hamburger-menu a {
+display: block;
+padding: 8px 0;
+color: #000;
+text-decoration: none;
+}
+#hamburger-menu a:hover {
+background: #ddd;
+}
