@@ -99,9 +99,9 @@ text {
     font-size: 16px;
 }
 #detail-card button {
-  margin-top: 10px;
-  padding: 5px 10px;
-  font-size: 14px;
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
 }
 
 /* Hamburger container: fixed at top left with a reserved width */
