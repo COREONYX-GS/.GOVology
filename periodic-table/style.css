@@ -54,7 +54,7 @@ svg {
     fill: #cfd8dc; /* light blue-grey */
 }
 .cell:hover {
-  fill: #538fad; /* medium steel blue */
+    fill: #538fad; /* medium steel blue */
 }
 
 /* Text styling */
