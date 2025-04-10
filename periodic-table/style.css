@@ -45,7 +45,7 @@ body {
 }
 /* Push the grid down so it's not overlapped by the search bar */
 svg {
-  margin-top: 60px;
+    margin-top: 60px;
 }
 /* Basic styling for the cells */
 .cell {
