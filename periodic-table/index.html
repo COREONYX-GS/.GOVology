@@ -267,6 +267,10 @@
         const freeMatch = freeTokens.every(token => domain.includes(token));
         const agencyMatch = agencyTokens.length === 0 || agencyTokens.some(token => agency.includes(token));
         const orgMatch = orgTokens.length === 0 || orgTokens.some(token => org.includes(token));
+        //const lenMatch = lengthTokens.every(token => {
+        //  const parsed = parseLengthFilter(token);
+        //  return parsed ? matchesLength(domain, parsed) : true;
+        //});
         return freeMatch && agencyMatch && orgMatch && isMatch;
       });
     }
