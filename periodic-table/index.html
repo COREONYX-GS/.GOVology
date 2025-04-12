@@ -514,9 +514,9 @@
         container.style("display", "none");
         currentSuggestionIndex = -1;
         return;
-      }
-      container.style("display", "block");
-      container.html(""); // Clear previous suggestions.
+      } // note, because of the 'return' there is an implicit "else" { } block for the code below
+      container.style("display", "block"); // Show Autocomplete
+      container.html(""); // Clear previous suggestions
       suggestions.forEach((suggestion, index) => {
         container.append("div")
           .attr("class", "autocomplete-item")
