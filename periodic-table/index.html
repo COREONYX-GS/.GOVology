@@ -327,9 +327,7 @@
     }
 
     // Draw or redraw grid based on provided data.
-    function drawGrid(data) {
-      updateSearchURL(); // Update the URL based on the current query.
-
+    function drawGrid(drawData) {
       const svg = d3.select("#visualization");
       svg.selectAll("*").remove();
       const availableWidth = window.innerWidth - (padding * 2);
