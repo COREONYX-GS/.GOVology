@@ -316,9 +316,9 @@
         const isMatch = isTokens.every(token => {
           const value = d[`is_${token}`];
           if (typeof value === "object" && value !== null) {
-            return Object.keys(value).length > 0; // Check if the object has keys
+            return Object.keys(value).length > 0; // Check if the object has any entries
           }
-          return !!value; // Handle non-object values
+          return Boolean(value); // Handle non-object values e.g. `!!value`;
         });
         
         const lenMatch = lengthTokens.every(token => matchesLengthFilter(domain, token)); // FIXME: Note this parses the regexp every time, could optimize if needed
