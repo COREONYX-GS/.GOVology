@@ -509,6 +509,11 @@
         input.value = value;
       }
     }
+    // Callback for the "About" menu item
+    d3.select("#menu-about").on("click", function() {
+      alert("Visualize federal .gov domains, visit GitHub for details or sugestions.\n\nSupported search syntax includes:\n    - agency:\"...\" (e.g., agency:\"Department of Energy\")\n    - org:\"...\" (e.g., org:\"Energy Information Administration\")\n    - len: ... [><!]?(\\d) (e.g., :>4 or :<6 or :5 or :!8 or 9)\n    - is: ... (e.g., is:acronym, is:agency, is:words, is:noun, is:verb)\n\nNote: Quotation marks are required for multi-word values.");
+      d3.select("#hamburger-menu").style("display", "none");
+    });
 
     const searchInput = d3.select("#search-input");
     searchInput
@@ -602,13 +607,6 @@
     const currentDisplay = menu.style("display");
     menu.style("display", currentDisplay === "none" || currentDisplay === "" ? "block" : "none");
   });
-
-  // Example callback for the "About" item.
-  d3.select("#menu-about").on("click", function() {
-    alert("This project visualizes government domains.\n\nSupported search syntax includes:\n- agency:\"...\" (e.g., agency:\"Department of Energy\")\n- org:\"...\" (e.g., org:\"Some Org\")\n- is:... (e.g., is:acronym)\n\nNote: Quotation marks are required for multi-word values.\n\nPlease visit GitHub for more info or to suggest updates.");
-    d3.select("#hamburger-menu").style("display", "none");
-  });
-
   // Callback for the "Cubes" menu item (resets to current grid view).
   d3.select("#menu-cubes").on("click", function() {
     if (globalData) {
