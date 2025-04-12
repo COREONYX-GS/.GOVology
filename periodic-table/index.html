@@ -275,8 +275,14 @@
       const isTokens = [];
       const lengthTokens = []
       
-      tokens.forEach(token => {
+      //console.log("Filter Query: " + query);
+      //console.log("Filter Tokens: " + tokens);
+
+      tokens.forEach(token => { // parse tokens and add them to filters
         const cleaned = token.replace(/"/g, '');
+        // Or remove only the surrounding quotes (if any) rather than all quotes.
+        // const cleaned = token.replace(/^"|"$/g, ''); // Note, this probably isn't necessary since I don't think any domains (or data) have quotes in them 
+
         if (cleaned.startsWith("agency:")) {
           const val = cleaned.slice("agency:".length).trim();
           if (val) agencyTokens.push(val);
