@@ -334,7 +334,7 @@
       svg.selectAll("*").remove();
       const availableWidth = window.innerWidth - (padding * 2);
       const numColumns = Math.floor(availableWidth / cellWidth);
-      const numRows = Math.ceil(data.length / numColumns);
+      const numRows = Math.ceil(drawData.length / numColumns);
       const svgWidth = (cellWidth * numColumns) + padding * 2;
       const svgHeight = (cellHeight * numRows) + padding * 2;
       svg.attr("width", svgWidth).attr("height", svgHeight);
