@@ -221,6 +221,16 @@
     let globalData;
     let currentSuggestionIndex = -1;  // Track the current autocomplete selection
 
+    // Load data and initialize.
+    d3.json("../data/gov-elements.json").then(data => {
+      globalData = data;
+      buildUniqueLists(globalData);
+      applyURLParameters();
+      applyFiltersAndRedraw();
+    }).catch(error => {
+      console.error("Error loading data:", error);
+    });
+
     function parseLengthFilter(input) {
       const match = input.match(/^([!<>]?)(\d+)$/);
       if (!match) {
@@ -540,15 +550,7 @@
       }
     });
 
-    // Load data and initialize.
-    d3.json("../data/gov-elements.json").then(data => {
-      globalData = data;
-      buildUniqueLists(globalData);
-      drawGrid(globalData);
-      applyURLParameters();
-    }).catch(error => {
-      console.error("Error loading data:", error);
-    });
+
 
     window.addEventListener("resize", () => {
       if (globalData) drawGrid(globalData);
