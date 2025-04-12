@@ -248,13 +248,7 @@
           searchInput.property("value", query);
           searchInput.dispatch("input");
       }
-      // FIXME: Can you set default values in regexp? like if operator is "" use "="
-      // FIXME: should we return { operator: null, value: null} if no match?
-      return {
-        operator: match[1],
-        value: parseInt(match[2], 10)
-      };
-    }
+    }  
 
       }
     
