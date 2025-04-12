@@ -582,6 +582,14 @@
           }
         }
       });
+    // Callback for the "Cubes" menu item (resets to default grid view) (not used yet)
+    d3.select("#menu-cubes").on("click", function() {
+      if (globalData) {
+        d3.select("#search-input").property("value", "").dispatch("input");
+        drawGrid(globalData);
+      }
+      d3.select("#hamburger-menu").style("display", "none");
+    });
 
     // Close autocomplete if clicking outside the search input
     d3.select("body").on("click", function(event) {
@@ -607,15 +615,6 @@
     const currentDisplay = menu.style("display");
     menu.style("display", currentDisplay === "none" || currentDisplay === "" ? "block" : "none");
   });
-  // Callback for the "Cubes" menu item (resets to current grid view).
-  d3.select("#menu-cubes").on("click", function() {
-    if (globalData) {
-      drawGrid(globalData);
-    }
-    d3.select("#hamburger-menu").style("display", "none");
-  });
-
-
     ///////////////////////////////////////////////////////////////////////////////////////////
   </script>
 </body>
