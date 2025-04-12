@@ -308,6 +308,11 @@
         const domain = (d.domain || "").toLowerCase();
         const agency = (d.agency || "").toLowerCase();
         const org = (d.org || "").toLowerCase();
+
+        const freeMatch = freeTokens.every(token => domain.includes(token)); // FIXME: Consider if this should search org and agency as well
+        const agencyMatch = agencyTokens.length === 0 || agencyTokens.some(token => agency.includes(token));
+        const orgMatch = orgTokens.length === 0 || orgTokens.some(token => org.includes(token));            
+
         const isMatch = isTokens.every(token => {
           const value = d[`is_${token}`];
           if (typeof value === "object" && value !== null) {
@@ -315,14 +320,9 @@
           }
           return !!value; // Handle non-object values
         });
-        const freeMatch = freeTokens.every(token => domain.includes(token));
-        const agencyMatch = agencyTokens.length === 0 || agencyTokens.some(token => agency.includes(token));
-        const orgMatch = orgTokens.length === 0 || orgTokens.some(token => org.includes(token));
-        //const lenMatch = lengthTokens.every(token => {
-        //  const parsed = parseLengthFilter(token);
-        //  return parsed ? matchesLength(domain, parsed) : true;
-        //});
-        return freeMatch && agencyMatch && orgMatch && isMatch;
+        
+        const lenMatch = lengthTokens.every(token => matchesLengthFilter(domain, token)); // FIXME: Note this parses the regexp every time, could optimize if needed
+        return freeMatch && agencyMatch && orgMatch && isMatch && lenMatch;
       });
     }
 
