@@ -239,10 +239,6 @@
       console.error("Error loading data:", error);
     });
 
-    function parseLengthFilter(input) {
-      const match = input.match(/^([!<>]?)(\d+)$/);
-      if (!match) {
-        return { operator: "", value: NaN };
       }
       // FIXME: Can you set default values in regexp? like if operator is "" use "="
       // FIXME: should we return { operator: null, value: null} if no match?
