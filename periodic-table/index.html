@@ -383,7 +383,7 @@
               if (Array.isArray(d[key])) {
               const items = d[key].join(", ");
               return `<strong>${key}:</strong> [${items}]`;
-             } else if (typeof d[key] === "object") {
+              } else if (typeof d[key] === "object") {
               const words = Object.entries(d[key])
               .map(([k, v]) => `${k} (${v})`)
               .join(", ");
