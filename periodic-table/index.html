@@ -304,7 +304,7 @@
         }
       });
       
-      return data.filter(d => {
+      return data.filter(d => { // Compare lower case values
         const domain = (d.domain || "").toLowerCase();
         const agency = (d.agency || "").toLowerCase();
         const org = (d.org || "").toLowerCase();
