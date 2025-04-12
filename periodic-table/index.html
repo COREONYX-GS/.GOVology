@@ -509,7 +509,7 @@
       } else if (filterType === "org") {
         suggestions = uniqueOrgs.filter(o => o.toLowerCase().includes(partial.toLowerCase()));
       }
-      if (suggestions.length === 0) {
+      if (suggestions.length === 0) { // if no matching suggestions, hide the container
         container.style("display", "none");
         currentSuggestionIndex = -1;
         return;
