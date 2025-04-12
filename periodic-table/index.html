@@ -448,6 +448,7 @@
 
     ////////////////////////////////// Primary UI Event Code //////////////////////////////////
     // This is the main function to update the grid based on the search query
+    d3.select("#search-input").on("input", function(event) {
       let query = this.value;
 
       // Globally auto-inject quotes for tokens that don’t already start with a quote
@@ -459,6 +460,90 @@
       // Update the input field with the revised query.
       event.target.value = query; // FIXME: This updates search-input even if there are no changes to query, could be optimized probably
 
+      // Split the query into tokens to extract the one that is being actively edited
+      const regex = /(?:^|\s)((?:[A-Za-z]+:"(?:[^"]*(?:"|$))|\S+))$/i; // thanks ChatGPT - feels a little hacky but it works
+      const tokens = query.match(regex) || [];
+      // const tokens = query.match(/(?:[^\s"]+|"[^"]*")+/g) || []; // Same as below - won't work if filter is unfinished (not fully quotes) with spaces in term
+      //const tokens = query.split(/\s+/); // Won't work for `agency:"Department of E` i.e. with a space
+      const lastToken = tokens.length > 0 ? tokens[tokens.length - 1] : '';
+
+      //console.log("Input Query: " + query);
+      //console.log("Input Tokens: " + tokens);
+      //console.log("Input Last Token: " + lastToken);
+
+      // Check if autocomplete will help here - for agency and org values
+      const agencyMatch = lastToken.match(/^agency:"([^"]*)$/i);
+      const orgMatch = lastToken.match(/^org:"([^"]*)$/i);
+      if (agencyMatch) { // Check if the active token is an incomplete agency filter.
+          showAutocomplete("agency", agencyMatch[1]);
+      }
+      else if (orgMatch) {
+          showAutocomplete("org", orgMatch[1]);
+      }
+      else {
+        // If none are viable, hide autocomplete suggestions
+        d3.select("#autocomplete-container").style("display", "none");
+        currentSuggestionIndex = -1;
+      }
+      applyFiltersAndRedraw();
+  }); // end input event handler
+
+    // This handles the keyboard events for navigating the autocomplete suggestions
+    d3.select("#search-input").on("keydown", function(event) {
+      const container = d3.select("#autocomplete-container");
+      
+      if (container.style("display") !== "none") { // Only use special keys when navigating AutoComplete Dialogue
+          const suggestions = container.selectAll(".autocomplete-item");
+
+          if (event.key === "Escape") {
+              container.style("display", "none");
+              currentSuggestionIndex = -1;
+              event.preventDefault();
+          }
+          else if ( (event.key === "Tab" || event.key === "Enter") && currentSuggestionIndex !== -1) {
+              const selectedSuggestion = suggestions.filter((d, i) => i === currentSuggestionIndex).text();
+              if (selectedSuggestion) {
+                  let current = d3.select(this).property("value");
+                  let filterType = "";
+
+                  if (/agency:"[^"]*$/.test(current)) {
+                      filterType = "agency";
+                  }
+                  else if (/org:"[^"]*$/.test(current)) {
+                      filterType = "org";
+                  }
+                  if (filterType) {
+                      completeFilter(filterType, selectedSuggestion);
+                      // FIXME: Does this event need to be triggered or will it be automatic?
+                      d3.select("#search-input").dispatch("input");
+                      event.preventDefault();
+                  }
+              }
+              // I think sending 'input' event should be only if filter is complted
+              // I also think event.preventDefault(); should be only if filter is completed
+          }
+          if (event.key === "ArrowDown") {
+              const count = suggestions.size();
+              currentSuggestionIndex = (currentSuggestionIndex + 1) % count;
+              updateActiveSuggestion(suggestions, currentSuggestionIndex);
+
+              // Scroll down if necessary
+              const activeItem = suggestions.filter((d, i) => i === currentSuggestionIndex).node();
+              if (activeItem) { activeItem.scrollIntoView({ block: "nearest" }); }
+              event.preventDefault();
+          }
+          else if (event.key === "ArrowUp") {
+              const count = suggestions.size();
+              currentSuggestionIndex = (currentSuggestionIndex - 1 + count) % count;
+              updateActiveSuggestion(suggestions, currentSuggestionIndex);
+
+              // Scroll up if necessary
+              const activeItem = suggestions.filter((d, i) => i === currentSuggestionIndex).node();
+              if (activeItem) { activeItem.scrollIntoView({ block: "nearest" }); }
+              event.preventDefault();
+          }
+      } // end conditionals for auto-complete dialog box
+    }); // end keydown event handler
     ///////////////////////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////// Autocomplete Support Code ////////////////////////////////
@@ -552,10 +637,6 @@
       d3.select("#hamburger-menu").style("display", "none");
     });
 
-    const searchInput = d3.select("#search-input");
-    searchInput
-      .on("input", function(event) {
-        const query = this.value;
     // Callback for the "Sankey" menu item (not implemented yet)
     d3.select("#menu-sankey").on("click", function() {
       if (globalData) {
@@ -565,59 +646,6 @@
       d3.select("#hamburger-menu").style("display", "none");
     });
 
-        // Check for filters
-        const agencyMatch = query.match(/agency:"([^"]*)$/i);
-        if (agencyMatch) {
-          showAutocomplete("agency", agencyMatch[1]);
-        } else {
-          const orgMatch = query.match(/org:"([^"]*)$/i);
-          if (orgMatch) {
-            showAutocomplete("org", orgMatch[1]);
-          } else {
-            d3.select("#autocomplete-container").style("display", "none");
-            currentSuggestionIndex = -1;
-          }
-        }
-        const filteredData = query.trim() === ""
-          ? globalData
-          : filterData(query, globalData);
-        drawGrid(filteredData);
-      })
-      .on("keydown", function(event) {
-        const container = d3.select("#autocomplete-container");
-        if (container.style("display") !== "none") {
-          const suggestions = container.selectAll(".autocomplete-item");
-          if (event.key === "ArrowDown") {
-            const count = suggestions.size();
-            currentSuggestionIndex = (currentSuggestionIndex + 1) % count;
-            updateActiveSuggestion(suggestions, currentSuggestionIndex);
-            event.preventDefault();
-          } else if (event.key === "ArrowUp") {
-            const count = suggestions.size();
-            currentSuggestionIndex = (currentSuggestionIndex - 1 + count) % count;
-            updateActiveSuggestion(suggestions, currentSuggestionIndex);
-            event.preventDefault();
-          } else if (event.key === "Enter" || event.key === "Tab") {
-            if (currentSuggestionIndex !== -1) {
-              const firstSuggestion = suggestions.filter((d, i) => i === currentSuggestionIndex).text();
-              if (firstSuggestion) {
-                // Determine filter type based on current query.
-                let current = d3.select(this).property("value");
-                let filterType = "";
-                if (/agency:"[^"]*$/.test(current)) {
-                  filterType = "agency";
-                } else if (/org:"[^"]*$/.test(current)) {
-                  filterType = "org";
-                }
-                if (filterType) {
-                  completeFilter(filterType, firstSuggestion);
-                  event.preventDefault();
-                }
-              }
-            }
-          }
-        }
-      });
     // Callback for the "Cubes" menu item (resets to default grid view) (not used yet)
     d3.select("#menu-cubes").on("click", function() {
       if (globalData) {
