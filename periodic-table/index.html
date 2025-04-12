@@ -464,6 +464,7 @@
     function showAutocomplete(filterType, partial) {
       const container = d3.select("#autocomplete-container");
       let suggestions = [];
+
       if (filterType === "agency") {
         suggestions = uniqueAgencies.filter(a => a.toLowerCase().includes(partial.toLowerCase()));
       } else if (filterType === "org") {
