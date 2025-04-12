@@ -443,6 +443,9 @@
       // Update the input field with the revised query.
       event.target.value = query; // FIXME: This updates search-input even if there are no changes to query, could be optimized probably
 
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////// Autocomplete Support Code ////////////////////////////////
     // Build unique lists of agencies and organizations.
     function buildUniqueLists(data) { // FIXME: Small bug that the "auto complete" might use Unique values from the Global Data that aren't part of a filtered dataset
       const agencies = new Set();
