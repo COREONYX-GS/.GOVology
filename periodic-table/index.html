@@ -526,7 +526,7 @@
           });
       });
       // Reset selection index when new suggestions are shown.
-      currentSuggestionIndex = -1;
+      currentSuggestionIndex = -1; // FIXME: Does this need to be reset here, or should it be above when suggestions = [] // theory it's better here because auto compelte could pop in/out
     }
     ///////////////////////////////////////////////////////////////////////////////////////////
 
