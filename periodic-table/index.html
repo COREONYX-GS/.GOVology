@@ -469,6 +469,13 @@
 
     }
 
+    // Helper function to update the visual highlight of autocomplete items.
+    function updateActiveSuggestion(suggestions, index) {
+      suggestions.each(function(d, i) {
+        d3.select(this).classed("active", i === index);
+      });
+    }  
+
     // Show autocomplete suggestions for a given filter type ("agency" or "org")
     function showAutocomplete(filterType, partial) {
       const container = d3.select("#autocomplete-container");
@@ -500,12 +507,6 @@
     }
     ///////////////////////////////////////////////////////////////////////////////////////////
 
-    // Helper function to update the visual highlight of autocomplete items.
-    function updateActiveSuggestion(suggestions, index) {
-      suggestions.each(function(d, i) {
-        d3.select(this).classed("active", i === index);
-      });
-    }
     //////////////////////// Hamburger Menu and Ancellary Support Code ////////////////////////
     // Redraw the visualization when / if the window is resized
     window.addEventListener("resize", () => {
