@@ -570,7 +570,7 @@
         }
       });
 
-    // Close autocomplete if clicking outside the search input.
+    // Close autocomplete if clicking outside the search input
     d3.select("body").on("click", function(event) {
       if (event.target.id !== "search-input") {
         d3.select("#autocomplete-container").style("display", "none");
