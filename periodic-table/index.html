@@ -295,8 +295,8 @@
             const val = cleaned.slice("is:".length).trim();
             if (val) isTokens.push(val);
         }
-        else if (cleaned.startsWith("length:")) {
-            const val = cleaned.slice("length:".length).trim();
+        else if (cleaned.startsWith("len:")) {
+            const val = cleaned.slice("len:".length).trim();
             if (val) lengthTokens.push(val);
         }
         else {
