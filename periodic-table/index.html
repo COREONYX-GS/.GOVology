@@ -252,16 +252,25 @@
       };
     }
 
-    function matchesLength(domain, { operator, value }) {
-      const len = domain.length;
-      switch (operator) {
-        case "":  return len === value;
-        case "=":  return len === value;
-        case "!": return len !== value;
-        case "<": return len < value;
-        case ">": return len > value;
-        default:  return false;
       }
+    
+    // Helper function for matching based on domain name length
+    function matchesLengthFilter(domain, filter) {
+        const match = filter.match(/^([!<>]?)(\d+)$/);
+        if (!match) { return false; }
+        
+        const len = domain.length;
+        const operator = match[1];
+        const value = parseInt(match[2], 10);
+
+        switch (operator) {
+          case "":  return len === value;
+          case "=":  return len === value; // Not supported by regexp but added just in case we expand
+          case "!": return len !== value;
+          case "<": return len < value;
+          case ">": return len > value;
+          default:  return false;
+        }
     }
 
     // Filter function supporting free text, agency:"", and org:"" filters.
