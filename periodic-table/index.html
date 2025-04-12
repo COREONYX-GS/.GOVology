@@ -474,6 +474,22 @@
       uniqueOrgs = Array.from(orgs);
     } // FIXME: Could rework this to re-filter each time but that seems unnecessary
 
+    // Complete the filter token using the provided suggestion.
+    function completeFilter(filterType, suggestion) {
+      // Hide the autocomplete container and reset the selection index.
+      d3.select("#autocomplete-container").style("display", "none");
+      currentSuggestionIndex = -1;
+
+      let current = d3.select("#search-input").property("value");
+      const regex = new RegExp(`(${filterType}:"?)([^"]*)$`, "i");
+      current = current.replace(regex, `$1${suggestion}"`);
+      
+      d3.select("#search-input").property("value", current);
+
+      // Focus in the search box and set the cursor to end
+      const inputNode = d3.select("#search-input").node();
+      inputNode.focus();
+      inputNode.setSelectionRange(current.length, current.length);
     }
 
     // Helper function to update the visual highlight of autocomplete items.
@@ -520,17 +536,6 @@
       applyFiltersAndRedraw();
     });
 
-    // Complete the filter token using the provided suggestion.
-    function completeFilter(filterType, suggestion) {
-      let current = d3.select("#search-input").property("value");
-      const regex = new RegExp(`(${filterType}:"?)([^"]*)$`, "i");
-      current = current.replace(regex, `$1${suggestion}"`);
-      d3.select("#search-input").property("value", current);
-      d3.select("#autocomplete-container").style("display", "none");
-      const filteredData = filterData(current, globalData);
-      drawGrid(filteredData);
-      currentSuggestionIndex = -1;
-    }
     // Toggle hamburger menu when clicking the icon
     d3.select("#hamburger-menu-icon").on("click", function() {
       const menu = d3.select("#hamburger-menu");
