@@ -514,6 +514,12 @@
       drawGrid(filteredData);
       currentSuggestionIndex = -1;
     }
+    // Toggle hamburger menu when clicking the icon
+    d3.select("#hamburger-menu-icon").on("click", function() {
+      const menu = d3.select("#hamburger-menu");
+      const currentDisplay = menu.style("display");
+      menu.style("display", currentDisplay === "none" || currentDisplay === "" ? "block" : "none");
+    });
 
     // Callback for the "About" menu item
     d3.select("#menu-about").on("click", function() {
@@ -611,12 +617,6 @@
     d3.select("#close-card").on("click", () => {
         d3.select("#detail-card").style("display", "none");
     });
-  /// Toggle hamburger menu when clicking the icon.
-  d3.select("#hamburger-menu-icon").on("click", function() {
-    const menu = d3.select("#hamburger-menu");
-    const currentDisplay = menu.style("display");
-    menu.style("display", currentDisplay === "none" || currentDisplay === "" ? "block" : "none");
-  });
     ///////////////////////////////////////////////////////////////////////////////////////////
   </script>
 </body>
