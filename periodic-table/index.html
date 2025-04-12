@@ -584,8 +584,9 @@
       if (globalData) drawGrid(globalData);
     });
 
+    // Close Domain Detail Modal when pop-out "Close" is clicked
     d3.select("#close-card").on("click", () => {
-      d3.select("#detail-card").style("display", "none");
+        d3.select("#detail-card").style("display", "none");
     });
   /// Toggle hamburger menu when clicking the icon.
   d3.select("#hamburger-menu-icon").on("click", function() {
