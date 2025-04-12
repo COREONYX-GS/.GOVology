@@ -239,7 +239,7 @@
       console.error("Error loading data:", error);
     });
 
-    // Decode URL parameters, set the search value, and trigger an "enter" event
+    // Decode URL parameters, set the search value, and trigger an "input" event to redraw w/ filter
     function applyURLParameters() {
       const urlParams = new URLSearchParams(window.location.search);
       const query = decodeURIComponent(urlParams.get("search") || "").trim();
