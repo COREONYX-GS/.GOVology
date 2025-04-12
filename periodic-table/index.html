@@ -523,6 +523,8 @@
           .text(suggestion)
           .on("click", () => {
             completeFilter(filterType, suggestion);
+            // FIXME: Will this "input" event happen automatically or does it need to be triggered?
+            d3.select("#search-input").dispatch("input");
           });
       });
       // Reset selection index when new suggestions are shown.
