@@ -506,7 +506,8 @@
 
       if (filterType === "agency") {
         suggestions = uniqueAgencies.filter(a => a.toLowerCase().includes(partial.toLowerCase()));
-      } else if (filterType === "org") {
+      } 
+      else if (filterType === "org") {
         suggestions = uniqueOrgs.filter(o => o.toLowerCase().includes(partial.toLowerCase()));
       }
       if (suggestions.length === 0) { // if no matching suggestions, hide the container
