@@ -300,7 +300,7 @@
             if (val) lengthTokens.push(val);
         }
         else {
-          freeTokens.push(cleaned);
+          freeTokens.push(cleaned); // Search based on free text as a token - not only in domain name (e.g. not org or agency)
         }
       });
       
