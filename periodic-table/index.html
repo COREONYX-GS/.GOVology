@@ -239,6 +239,14 @@
       console.error("Error loading data:", error);
     });
 
+    // Decode URL parameters, set the search value, and trigger an "enter" event
+    function applyURLParameters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const query = decodeURIComponent(urlParams.get("search") || "").trim();
+      if (query) {
+          const searchInput = d3.select("#search-input");
+          searchInput.property("value", query);
+          searchInput.dispatch("input");
       }
       // FIXME: Can you set default values in regexp? like if operator is "" use "="
       // FIXME: should we return { operator: null, value: null} if no match?
@@ -579,53 +587,6 @@
     d3.select("#close-card").on("click", () => {
       d3.select("#detail-card").style("display", "none");
     });
-
-    // Check for query parameters on page load and trigger a search accordingly.
-  function applyURLParameters() {
-    const urlParams = new URLSearchParams(window.location.search);
-    let query = "";
-    
-    // If a 'search' parameter is provided, use it as the starting query.
-    const searchParam = urlParams.get("search");
-    if (searchParam) {
-      query += searchParam;
-    }
-    
-    // If an 'agency' parameter is provided, append it with the proper syntax.
-    const agencyParam = urlParams.get("agency");
-    if (agencyParam) {
-      // If query isn’t empty, add a space first.
-      query += (query ? " " : "") + `agency:"${agencyParam}"`;
-    }
-    
-    // Similarly, check for an 'org' parameter.
-    const orgParam = urlParams.get("org");
-    if (orgParam) {
-      query += (query ? " " : "") + `org:"${orgParam}"`;
-    }
-    
-    // If the query is not empty, set the search input's value and trigger filtering.
-    if (query.trim() !== "") {
-      d3.select("#search-input").property("value", query.trim());
-      // Trigger the input event to update the grid based on the query.
-      d3.select("#search-input").dispatch("input");
-    }
-  }
-
-  function updateSearchURL() {
-    const query = d3.select("#search-input").property("value");
-    const url = new URL(window.location.href);
-    if (query.trim() === "") {
-      // Remove the search parameter if the query is empty.
-      url.searchParams.delete("search");
-    } else {
-      // Set the search parameter to the input value.
-      url.searchParams.set("search", query);
-    }
-    // Update the URL without reloading the page.
-    window.history.replaceState({}, '', url);
-  }
-
   /// Toggle hamburger menu when clicking the icon.
   d3.select("#hamburger-menu-icon").on("click", function() {
     const menu = d3.select("#hamburger-menu");
