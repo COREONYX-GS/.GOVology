@@ -264,6 +264,13 @@
       //window.history.pushState({}, '', url); // Use if we wanted to keep the full history (since we're updating per keystroke this seems like too much)
     }
 
+    // Main function to apply search filters and redraw the grid
+    function applyFiltersAndRedraw() {
+      const query = d3.select("#search-input").property("value").trim();
+      updateURLParameters(query); // Update the URL based on the current query
+      const drawData = query === "" ? globalData : filterData(query, globalData);  
+      drawGrid(drawData);
+    }
     
     // Helper function for matching based on domain name length
     function matchesLengthFilter(domain, filter) {
