@@ -15,6 +15,13 @@
     padding: 8px;
     font-size: 16px;
     width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* Added for better aesthetics */
+}
+#search-input:focus {
+    outline: none;
+    border-color: #538fad; /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(83, 143, 173, 0.5); /* Subtle glow effect */
 }
 /* Autocomplete dropdown styling */
 #autocomplete-container {
@@ -29,6 +36,7 @@
     overflow-y: auto;
     display: none;
     z-index: 3200;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added subtle shadow */
 }
 .autocomplete-item {
     padding: 8px;
@@ -42,6 +50,7 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif; /* Added a default font for consistency */
 }
 /* Push the grid down so it's not overlapped by the search bar */
 svg {
@@ -49,12 +58,13 @@ svg {
 }
 /* Basic styling for the cells */
 .cell {
-  transition: fill 0.3s;
     stroke: #333;
     fill: #cfd8dc; /* light blue-grey */
+    transition: fill 0.3s, transform 0.2s; /* Added smooth scaling effect */
 }
 .cell:hover {
     fill: #538fad; /* medium steel blue */
+    transform: scale(1.05); /* Slight zoom effect on hover */
 }
 
 /* Text styling */
@@ -77,6 +87,7 @@ text {
     display: none;
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    border-radius: 4px; /* Added for better aesthetics */
 }
 /* Detail Card (Modal) styling */
 #detail-card {
@@ -91,6 +102,7 @@ text {
     display: none;
     z-index: 2000;
     max-width: 90%;
+    border-radius: 8px; /* Added for a modern look */
 }
 #detail-card h2 {
     margin-top: 0;
@@ -103,6 +115,14 @@ text {
     margin-top: 10px;
     padding: 5px 10px;
     font-size: 14px;
+    background: #538fad; /* Added background color for better visibility */
+    color: #fff;
+    border: none;
+    border-radius: 4px; /* Added for consistency */
+    cursor: pointer;
+}
+#detail-card button:hover {
+    background: #41728a; /* Darker shade for hover effect */
 }
 
 /* Hamburger container: fixed at top left with a reserved width */
@@ -132,6 +152,8 @@ text {
     border: 1px solid #ccc;
     padding: 10px;
     z-index: 3200;
+    border-radius: 4px; /* Added for consistency */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added subtle shadow */
 }
 /* Hamburger menu link styling */
 #hamburger-menu a {
