@@ -250,7 +250,20 @@
       }
     }  
 
+    // Encode search parameters into URL search=...
+    function updateURLParameters(query) {
+      const url = new URL(window.location.href);
+      
+      if (query.trim() === "") { // Remove the search parameter if the query is empty
+        url.searchParams.delete("search");
       }
+      else { // Set the search parameter to the input value
+        url.searchParams.set("search", query);
+      }
+      window.history.replaceState({}, '', url);
+      //window.history.pushState({}, '', url); // Use if we wanted to keep the full history (since we're updating per keystroke this seems like too much)
+    }
+
     
     // Helper function for matching based on domain name length
     function matchesLengthFilter(domain, filter) {
