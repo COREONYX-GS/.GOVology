@@ -444,12 +444,12 @@
       event.target.value = query; // FIXME: This updates search-input even if there are no changes to query, could be optimized probably
 
     // Build unique lists of agencies and organizations.
-    function buildUniqueLists(data) {
+    function buildUniqueLists() {
       const agencies = new Set();
       const orgs = new Set();
-      data.forEach(d => {
-        if (d.agency) agencies.add(d.agency);
-        if (d.org) orgs.add(d.org);
+      globalData.forEach(d => {
+          if (d.agency) agencies.add(d.agency);
+          if (d.org) orgs.add(d.org);
       });
       uniqueAgencies = Array.from(agencies);
       uniqueOrgs = Array.from(orgs);
