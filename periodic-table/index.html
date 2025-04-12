@@ -480,8 +480,7 @@
       else if (orgMatch) {
           showAutocomplete("org", orgMatch[1]);
       }
-      else {
-        // If none are viable, hide autocomplete suggestions
+      else { // If no org or agency matches, hide autocomplete suggestions
         d3.select("#autocomplete-container").style("display", "none");
         currentSuggestionIndex = -1;
       }
