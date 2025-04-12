@@ -267,7 +267,7 @@
     // Main function to apply search filters and redraw the grid
     function applyFiltersAndRedraw() {
       const query = d3.select("#search-input").property("value").trim();
-      updateURLParameters(query); // Update the URL based on the current query
+      updateURLParameters(query); // Update the URL based on the current query, even if it's empty (redraws everything)
       const drawData = query === "" ? globalData : filterData(query, globalData);  
       drawGrid(drawData);
     }
