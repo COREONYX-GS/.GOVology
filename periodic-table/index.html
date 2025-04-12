@@ -483,8 +483,8 @@
       else { // If no org or agency matches, hide autocomplete suggestions
         d3.select("#autocomplete-container").style("display", "none");
         currentSuggestionIndex = -1;
-      }
-      applyFiltersAndRedraw();
+      } // FIXME: Consider autocompleting the "len:" and "is:" tokens as well, but that would require a more complicated approach
+      applyFiltersAndRedraw(); // Note this needs to be here even if no changes so other UI components can trigger an update
   }); // end input event handler
 
     // This handles the keyboard events for navigating the autocomplete suggestions
