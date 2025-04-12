@@ -432,6 +432,17 @@
           .text(d => d.domain);
     }
 
+      let query = this.value;
+
+      // Globally auto-inject quotes for tokens that don’t already start with a quote
+      // Auto-inject quotes for agency tokens
+      query = query.replace(/(agency:)(?!")/gi, '$1"');
+      // Auto-inject quotes for org tokens
+      query = query.replace(/(org:)(?!")/gi, '$1"');
+
+      // Update the input field with the revised query.
+      event.target.value = query; // FIXME: This updates search-input even if there are no changes to query, could be optimized probably
+
     // Build unique lists of agencies and organizations.
     function buildUniqueLists(data) {
       const agencies = new Set();
@@ -492,23 +503,6 @@
       currentSuggestionIndex = -1;
     }
 
-    // Auto-insert matching quotes for agency: and org: filters.
-    function autoInsertQuotes(e) {
-      const input = e.target;
-      let value = input.value;
-      // const agencyPattern = /agency:(?!")(\S+)/i;
-      const agencyPattern = /agency:([^\s"]*)$/i;
-      if (agencyPattern.test(value)) {
-        value = value.replace(agencyPattern, 'agency:"$1');
-        input.value = value;
-      }
-      // const orgPattern = /org:(?!")(\S+)/i;
-      const orgPattern = /org:([^\s"]*)$/i;
-      if (orgPattern.test(value)) {
-        value = value.replace(orgPattern, 'org:"$1');
-        input.value = value;
-      }
-    }
     // Callback for the "About" menu item
     d3.select("#menu-about").on("click", function() {
       alert("Visualize federal .gov domains, visit GitHub for details or sugestions.\n\nSupported search syntax includes:\n    - agency:\"...\" (e.g., agency:\"Department of Energy\")\n    - org:\"...\" (e.g., org:\"Energy Information Administration\")\n    - len: ... [><!]?(\\d) (e.g., :>4 or :<6 or :5 or :!8 or 9)\n    - is: ... (e.g., is:acronym, is:agency, is:words, is:noun, is:verb)\n\nNote: Quotation marks are required for multi-word values.");
@@ -518,7 +512,6 @@
     const searchInput = d3.select("#search-input");
     searchInput
       .on("input", function(event) {
-        autoInsertQuotes(event);
         const query = this.value;
     // Callback for the "Sankey" menu item (not implemented yet)
     d3.select("#menu-sankey").on("click", function() {
