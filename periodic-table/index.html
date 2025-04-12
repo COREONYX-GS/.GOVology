@@ -341,48 +341,46 @@
       const tooltip = d3.select("#tooltip");
       
       svg.selectAll("rect")
-         .data(data)
-         .enter()
-         .append("rect")
-         .attr("class", "cell")
-         .attr("x", (d, i) => padding + (i % numColumns) * cellWidth)
-         .attr("y", (d, i) => padding + Math.floor(i / numColumns) * cellHeight)
-         .attr("rx", 8)
-         .attr("ry", 8)
-         .attr("width", cellWidth)
-         .attr("height", cellHeight)
-         .on("mouseover", function(event, d) {
-           const isAttributes = Object.keys(d)
-         .filter(key => key.startsWith("is_"))
-         .map(key => {
-             if (Array.isArray(d[key])) {
-              const items = d[key].join(", ");
-              return `<strong>${key}:</strong> [${items}]`;
-             } else if (typeof d[key] === "object") {
-              const words = Object.entries(d[key])
-              .map(([k, v]) => `${k} (${v})`)
-              .join(", ");
-              return `<strong>${key}:</strong> ${words}`;
-             } else {
-           return `<strong>${key}:</strong> ${d[key]}`;
-           }
-         })
-         .join("<br>");
-           tooltip.style("display", "block")
-          .html(`<strong>${d.domain}.gov</strong><br>Agency: ${d.agency}<br>Organization: ${d.org}<br>${isAttributes}`);
-         })
-         .on("mousemove", function(event) {
-           tooltip.style("left", (event.pageX + 10) + "px")
-          .style("top", (event.pageY + 10) + "px");
-         })
-         .on("mouseout", function() {
-           tooltip.style("display", "none");
-         })
-         .on("click", function(event, d) {
-           const isAttributes = Object.keys(d)
-         .filter(key => key.startsWith("is_"))
-         .map(key => {
-             if (Array.isArray(d[key])) {
+          .data(drawData)
+          .enter()
+          .append("rect")
+          .attr("class", "cell")
+          .attr("x", (d, i) => padding + (i % numColumns) * cellWidth)
+          .attr("y", (d, i) => padding + Math.floor(i / numColumns) * cellHeight)
+          .attr("width", cellWidth)
+          .attr("height", cellHeight)
+          .on("mouseover", function(event, d) {
+              const isAttributes = Object.keys(d)
+              .filter(key => key.startsWith("is_"))
+              .map(key => {
+                  if (Array.isArray(d[key])) {
+                  const items = d[key].join(", ");
+                  return `<strong>${key}:</strong>[${items}]`;
+                  } else if (typeof d[key] === "object") {
+                  const words = Object.entries(d[key])
+                  .map(([k, v]) => `${k} (${v})`)
+                  .join(", ");
+                  return `<strong>${key}:</strong> ${words}`;
+                  } else {
+              return `<strong>${key}:</strong> ${d[key]}`;
+              }
+              })
+              .join("<br>");
+              tooltip.style("display", "block") // This is where the content for the 'hover' tooltip is created
+              .html(`<strong>${d.domain}.gov</strong><br><br><b>agency:</b>"${d.agency}"<br><b>organization:</b>"${d.org}"<br><b>len:</b> ${d["length"]}<br>${isAttributes}`);
+              })
+          .on("mousemove", function(event) {
+              tooltip.style("left", (event.pageX + 10) + "px")
+              .style("top", (event.pageY + 10) + "px");
+          })
+          .on("mouseout", function() {
+              tooltip.style("display", "none");
+          })
+          .on("click", function(event, d) {
+          const isAttributes = Object.keys(d)
+          .filter(key => key.startsWith("is_"))
+          .map(key => {
+              if (Array.isArray(d[key])) {
               const items = d[key].join(", ");
               return `<strong>${key}:</strong> [${items}]`;
              } else if (typeof d[key] === "object") {
