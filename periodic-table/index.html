@@ -235,7 +235,7 @@
     let currentSuggestionIndex = -1;  // Track the current autocomplete selection
 
     // Load data and initialize.
-    d3.json("../data/gov-elements.json").then(data => {
+    d3.json("https://raw.githubusercontent.com/COREONYX-GS/.GOVology/refs/heads/main/data/gov-elements.json").then(data => {
       globalData = data;
       buildUniqueLists(globalData);
       applyURLParameters();
