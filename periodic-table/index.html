@@ -80,14 +80,17 @@
     /* Fixed search bar styling */
     #search-container {
       position: fixed;
+      align-items: center;
       top: 0;
       left: 40px; /* Offset by the hamburger container width plus a little margin */
       right: 0;
-      width: calc(100% - 9%); /* Adjust width accordingly */
+      width: calc(100% - 20%); /* Adjust width accordingly */
       padding: 10px;
       box-sizing: border-box;
       border-bottom: 1px solid var(--border-color);
       /* background: #fff; */
+      justify-content: space-between; /* Ensure proper spacing between elements */
+      display: flex;
       z-index: 3000;
     }
     #search-input {
@@ -96,11 +99,25 @@
       width: 100%;
       border: 1px solid var(--border-color);
       border-radius: 4px;
+      margin-right: 10px; /* Add spacing between input and count */
+      flex-grow: 1; /* Allow the input to take up available space */
     }
     #search-input:focus {
       outline: none;
       border-color: var(--primary); /* Highlight border on focus */
       box-shadow: 0 0 5px var(--primary-glow); /* Subtle glow effect */
+    }
+    #count-container {
+      position: absolute;
+      top: 19px;
+      right: 5px;
+      font-size: 16px;
+      color: var(--dark-grey);
+      width: calc(15%);
+      white-space: nowrap; /* Prevent text wrapping */
+    }
+    #count {
+      font-weight: bold;
     }
 
     /* Autocomplete dropdown styling */
@@ -228,6 +245,8 @@
     <!-- Autocomplete Container -->
     <div id="autocomplete-container"></div>
   </div>
+  
+  <div id="count-container"><text id="count"></text> domains</div>
   
   <svg id="visualization"></svg>
   
@@ -379,6 +398,8 @@
 
     // Draw or redraw grid based on provided data.
     function drawGrid(drawData) {
+      d3.select("#count").text(`${drawData.length}`);
+      
       const svg = d3.select("#visualization");
       svg.selectAll("*").remove();
 
