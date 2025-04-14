@@ -451,6 +451,7 @@
               tooltip.style("display", "none");
           })
           .on("click", function(event, d) {
+          if (event.pointerType === "touch") return; // Ignore mouseover on touch devices
           const isAttributes = Object.keys(d)
           .filter(key => key.startsWith("is_"))
           .map(key => {
