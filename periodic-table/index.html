@@ -400,6 +400,7 @@
     // Draw or redraw grid based on provided data.
     function drawGrid(drawData) {
       d3.select("#count").text(`${drawData.length}`);
+      drawData = drawData.sort((a, b) => a.domain.localeCompare(b.domain)); // Sort alphabetically by domain name
       
       const svg = d3.select("#visualization");
       svg.selectAll("*").remove();
