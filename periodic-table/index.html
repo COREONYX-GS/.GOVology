@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>.GOVology - Federal .gov Domain Search Tool</title>
+  <style>
+    /* Reset body margins */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    /* Push the grid down so it's not overlapped by the search bar */
+    svg {
+      margin-top: 60px;
+    }
+
+    /* Hamburger container: fixed at top left with a reserved width */
+    #hamburger-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 50px;
+      padding: 10px;    
+      box-sizing: border-box;
+      z-index: 3100;
+      /* border-right: 1px solid #ccc; */
+      /* background: #fff; */
+    }
+    /* Hamburger icon styling (stays the same) */
+    #hamburger-menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+    /* Hamburger dropdown styling */
+    #hamburger-menu {
+      display: none; /* Hidden by default */
+      position: absolute;
+      top: 40px;  /* Adjust based on icon size; this positions it below the icon */
+      left: 0;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 4px; /* Added for consistency */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added subtle shadow */
+      background: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
+      /* background: #fff; */
+      /* border: 1px solid #ccc; */
+      z-index: 3200;
+    }
+    /* Hamburger menu link styling */
+    #hamburger-menu a {
+      display: block;
+      padding: 8px 0;
+      color: #000;
+      text-decoration: none;
+    }
+    #hamburger-menu a:hover {
+      background: #1188ff;
+      color: #fff;
+    }
+
+    /* Fixed search bar styling */
+    #search-container {
+      position: fixed;
+      top: 0;
+      left: 40px; /* Offset by the hamburger container width plus a little margin */
+      right: 0;
+      width: calc(100% - 9%); /* Adjust width accordingly */
+      padding: 10px;
+      box-sizing: border-box;
+      border-bottom: 1px solid #ccc;
+      /* background: #fff; */
+      z-index: 3000;
+    }
+    #search-input {
+      padding: 8px;
+      font-size: 16px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #search-input:focus {
+      outline: none;
+      border-color: #1188ff; /* Highlight border on focus */
+      box-shadow: 0 0 5px rgba(83, 143, 173, 0.5); /* Subtle glow effect */
+    }
+
+    /* Autocomplete dropdown styling */
+    #autocomplete-container {
+      position: absolute;
+      top: 50px; /* below the search bar */
+      left: 10px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px; /* Added for consistency */
+      width: calc(100% - 2%);
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added subtle shadow */
+      z-index: 3200;
+    }
+    .autocomplete-item {
+      padding: 8px;
+      cursor: pointer;
+    }
+    .autocomplete-item:hover,
+    .autocomplete-item.active {
+      background: #ddd;
+    }
+
+    /* Basic styling for the cells */
+    .cell {
+      stroke: #333;
+      fill: #cfd8dc; /* light blue-grey */
+      rx: 8;
+      ry: 8;
+      /* transition: fill 0.3s; */
+    }
+    .cell:hover {
+      fill: #1188ff;
+    }
+    /* Text styling */
+    text {
+      pointer-events: none;
+      font-size: 14px;
+      fill: #000;
+      font-weight: bold;  
+      dominant-baseline: middle;
+    }
+
+    /* Tooltip styling */
+    #tooltip {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid #333;
+      padding: 10px;
+      font-size: 14px;
+      pointer-events: none;
+      display: none;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+    /* Detail Card (Modal domain detail pop-out) styling */
+    #detail-card {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border: 2px solid #333;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      display: none;
+      border-radius: 8px; /* Added for a modern look */
+      max-width: 90%;
+      z-index: 2000;
+    }
+    #detail-card h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+    #detail-card p {
+      font-size: 16px;
+    }
+    #detail-card a {
+      color: #1188ff;
+    }
+    #detail-card button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      font-size: 14px;
+      background: #1188ff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #detail-card button:hover {
+      background: #41728a;
+      color: #333;
+    }
+    #detail-card #close-card {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="hamburger-container">
+    <div id="hamburger-menu-icon">&#9776;</div>
+    <!-- Hamburger Menu Dropdown -->
+    <div id="hamburger-menu">
+      <a id="menu-about" href="#">About</a>
+      <a id="menu-github" href="https://github.com/COREONYX-GS/.GOVology">GitHub</a>
+    </div>
+  </div>
+
+  <!-- Fixed Search Bar -->
+  <div id="search-container">
+    <!-- Search Input -->
+    <input id="search-input" type="text" autocomplete="off" placeholder="Search... e.g. agency:&quot;Department of Energy&quot; org:&quot;Energy Information Administration&quot; is:acronym" />
+    <!-- Autocomplete Container -->
+    <div id="autocomplete-container"></div>
+  </div>
+  
+  <svg id="visualization"></svg>
+  
+  <!-- Tooltip for hover interactions -->
+  <div id="tooltip"></div>
+  
+  <!-- Detail Card for click interactions -->
+  <div id="detail-card">
+    <h2 id="card-title"></h2>
+    <p id="card-content"></p>
+    <button id="close-card">X</button>
+  </div>
+  
+  <!-- d3.js from a CDN -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script defer>
+    const cellWidth = 160;
+    const cellHeight = 40;
+    const padding = 5;      // Padding around total visualization, not intra-cell padding
+  
+    let uniqueAgencies = [];
+    let uniqueOrgs = [];
+    let globalData;
+    let currentSuggestionIndex = -1;  // Track the current autocomplete selection
+
+    // Load data and initialize.
+    d3.json("../data/gov-elements.json").then(data => {
+      globalData = data;
+      buildUniqueLists(globalData);
+      applyURLParameters();
+      applyFiltersAndRedraw();
+    }).catch(error => {
+      console.error("Error loading data:", error);
+    });
+
+    // Decode URL parameters, set the search value, and trigger an "input" event to redraw w/ filter
+    function applyURLParameters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const query = decodeURIComponent(urlParams.get("search") || "").trim();
+      if (query) {
+          const searchInput = d3.select("#search-input");
+          searchInput.property("value", query);
+          searchInput.dispatch("input");
+      }
+    }  
+
+    // Encode search parameters into URL search=...
+    function updateURLParameters(query) {
+      const url = new URL(window.location.href);
+      
+      if (query.trim() === "") { // Remove the search parameter if the query is empty
+        url.searchParams.delete("search");
+      }
+      else { // Set the search parameter to the input value
+        url.searchParams.set("search", query);
+      }
+      window.history.replaceState({}, '', url);
+      //window.history.pushState({}, '', url); // Use if we wanted to keep the full history (since we're updating per keystroke this seems like too much)
+    }
+
+    // Main function to apply search filters and redraw the grid
+    function applyFiltersAndRedraw() {
+      const query = d3.select("#search-input").property("value").trim();
+      updateURLParameters(query); // Update the URL based on the current query, even if it's empty (redraws everything)
+      const drawData = query === "" ? globalData : filterData(query, globalData);  
+      drawGrid(drawData);
+    }
+    
+    // Helper function for matching based on domain name length
+    function matchesLengthFilter(domain, filter) {
+        const match = filter.match(/^([!<>]?)(\d+)$/);
+        if (!match) { return false; }
+        
+        const len = domain.length;
+        const operator = match[1];
+        const value = parseInt(match[2], 10);
+
+        switch (operator) {
+          case "":  return len === value;
+          case "=":  return len === value; // Not supported by regexp but added just in case we expand
+          case "!": return len !== value;
+          case "<": return len < value;
+          case ">": return len > value;
+          default:  return false;
+        }
+    }
+
+    // Filter function supporting free text, agency:"", and org:"" filters.
+    function filterData(query, data) {
+      query = query.toLowerCase();
+      // Regex to match tokens (including quoted values)
+      const tokens = query.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
+      const freeTokens = [];
+      const agencyTokens = [];
+      const orgTokens = [];
+      const isTokens = [];
+      const lengthTokens = []
+      
+      //console.log("Filter Query: " + query);
+      //console.log("Filter Tokens: " + tokens);
+
+      tokens.forEach(token => { // parse tokens and add them to filters
+        const cleaned = token.replace(/"/g, '');
+        // Or remove only the surrounding quotes (if any) rather than all quotes.
+        // const cleaned = token.replace(/^"|"$/g, ''); // Note, this probably isn't necessary since I don't think any domains (or data) have quotes in them 
+
+        if (cleaned.startsWith("agency:")) {
+          const val = cleaned.slice("agency:".length).trim();
+          if (val) agencyTokens.push(val);
+        }
+        else if (cleaned.startsWith("org:")) {
+          const val = cleaned.slice("org:".length).trim();
+          if (val) orgTokens.push(val);
+        } 
+        else if (cleaned.startsWith("is:")) {
+            const val = cleaned.slice("is:".length).trim();
+            if (val) isTokens.push(val);
+        }
+        else if (cleaned.startsWith("len:")) {
+            const val = cleaned.slice("len:".length).trim();
+            if (val) lengthTokens.push(val);
+        }
+        else {
+          freeTokens.push(cleaned); // Search based on free text as a token - not only in domain name (e.g. not org or agency)
+        }
+      });
+      
+      return data.filter(d => { // Compare lower case values
+        const domain = (d.domain || "").toLowerCase();
+        const agency = (d.agency || "").toLowerCase();
+        const org = (d.org || "").toLowerCase();
+
+        const freeMatch = freeTokens.every(token => domain.includes(token)); // FIXME: Consider if this should search org and agency as well
+        const agencyMatch = agencyTokens.length === 0 || agencyTokens.some(token => agency.includes(token));
+        const orgMatch = orgTokens.length === 0 || orgTokens.some(token => org.includes(token));            
+
+        const isMatch = isTokens.every(token => {
+          const value = d[`is_${token}`];
+          if (typeof value === "object" && value !== null) {
+            return Object.keys(value).length > 0; // Check if the object has any entries
+          }
+          return Boolean(value); // Handle non-object values e.g. `!!value`;
+        });
+        
+        const lenMatch = lengthTokens.every(token => matchesLengthFilter(domain, token)); // FIXME: Note this parses the regexp every time, could optimize if needed
+        return freeMatch && agencyMatch && orgMatch && isMatch && lenMatch;
+      });
+    }
+
+    // Draw or redraw grid based on provided data.
+    function drawGrid(drawData) {
+      const svg = d3.select("#visualization");
+      svg.selectAll("*").remove();
+
+      const availableWidth = window.innerWidth - (padding * 2);
+      const numColumns = Math.floor(availableWidth / cellWidth);
+      const numRows = Math.ceil(drawData.length / numColumns);
+      const svgWidth = (cellWidth * numColumns) + padding * 2;
+      const svgHeight = (cellHeight * numRows) + padding * 2;
+      
+      svg.attr("width", svgWidth).attr("height", svgHeight);
+      const tooltip = d3.select("#tooltip");
+      
+      svg.selectAll("rect")
+          .data(drawData)
+          .enter()
+          .append("rect")
+          .attr("class", "cell")
+          .attr("x", (d, i) => padding + (i % numColumns) * cellWidth)
+          .attr("y", (d, i) => padding + Math.floor(i / numColumns) * cellHeight)
+          .attr("width", cellWidth)
+          .attr("height", cellHeight)
+          .on("mouseover", function(event, d) {
+              const isAttributes = Object.keys(d)
+              .filter(key => key.startsWith("is_"))
+              .map(key => {
+                  if (Array.isArray(d[key])) {
+                  const items = d[key].join(", ");
+                  return `<strong>${key}:</strong>[${items}]`;
+                  } else if (typeof d[key] === "object") {
+                  const words = Object.entries(d[key])
+                  .map(([k, v]) => `${k} (${v})`)
+                  .join(", ");
+                  return `<strong>${key}:</strong> ${words}`;
+                  } else {
+              return `<strong>${key}:</strong> ${d[key]}`;
+              }
+              })
+              .join("<br>");
+              tooltip.style("display", "block") // This is where the content for the 'hover' tooltip is created
+              .html(`<strong>${d.domain}.gov</strong><br><br><b>agency:</b>"${d.agency}"<br><b>organization:</b>"${d.org}"<br><b>len:</b> ${d["length"]}<br>${isAttributes}`);
+              })
+          .on("mousemove", function(event) {
+              tooltip.style("left", (event.pageX + 10) + "px")
+              .style("top", (event.pageY + 10) + "px");
+          })
+          .on("mouseout", function() {
+              tooltip.style("display", "none");
+          })
+          .on("click", function(event, d) {
+          const isAttributes = Object.keys(d)
+          .filter(key => key.startsWith("is_"))
+          .map(key => {
+              if (Array.isArray(d[key])) {
+              const items = d[key].join(", ");
+              return `<strong>${key}:</strong> [${items}]`;
+              } else if (typeof d[key] === "object") {
+              const words = Object.entries(d[key])
+              .map(([k, v]) => `${k} (${v})`)
+              .join(", ");
+              return `<strong>${key}:</strong> ${words}`;
+              } else {
+          return `<strong>${key}:</strong> ${d[key]}`;
+          }
+          })
+          .join("<br>");
+          d3.select("#card-title")
+          .html(`<a href="https://${d.domain}.gov" target="_blank">${d.domain}.gov</a>`);
+          d3.select("#card-content").html( // This is where the content for the detailed content card is created
+          `<strong>agency:</strong>"${d.agency}"<br><strong>organization:</strong>"${d.org}"<br><b>len:</b> ${d["length"]}<br>${isAttributes}`
+          );
+          d3.select("#detail-card").style("display", "block");
+          });
+          
+      svg.selectAll("text")
+          .data(drawData)
+          .enter()
+          .append("text")
+          .attr("x", (d, i) => padding + (i % numColumns) * cellWidth + cellWidth / 2)
+          .attr("y", (d, i) => padding + Math.floor(i / numColumns) * cellHeight + cellHeight / 2)
+          .attr("text-anchor", "middle")
+          .attr("dominant-baseline", "middle")
+          .style("font-size", d => { // Used to adjust font size based on domain length - not sure how well it scales on mobile and other devices / sizes
+              const len = d.domain.length;
+              return len > 18 ? "8px"
+                      : len > 16 ? "10px"
+                      : len > 14 ? "12px"
+                      : "14px";
+          })
+          .text(d => d.domain);
+    }
+
+    ////////////////////////////////// Primary UI Event Code //////////////////////////////////
+    // This is the main function to update the grid based on the search query
+    d3.select("#search-input").on("input", function(event) {
+      let query = this.value;
+
+      // Globally auto-inject quotes for tokens that don’t already start with a quote
+      // Auto-inject quotes for agency tokens
+      query = query.replace(/(agency:)(?!")/gi, '$1"');
+      // Auto-inject quotes for org tokens
+      query = query.replace(/(org:)(?!")/gi, '$1"');
+
+      // Update the input field with the revised query.
+      event.target.value = query; // FIXME: This updates search-input even if there are no changes to query, could be optimized probably
+
+      // Split the query into tokens to extract the one that is being actively edited
+      const regex = /(?:^|\s)((?:[A-Za-z]+:"(?:[^"]*(?:"|$))|\S+))$/i; // thanks ChatGPT - feels a little hacky but it works
+      const tokens = query.match(regex) || [];
+      // const tokens = query.match(/(?:[^\s"]+|"[^"]*")+/g) || []; // Same as below - won't work if filter is unfinished (not fully quotes) with spaces in term
+      //const tokens = query.split(/\s+/); // Won't work for `agency:"Department of E` i.e. with a space
+      const lastToken = tokens.length > 0 ? tokens[tokens.length - 1] : '';
+
+      //console.log("Input Query: " + query);
+      //console.log("Input Tokens: " + tokens);
+      //console.log("Input Last Token: " + lastToken);
+
+      // Check if autocomplete will help here - for agency and org values
+      const agencyMatch = lastToken.match(/^agency:"([^"]*)$/i);
+      const orgMatch = lastToken.match(/^org:"([^"]*)$/i);
+      if (agencyMatch) { // Check if the active token is an incomplete agency filter.
+          showAutocomplete("agency", agencyMatch[1]);
+      }
+      else if (orgMatch) {
+          showAutocomplete("org", orgMatch[1]);
+      }
+      else { // If no org or agency matches, hide autocomplete suggestions
+        d3.select("#autocomplete-container").style("display", "none");
+        currentSuggestionIndex = -1;
+      } // FIXME: Consider autocompleting the "len:" and "is:" tokens as well, but that would require a more complicated approach
+      applyFiltersAndRedraw(); // Note this needs to be here even if no changes so other UI components can trigger an update
+  }); // end input event handler
+
+    // This handles the keyboard events for navigating the autocomplete suggestions
+    d3.select("#search-input").on("keydown", function(event) {
+      const container = d3.select("#autocomplete-container");
+      
+      if (container.style("display") !== "none") { // Only use special keys when navigating AutoComplete Dialogue
+          const suggestions = container.selectAll(".autocomplete-item");
+
+          if (event.key === "Escape") {
+              container.style("display", "none");
+              currentSuggestionIndex = -1;
+              event.preventDefault();
+          }
+          else if ( (event.key === "Tab" || event.key === "Enter") && currentSuggestionIndex !== -1) {
+              const selectedSuggestion = suggestions.filter((d, i) => i === currentSuggestionIndex).text();
+              if (selectedSuggestion) {
+                  let current = d3.select(this).property("value");
+                  let filterType = "";
+
+                  if (/agency:"[^"]*$/.test(current)) {
+                      filterType = "agency";
+                  }
+                  else if (/org:"[^"]*$/.test(current)) {
+                      filterType = "org";
+                  }
+                  if (filterType) {
+                      completeFilter(filterType, selectedSuggestion);
+                      // FIXME: Does this event need to be triggered or will it be automatic?
+                      d3.select("#search-input").dispatch("input");
+                      event.preventDefault();
+                  }
+              }
+              // I think sending 'input' event should be only if filter is complted
+              // I also think event.preventDefault(); should be only if filter is completed
+          }
+          if (event.key === "ArrowDown") {
+              const count = suggestions.size();
+              currentSuggestionIndex = (currentSuggestionIndex + 1) % count;
+              updateActiveSuggestion(suggestions, currentSuggestionIndex);
+
+              // Scroll down if necessary
+              const activeItem = suggestions.filter((d, i) => i === currentSuggestionIndex).node();
+              if (activeItem) { activeItem.scrollIntoView({ block: "nearest" }); }
+              event.preventDefault();
+          }
+          else if (event.key === "ArrowUp") {
+              const count = suggestions.size();
+              currentSuggestionIndex = (currentSuggestionIndex - 1 + count) % count;
+              updateActiveSuggestion(suggestions, currentSuggestionIndex);
+
+              // Scroll up if necessary
+              const activeItem = suggestions.filter((d, i) => i === currentSuggestionIndex).node();
+              if (activeItem) { activeItem.scrollIntoView({ block: "nearest" }); }
+              event.preventDefault();
+          }
+      } // end conditionals for auto-complete dialog box
+    }); // end keydown event handler
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////// Autocomplete Support Code ////////////////////////////////
+    // Build unique lists of agencies and organizations.
+    function buildUniqueLists(data) { // FIXME: Small bug that the "auto complete" might use Unique values from the Global Data that aren't part of a filtered dataset
+      const agencies = new Set();
+      const orgs = new Set();
+      data.forEach(d => {
+          if (d.agency) agencies.add(d.agency);
+          if (d.org) orgs.add(d.org);
+      });
+      uniqueAgencies = Array.from(agencies);
+      uniqueOrgs = Array.from(orgs);
+    } // FIXME: Could rework this to re-filter each time but that seems unnecessary
+
+    // Complete the filter token using the provided suggestion.
+    function completeFilter(filterType, suggestion) {
+      // Hide the autocomplete container and reset the selection index.
+      d3.select("#autocomplete-container").style("display", "none");
+      currentSuggestionIndex = -1;
+
+      let current = d3.select("#search-input").property("value");
+      const regex = new RegExp(`(${filterType}:"?)([^"]*)$`, "i");
+      current = current.replace(regex, `$1${suggestion}"`);
+      
+      d3.select("#search-input").property("value", current);
+
+      // Focus in the search box and set the cursor to end
+      const inputNode = d3.select("#search-input").node();
+      inputNode.focus();
+      inputNode.setSelectionRange(current.length, current.length);
+    }
+
+    // Helper function to update the visual highlight of autocomplete items.
+    function updateActiveSuggestion(suggestions, index) {
+      suggestions.each(function(d, i) {
+        d3.select(this).classed("active", i === index);
+      });
+    }  
+
+    // Show autocomplete suggestions for a given filter type ("agency" or "org")
+    function showAutocomplete(filterType, partial) {
+      const container = d3.select("#autocomplete-container");
+      let suggestions = [];
+
+      if (filterType === "agency") {
+        suggestions = uniqueAgencies.filter(a => a.toLowerCase().includes(partial.toLowerCase()));
+      } 
+      else if (filterType === "org") {
+        suggestions = uniqueOrgs.filter(o => o.toLowerCase().includes(partial.toLowerCase()));
+      }
+      if (suggestions.length === 0) { // if no matching suggestions, hide the container
+        container.style("display", "none");
+        currentSuggestionIndex = -1;
+        return;
+      } // note, because of the 'return' there is an implicit "else" { } block for the code below
+      container.style("display", "block"); // Show Autocomplete
+      container.html(""); // Clear previous suggestions
+      suggestions.forEach((suggestion, index) => {
+        container.append("div")
+          .attr("class", "autocomplete-item")
+          .attr("data-index", index)
+          .text(suggestion)
+          .on("click", () => {
+            completeFilter(filterType, suggestion);
+            // FIXME: Will this "input" event happen automatically or does it need to be triggered?
+            d3.select("#search-input").dispatch("input");
+          });
+      });
+      // Reset selection index when new suggestions are shown.
+      currentSuggestionIndex = -1; // FIXME: Does this need to be reset here, or should it be above when suggestions = [] // theory it's better here because auto compelte could pop in/out
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////// Hamburger Menu and Ancellary Support Code ////////////////////////
+    // Redraw the visualization when / if the window is resized
+    window.addEventListener("resize", () => {
+      applyFiltersAndRedraw();
+    });
+
+    // Toggle hamburger menu when clicking the icon
+    d3.select("#hamburger-menu-icon").on("click", function() {
+      const menu = d3.select("#hamburger-menu");
+      const currentDisplay = menu.style("display");
+      menu.style("display", currentDisplay === "none" || currentDisplay === "" ? "block" : "none");
+    });
+
+    // Callback for the "About" menu item
+    d3.select("#menu-about").on("click", function() {
+      alert("Visualize federal .gov domains, visit GitHub for details or sugestions.\n\nSupported search syntax includes:\n    - agency:\"...\" (e.g., agency:\"Department of Energy\")\n    - org:\"...\" (e.g., org:\"Energy Information Administration\")\n    - len: ... [><!]?(\\d) (e.g., :>4 or :<6 or :5 or :!8 or 9)\n    - is: ... (e.g., is:acronym, is:agency, is:words, is:noun, is:verb)\n\nNote: Quotation marks are required for multi-word values.");
+      d3.select("#hamburger-menu").style("display", "none");
+    });
+
+    // Callback for the "Sankey" menu item (not implemented yet)
+    d3.select("#menu-sankey").on("click", function() {
+      if (globalData) {
+        d3.select("#search-input").property("value", "").dispatch("input");
+        // drawSankey(globalData); // FIXME: Implement this function if needed
+      }
+      d3.select("#hamburger-menu").style("display", "none");
+    });
+
+    // Callback for the "Cubes" menu item (resets to default grid view) (not used yet)
+    d3.select("#menu-cubes").on("click", function() {
+      if (globalData) {
+        d3.select("#search-input").property("value", "").dispatch("input");
+        drawGrid(globalData);
+      }
+      d3.select("#hamburger-menu").style("display", "none");
+    });
+
+    // Close autocomplete if clicking outside the search input
+    d3.select("body").on("click", function(event) {
+      // Get references to the search input and autocomplete container elements
+      const searchInput = document.getElementById("search-input");
+      const autocompleteContainer = document.getElementById("autocomplete-container");
+    
+      // FIXME: Check this ChatGPT suggestion
+      // Check if the click target is inside either of these elements
+      // if (!searchInput.contains(event.target) && !autocompleteContainer.contains(event.target)) {
+      //   d3.select("#autocomplete-container").style("display", "none");
+      //   currentSuggestionIndex = -1;
+      // }
+
+      if (event.target.id !== "search-input") {
+        d3.select("#autocomplete-container").style("display", "none");
+        currentSuggestionIndex = -1;
+      }
+
+    });
+
+    // Close Domain Detail Modal when pop-out "Close" is clicked
+    d3.select("#close-card").on("click", () => {
+        d3.select("#detail-card").style("display", "none");
+    });
+    ///////////////////////////////////////////////////////////////////////////////////////////
+  </script>
+</body>
+</html>
