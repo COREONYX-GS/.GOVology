@@ -194,7 +194,11 @@ if __name__ == "__main__":
     DATA_FILE_IN = os.getenv("DATA_FILE_IN", "data/federal-domains.csv")
     DATA_FILE_OUT = os.getenv("DATA_FILE_OUT", "data/gov-elements.json")
 
-    data = generate_data(DATA_FILE_IN)
+    old_data = load_old_data(DATA_FILE_OUT)
+    new_data = generate_data(DATA_FILE_IN)
+
+    data = merge_data(new_data, old_data)
+
     save_data(data, DATA_FILE_OUT)
 
     print(f"Data saved with {len(data)} entries.")
