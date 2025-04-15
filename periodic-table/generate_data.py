@@ -186,6 +186,30 @@ def generate_data(FILE_IN):
 
     return data
 
+def load_old_data(FILENAME):
+    if os.path.exists(FILENAME):
+        with open(FILENAME, 'r', encoding='utf-8') as file:
+            return json.load(file)
+    return {}
+
+def get_embedding(text, model="text-embedding-3-small"):
+    from openai import OpenAI
+    client = OpenAI()
+    response = client.embeddings.create(input=[text], model=model)
+    return response.data[0].embedding
+
+def merge_data(new, old):
+    old_map = {item['domain']: item for item in old}
+    for item in new:
+        if item['domain'] in old_map:
+            item['embedding'] = old_map[item['domain']].get('embedding', None)
+
+        if not item['embedding']:
+            item['embedding'] = get_embedding(item['domain'])
+    
+    return new_data
+     
+
 def save_data(data, json_filename = "gov-elements.json"):
     with open(json_filename, 'w', encoding='utf-8') as out:
         json.dump(data, out, indent=4)
