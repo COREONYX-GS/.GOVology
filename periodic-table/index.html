@@ -453,7 +453,9 @@
               tooltip.style("display", "none");
           })
           .on("click", function(event, d) {
+          // Disable click handling on touch devices
           if (event.pointerType === "touch") return; // Ignore mouseover on touch devices
+          // if (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) return; // Another Alternative
           const isAttributes = Object.keys(d)
           .filter(key => key.startsWith("is_"))
           .map(key => {
