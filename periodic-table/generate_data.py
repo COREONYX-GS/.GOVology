@@ -8,6 +8,9 @@ import math
 from nltk.corpus import words
 from nltk.corpus import wordnet as wn
 
+from openai import OpenAI
+client = OpenAI()
+
 word_list = [w for w in set(words.words()) if len(w) > 3]
 
 ###############################################################################################
@@ -193,8 +196,6 @@ def load_old_data(FILENAME):
     return {}
 
 def get_embedding(text, model="text-embedding-3-small"):
-    from openai import OpenAI
-    client = OpenAI()
     response = client.embeddings.create(input=[text], model=model)
     return response.data[0].embedding
 
