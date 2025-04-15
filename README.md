@@ -27,16 +27,16 @@ So far the tool supports the following syntax - based on automatic classificatio
       - Note, if `is_agency` is `false` for a domain that doesn't mean it's *not* representative of an agency (since by definition most if not all .gov domains could be considered an agency).
       - a `false` value means that the python NTLK library does not _define_ this domain as belonging to an agency
       - e.g. this might mean Python NLTK needs updating, or perhaps could be considered a sign that the agency needs to do more commmunications, or the domain is a bad match, etc.
-      - Code for this test is found in [other_file.md](periodic-table/generate_data.py) with the specific check being `if "agency" in w.definition():`
+      - Code for this test is found in [generate_data.py](periodic-table/generate_data.py) with the specific check being `if "agency" in w.definition():`
   - `is_noun: [true|false]` - this is based on whether or not the NLTK Wordnes corpus `nltk.corpus import wordnet as wn` identifies the domain as a 'noun'
-      - Code for this test is found in [other_file.md](periodic-table/generate_data.py) with the specific check being `return any(synset.lexname().startswith('noun') for synset in wn.synsets(name))`
+      - Code for this test is found in [generate_data.py](periodic-table/generate_data.py) with the specific check being `return any(synset.lexname().startswith('noun') for synset in wn.synsets(name))`
   - `is_verb: [true|false]` - this is based on whether or not the NLTK Wordnes corpus `nltk.corpus import wordnet as wn` identifies the domain as a 'verb'
-      - Code for this test is found in [other_file.md](periodic-table/generate_data.py) with the specific check being `return any(synset.lexname().startswith('verb') for synset in wn.synsets(name))`
+      - Code for this test is found in [generate_data.py](periodic-table/generate_data.py) with the specific check being `return any(synset.lexname().startswith('verb') for synset in wn.synsets(name))`
   - `is_acronym: [true|false]` - this is basically a 'meta check' - if the domain isn't (1) recognized as a 'agency', (2) isn't known as a word, (3) isn't a 'noun' or a 'verb' [similar to check #2], or (4) isn't identified as a word (e.g. stem) based on the [Aho-Corasick string matching algorithm](https://www.geeksforgeeks.org/aho-corasick-algorithm-pattern-searching/) then we presume it's an acronym
   - `is_words: {} | [ {_word_: _location_ } ]` - this executes an implementation of the the [Aho-Corasick string matching algorithm](https://www.geeksforgeeks.org/aho-corasick-algorithm-pattern-searching/) to determine if the domain consists of (one of more) words
     - If it is, it will build a list of dictionaries where the key is the 'word' (or root / stem), and the value is the location in the string, e.g. `uspsinformeddelivery` (.gov is removed) contains `is_words` of `{'inform': 4, 'form': 6, 'forme': 6, 'informed': 4, 'formed': 6, 'live': 14, 'deliver': 12, 'liver': 14, 'delivery': 12, 'livery': 14, 'very': 16}`
     - Use this filter as a boolean, e.g. `is:words`
-    - Again, code for this check is in [other_file.md](periodic-table/generate_data.py) but is slightly more complicated then a general NLTK check
+    - Again, code for this check is in [generate_data.py](periodic-table/generate_data.py) but is slightly more complicated then a general NLTK check
 
 If you have thoughts on how to further catalogue websites, please reach out!
 
