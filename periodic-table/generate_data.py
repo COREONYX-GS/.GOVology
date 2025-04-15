@@ -209,7 +209,6 @@ def merge_data(new, old):
             item['embedding'] = get_embedding(item['domain'])
     
     return new_data
-     
 
 def save_data(data, json_filename = "gov-elements.json"):
     with open(json_filename, 'w', encoding='utf-8') as out:
