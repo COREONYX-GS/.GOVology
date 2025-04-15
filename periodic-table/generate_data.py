@@ -2,6 +2,7 @@ import os
 import random
 import json
 import pandas as pd
+import numpy as np
 import math
 
 from nltk.corpus import words
