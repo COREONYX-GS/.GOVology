@@ -35,6 +35,14 @@ jobs:
             update-setuptools: false
             update-wheel: false
                     
+        - name: Analysis - Build JSON data file for .gov0logy.us [include adding OpenAI Embeddings]
+          env:
+            OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+            DATA_FILE_IN: "data/${{ env.FILENAME }}"
+            DATA_FILE_OUT: "data/gov-elements.json"
+          run: |
+            python periodic-table/generate_data.py
+            
         - name: Analysis - General
           run: |
             rm -f ${{ env.ANALYSIS_OUTPUT }} # Ensuring we start fresh, but shouldn't be necessary
