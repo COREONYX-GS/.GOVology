@@ -450,9 +450,9 @@
               })
               .join("<br>");
               tooltip.style("display", "block") // This is where the content for the 'hover' tooltip is created
+              tooltip.style("pointer-events", "auto")
               .html(`<strong>${d.domain}.gov</strong><br><br><b>agency:</b>"${d.agency}"<br><b>organization:</b>"${d.org}"<br><b>len:</b> ${d["length"]}<br>${isAttributes}`);
               })
-            tooltip.style("pointer-events", "auto")
           .on("mousemove", function(event) {
               tooltip.style("left", (event.pageX + 10) + "px")
               .style("top", (event.pageY + 10) + "px");
