@@ -730,6 +730,12 @@
     d3.select("#close-card").on("click", () => {
         d3.select("#detail-card").style("display", "none");
     });
+
+    d3.select("#tooltip").on("click", () => {
+        d3.select("#tooltip").style("display", "none").style("pointer-events", "none");
+        event.preventDefault(); // Prevent default action (e.g., scrolling)
+        event.preventPropagation(); // Prevent event from bubbling up to parent elements
+    });
     ///////////////////////////////////////////////////////////////////////////////////////////
   </script>
 </body>
