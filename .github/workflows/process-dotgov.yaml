@@ -41,7 +41,7 @@ jobs:
             DATA_FILE_IN: "data/${{ env.FILENAME }}"
             DATA_FILE_OUT: "data/gov-elements.json"
           run: |
-            python periodic-table/generate_data.py
+            python dotgov/generate_domain_json_data.py
             
         - name: Analysis - General
           run: |
