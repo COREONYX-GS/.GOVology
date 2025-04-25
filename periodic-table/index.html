@@ -751,6 +751,13 @@
         d3.select("#detail-card").style("display", "none");
     });
 
+    // Close Domain Detail Modal when the Escape key is pressed, only if the card is visible
+    d3.select("body").on("keydown", (event) => {
+      if (event.key === "Escape" && d3.select("#detail-card").style("display") !== "none") {
+        d3.select("#detail-card").style("display", "none");
+      }
+    });
+
     d3.select("#tooltip").on("click", () => {
         d3.select("#tooltip").style("display", "none").style("pointer-events", "none");
         event.preventDefault(); // Prevent default action (e.g., scrolling)
