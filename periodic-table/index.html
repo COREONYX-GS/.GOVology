@@ -169,6 +169,8 @@
     .cell {
       stroke: var(--dark-grey);
       fill: var(--cell-fill);
+      color: var(--cell-color); /* FIXME: This isn't working, text is always black */
+      /* Per ChatGPT this needs to set the SVG #visualization .cell text color - not worth it */
       rx: 8;
       ry: 8;
       /* transition: fill 0.3s; */
