@@ -1,11 +1,11 @@
-name: .GOVology - Deploy
+name: Cloudflare - .GOVology Deploy (not working yet - needs to be updated for Pages)
 ## https://github.com/cloudflare/wrangler-action
 
 on:
   workflow_dispatch:
   push:
     branches:
-        - publish
+        - publish ## Placeholder for now, so we don't deploy the worker on every commit to main
 
 concurrency:
   group: govology.deploy
