@@ -41,7 +41,13 @@ jobs:
             DATA_FILE_IN: "data/${{ env.FILENAME }}"
             DATA_FILE_OUT: "data/gov-elements.json"
           run: |
+            python -m nltk.downloader -q wordnet_ic wordnet words
             python dotgov/generate_domain_json_data.py
+            if [ -n "$(git status --porcelain data/gov-elements.json)" ]; then
+              git add data/gov-elements.json
+              git commit -m "Update gov-elements.json with new analysis"
+              git push
+            fi
             
         - name: Analysis - General
           run: |
