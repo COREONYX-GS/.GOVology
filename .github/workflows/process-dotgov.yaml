@@ -94,3 +94,19 @@ jobs:
                 body: issueBody,
                 labels: ['analysis']
               });
+
+        - name: Summarize Changes (AI - HALLUCINATION WARNING)
+          if: steps.commit-and-push.outputs.CHANGES_DETECTED == 'true'
+          continue-on-error: true
+          id: ai-summarize-changes
+          env:
+            PROMPT_FILE_PATH: "chatgpt_summarize_gov_diffs - prompt.txt"
+            OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+            ISSUE_BODY: ${{ steps.capture-issue-body.outputs.ISSUE_BODY }}
+            DIFF_EXPLANATIONS: "../data/diff_explanations.txt"
+          working-directory: "utils"
+          run: |
+            python chatgpt_summarize_gov_diffs.py | tee ${{ env.DIFF_EXPLANATIONS }}
+            # git add -A ${{ env.DIFF_EXPLANATIONS }}
+            # git commit -m "Add summarized changes: $(date -u)"
+            # git push
