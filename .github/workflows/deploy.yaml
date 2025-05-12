@@ -1,4 +1,4 @@
-name: Cloudflare - .GOVology Deploy (not working yet - needs to be updated for Pages)
+name: Cloudflare - .GOVology Deploy (not working yet - needs to be updated for Pagesgo)
 ## https://github.com/cloudflare/wrangler-action
 
 on:
@@ -14,13 +14,42 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Deploy
+    name: Deploy - Cloudflare
     defaults:
       run:
         working-directory: govology-api
     steps:
-      - uses: actions/checkout@v4
-      - name: Deploy
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy Cloudflare Worker
+        id: deploy-worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      
+      # - name: Publish Cloudflare Pages [Deprecated]
+        # uses: cloudflare/pages-action@v1
+        # with: ## https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/
+        #  apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        #  accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        #  projectName: YOUR_PROJECT_NAME # e.g. 'my-project'
+        #  directory: YOUR_DIRECTORY_OF_STATIC_ASSETS # e.g. 'dist'
+        #  gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Publish Cloudflare Pages [New] # https://github.com/marketplace/actions/github-action-for-cloudflare-pages
+        id: deploy-page
+        uses: cloudflare/wrangler-action@v3
+        env:
+          projectName: "YOUR_PROJECT_NAME" # e.g. 'my-project'
+          projectDir: "YOUR_DIRECTORY_OF_STATIC_ASSETS" # e.g. 'dist'
+        with: ## https://github.com/cloudflare/wrangler-action?tab=readme-ov-file#deploy-your-pages-site-production--preview
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}   ## Maybe should be called cloudflare-api-token
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }} ## Maybe should be called cloudflare-account-id
+          command: pages deploy ${projectDir} --project-name=${projectName}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: print wrangler command output
+        env:
+          CMD_OUTPUT: ${{ steps.deploy-page.outputs.command-output }}
+        run: echo $CMD_OUTPUT
