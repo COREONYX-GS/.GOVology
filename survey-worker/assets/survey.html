@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>.GOVology - .gov Domain Survey</title>
+  <link rel="icon" href="https://raw.githubusercontent.com/COREONYX-GS/.GOVology/refs/heads/main/static/favicon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <style>
+    :root {
+      --text-color: #000;
+      --text-invert: #fff;
+      --primary: #1188ff;
+      --primary-glow: rgba(65, 114, 138, 0.5);
+      --primary-glow: #41728a80;
+      --dark-grey: #333;
+      --border-color: #ccc;
+      --autocomplete-hover: #1188ff;
+      --cell-fill: #cad6e2; /* light blue/grey from GSA logo */
+      --tooltip-background: rgba(255, 255, 255, 0.95); /* unused */
+      --background: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
+      --shadow: rgba(0, 0, 0, 0.2);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Reset body margins */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: var(--background);
+      color: var(--dark-grey);
+      margin: 0 auto;
+    }
+    /* Push the grid down so it's not overlapped by the search bar */
+    #content, svg {
+      margin-top: 75px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Hamburger container: fixed at top left with a reserved width */
+    #hamburger-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 50px;
+      padding: 10px;    
+      box-sizing: border-box;
+      z-index: 3100;
+      /* border-right: 1px solid #ccc; */
+      /* background: #fff; */
+    }
+    /* Hamburger icon styling (stays the same) */
+    #hamburger-menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+    /* Hamburger dropdown styling */
+    #hamburger-menu {
+      display: none; /* Hidden by default */
+      position: absolute;
+      top: 40px;  /* Adjust based on icon size; this positions it below the icon */
+      left: 0;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 4px; /* Added for consistency */
+      box-shadow: 0 2px 5px var(--shadow); /* Added subtle shadow */
+      background: var(--background);
+      transition: all 0.3s ease;
+      /* background: #fff; */
+      /* border: 1px solid #ccc; */
+      z-index: 3200;
+    }
+    /* Hamburger menu link styling */
+    #hamburger-menu a {
+      display: block;
+      padding: 8px 0;
+      color: var(--dark-grey);
+      text-decoration: none;
+    }
+    #hamburger-menu a:hover {
+      background: var(--primary);
+      color: var(--text-invert);
+    }
+
+    /* Fixed search bar styling */
+    #search-container {
+      position: fixed;
+      align-items: center;
+      top: 0;
+      left: 40px; /* Offset by the hamburger container width plus a little margin */
+      right: 0;
+      width: calc(100% - 11%); /* Adjust width accordingly */
+      margin-bottom: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+      border-bottom: 1px solid var(--border-color);
+      /* background: #fff; */
+      justify-content: space-between; /* Ensure proper spacing between elements */
+      display: flex;
+      z-index: 3000;
+    }
+    #search-container h1 {
+      /* flex-grow: 1; /* Allow the input to take up available space */
+      flex: 1 1 auto;       /* Grow to fill available space */
+      padding: 8px;
+      font-size: 16px;
+      width: 100%;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      margin-right: 10px; /* Add spacing between input and count */
+    }
+
+    #search-input {
+      /* flex-grow: 1; /* Allow the input to take up available space */
+      flex: 1 1 auto;       /* Grow to fill available space */
+      padding: 8px;
+      font-size: 16px;
+      width: 100%;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      margin-right: 10px; /* Add spacing between input and count */
+    }
+    #search-input:focus {
+      outline: none;
+      border-color: var(--primary); /* Highlight border on focus */
+      box-shadow: 0 0 5px var(--primary-glow); /* Subtle glow effect */
+    }
+    #count-container {
+      flex: 0 0 auto;       /* Do not grow or shrink */
+      margin-right: 0;
+      font-size: 16px;
+      color: var(--dark-grey);
+      white-space: nowrap; /* Prevent text wrapping */
+    }
+    #count {
+      font-weight: bold;
+    }
+    #domains-left-text {
+      display: none;
+    }
+
+    /* Autocomplete dropdown styling */
+    #autocomplete-container {
+      position: absolute;
+      top: 50px; /* below the search bar */
+      left: 10px;
+      background: var(--background);
+      border: 1px solid var(--border-color);
+      border-radius: 4px; /* Added for consistency */
+      width: calc(100% - 2%);
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      box-shadow: 0 2px 5px var(--shadow); /* Added subtle shadow */
+      z-index: 3200;
+    }
+    .autocomplete-item {
+      padding: 8px;
+      cursor: pointer;
+    }
+    .autocomplete-item:hover,
+    .autocomplete-item.active {
+      background: var(--autocomplete-hover);
+      color: var(--text-invert);
+    }
+
+    /* Basic styling for the cells */
+    .cell {
+      stroke: var(--dark-grey);
+      fill: var(--cell-fill);
+      color: var(--cell-color); /* FIXME: This isn't working, text is always black */
+      /* Per ChatGPT this needs to set the SVG #visualization .cell text color - not worth it */
+      rx: 8;
+      ry: 8;
+      /* transition: fill 0.3s; */
+    }
+    .cell:hover {
+      fill: var(--primary);
+    }
+    /* Text styling */
+    text {
+      pointer-events: none;
+      font-size: 14px;
+      fill: var(--text-color);
+      font-weight: bold;  
+      dominant-baseline: middle;
+    }
+
+    /* Tooltip styling */
+    #tooltip {
+      position: absolute;
+      background: var(--background);
+      border: 1px solid var(--dark-grey);
+      padding: 10px;
+      font-size: 14px;
+      pointer-events: none;
+      display: none;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px var(--shadow);
+      z-index: 1000;
+    }
+    /* Detail Card (Modal domain detail pop-out) styling */
+    #detail-card {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--background);
+      border: 2px solid var(--border-color);
+      padding: 20px;
+      box-shadow: 0 2px 10px var(--shadow);
+      display: none;
+      border-radius: 8px; /* Added for a modern look */
+      max-width: 90%;
+      z-index: 2000;
+    }
+    #detail-card h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+    #detail-card p {
+      font-size: 16px;
+    }
+    #detail-card a {
+      color: var(--primary);
+    }
+    #detail-card button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      font-size: 14px;
+      background: var(--primary);
+      color: var(--text-invert);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #detail-card button:hover {
+      background: var(--primary-glow);
+      color: var(--text);
+    }
+    #detail-card #close-card {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+
+    #survey-welcome {
+      max-width: 600px;
+      margin: 40px auto 0 auto;
+      padding: 24px 20px 20px 20px;
+      background: var(--background);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    #survey-welcome h2 {
+        margin-bottom:10px;
+    } 
+
+    #survey-welcome p {
+        margin-bottom: 18px;
+    }
+
+    #survey-form {
+
+    }
+
+    #survey-form label {
+        font-weight:bold;
+    }
+
+    #survey-form select {
+        margin-left:10px;
+        margin-bottom:18px;
+    }
+
+    #survey-form #authority-container {
+        display:none;
+        margin-top:10px;
+    }
+
+    #survey-form #authority-container label {
+        font-weight:bold;
+    }
+
+    #survey-form #authority-container select {
+        margin-left:10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="hamburger-container">
+    <div id="hamburger-menu-icon">&#9776;</div>
+    <!-- Hamburger Menu Dropdown -->
+    <div id="hamburger-menu">
+        <a id="menu-stats" href="/stats">Stats</a>
+        <a id="menu-signout" href="/signout">Signout</a>
+        <a id="menu-about" href="/about">About</a>
+        <a id="menu-github" href="https://github.com/COREONYX-GS/.GOVology">GitHub</a>
+    </div>
+  </div>
+
+  <!-- Fixed Search Bar -->
+  <div id="search-container">
+    <!-- Search Input -->
+    <h1>.GOVology Survey</h1> 
+    <div id="count-container">
+      <text id="count">1,400 domains left</text>
+      <span id="domains-left-text" style="display:none;"> domains left</span>
+    </div>
+  </div>
+
+  <div id="content">
+    <div id="survey-welcome">
+        <h2>Welcome to .GOVology's Domain Survey!</h2>
+        <p>
+          Help us catalogue and verify .gov domains! Please select the appropriate scope for your review. If you are working with a State, Local, Tribal, or Territorial government, specify the authority below.
+        </p>
+        <form id="survey-form" action="/survey" method="POST">
+          <label for="scope-select">Scope:</label>
+          <select id="scope-select" name="scope">
+            <option value="federal">Federal - Executive</option>
+            <option value="sltt">State/Local/Tribal/Territorial</option>
+            <option value="other">Other</option>
+          </select>
+          <br>
+          <div id="authority-container">
+            <label for="authority-select">Authority:</label>
+            <select id="authority-select" name="authority">
+                <!-- Options will be populated dynamically based on the selected scope -->
+            </select> 
+          </div> <!-- End of Authority Container -->
+          <br>
+          <button type="submit" id="start-survey-btn">Start Survey</button>
+        </form> <!-- End of Survey Form -->
+    </div> <!-- End of Survey Welcome -->
+  </div> <!-- End of Content Container -->
+
+  <!-- Detail Card for click interactions -->
+  <div id="detail-card">
+    <h2 id="card-title"></h2>
+    <p id="card-content"></p>
+    <button id="close-card">X</button>
+  </div>
+  
+<!-- d3.js from a CDN -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script defer>
+    const GOV_SCOPE = [
+      { name: "Federal - Executive", value: "federal" },
+      { name: "State/Local/Tribal/Territorial", value: "sltt" },
+      { name: "Other", value: "other" }
+    ];
+    const GOV_STATES = [
+      "Alabama",
+      "Alaska",
+      "Arizona",
+      "Arkansas",
+      "California",
+      "Colorado",
+      "Connecticut",
+      "Delaware",
+      "Florida",
+      "Georgia",
+      "Hawaii",
+      "Idaho",
+      "Illinois",
+      "Indiana",
+      "Iowa",
+      "Kansas",
+      "Kentucky",
+      "Louisiana",
+      "Maine",
+      "Maryland",
+      "Massachusetts",
+      "Michigan",
+      "Minnesota",
+      "Mississippi",
+      "Missouri",
+      "Montana",
+      "Nebraska",
+      "Nevada",
+      "New Hampshire",
+      "New Jersey",
+      "New Mexico",
+      "New York",
+      "North Carolina",
+      "North Dakota",
+      "Ohio",
+      "Oklahoma",
+      "Oregon",
+      "Pennsylvania",
+      "Rhode Island",
+      "South Carolina",
+      "South Dakota",
+      "Tennessee",
+      "Texas",
+      "Utah",
+      "Vermont",
+      "Virginia",
+      "Washington",
+      "West Virginia",
+      "Wisconsin",
+      "Wyoming",
+      "District of Columbia"
+    ];
+
+    // Populate authority-select with GOV_STATES
+    function populateAuthorityOptions() {
+      const authoritySelect = document.getElementById('authority-select');
+      if (authoritySelect) {
+        authoritySelect.innerHTML = ""; // Clear existing options
+        GOV_STATES.forEach(state => {
+          const option = document.createElement('option');
+          option.value = state;
+          option.textContent = state;
+          authoritySelect.appendChild(option);
+        });
+      }
+    }
+
+    // Attach event listener after DOM is loaded
+    window.addEventListener('DOMContentLoaded', function() {
+      const scopeSelect = document.getElementById('scope-select');
+      const authorityContainer = document.getElementById('authority-container');
+      if (scopeSelect) {
+        scopeSelect.addEventListener('change', function() {
+          if (this.value === 'sltt') {
+            authorityContainer.style.display = '';
+            populateAuthorityOptions();
+          } else {
+            authorityContainer.style.display = 'none';
+          }
+        });
+
+        // If "sltt" is selected by default, show and populate authority
+        if (scopeSelect.value === 'sltt') {
+          authorityContainer.style.display = '';
+          populateAuthorityOptions();
+        }
+      }
+    });
+
+    // Toggle hamburger menu when clicking the icon
+    d3.select("#hamburger-menu-icon").on("click", function() {
+      const menu = d3.select("#hamburger-menu");
+      const currentDisplay = menu.style("display");
+      menu.style("display", currentDisplay === "none" || currentDisplay === "" ? "block" : "none");
+    });
+
+    // Callback for the "About" menu item
+    d3.select("#menu-about").on("click", function(event) {
+      alert("Help catalogue .gov domains, visit GitHub for details or sugestions!");
+      d3.select("#hamburger-menu").style("display", "none");
+      event.preventDefault();
+    });
+
+    // Show/hide "domains left" text based on #count value
+    function updateDomainsLeftText() {
+      const count = document.getElementById('count');
+      const domainsLeftText = document.getElementById('domains-left-text');
+      if (count && domainsLeftText) {
+        if (count.textContent && count.textContent.trim() !== "") {
+          domainsLeftText.style.display = "";
+        } else {
+          domainsLeftText.style.display = "none";
+        }
+      }
+    }
+
+    // Observe changes to #count and update accordingly
+    const countObserver = new MutationObserver(updateDomainsLeftText);
+    const countElem = document.getElementById('count');
+    if (countElem) {
+      countObserver.observe(countElem, { childList: true, characterData: true, subtree: true });
+      updateDomainsLeftText();  // Initial check
+    }
+</script>  
+  
+</body>
+</html>
