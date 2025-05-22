@@ -10,6 +10,21 @@
 
 export default {
 	async fetch(request, env, ctx) {
-		return new Response('Hello World!');
+		const url = new URL(request.url);
+
+		if (request.method.toUpperCase() === "GET" && url.pathname === "/") { 
+
+			try {
+				const htmlContent = await env.ASSETS.fetch('https://assets.local/survey.html');
+
+				return new Response(await htmlContent.text(), {
+					headers: { "Content-Type": "text/html" },
+				});
+			} catch (err) {
+				console.log({ "message": "Error reading the HTML file", "error": err });
+				return new Response("Error loading the survey.", { status: 500 });
+			}
+
+		} // end if GET '/'
 	},
 };
