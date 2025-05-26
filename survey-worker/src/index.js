@@ -28,5 +28,27 @@ export default {
 			}
 
 		} // end if GET '/'
-	},
+		else if (request.method.toUpperCase() === "POST" && url.pathname === "/survey") {
+
+			try {
+				const formData = await request.formData();
+				const surveyData = Object.fromEntries(formData.entries());
+
+				// Here you would typically process the survey data, e.g., save it to a database
+				console.log("Survey Data Received:", surveyData);
+
+				return new Response( JSON.stringify(surveyData, null, 2), {
+						status: 200, headers: { "Content-Type": "application/json" } }
+				);
+			} catch (err) {
+				console.log({ "message": "Error processing the survey request", "error": err });
+				return new Response("Error processing the survey request.", { status: 500 });
+			}
+
+		} // end if POST '/survey' - this is how we start the survey
+		else {
+			console.log("Unhandled request method or path:", request.method, url.pathname);
+			return new Response("Not Found", { status: 404 });
+		}
+	}
 };
