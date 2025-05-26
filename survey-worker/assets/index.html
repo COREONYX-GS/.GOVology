@@ -371,6 +371,20 @@
       }
     }
 
+    function showDomain(domain) {
+        document.getElementById('card-title').textContent = domain['Domain name'];
+        let cardContent = document.getElementById('card-content');
+
+        const { ['Domain name']: _, ...metaData } = domain; // metaData is domain minus 'Domain name'
+
+        Object.entries(metaData).map(([key, value]) => [key, value || "N/A"]).map(
+          // add key: value to #card-content
+          ([key, value]) => {
+            const p = document.createElement('p');
+            p.textContent = `${key}: ${value}`;
+            cardContent.appendChild(p);
+          }
+        );
     }
 
     // Attach event listener after DOM is loaded
