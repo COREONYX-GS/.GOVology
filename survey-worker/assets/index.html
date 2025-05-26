@@ -458,14 +458,17 @@
         scopeSelect.addEventListener('change', function() {
           if (this.value === 'sltt') {
             authorityContainer.style.display = 'block';
+            authority.disabled = false;
           } else {
             authorityContainer.style.display = 'none';
+            authority.disabled = true;
           }
         });
 
         // If "sltt" is selected by default, show and populate authority
         if (scopeSelect.value === 'sltt') {
           authorityContainer.style.display = 'block';
+          authority.disabled = false;
         }
       }
 
