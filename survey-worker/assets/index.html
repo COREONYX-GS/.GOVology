@@ -371,18 +371,6 @@
       }
     }
 
-    // Populate authority-select with GOV_STATES
-    function populateAuthorityOptions() {
-      const authoritySelect = document.getElementById('authority-select');
-      if (authoritySelect) {
-        authoritySelect.innerHTML = ""; // Clear existing options
-        GOV_STATES.forEach(state => {
-          const option = document.createElement('option');
-          option.value = state;
-          option.textContent = state;
-          authoritySelect.appendChild(option);
-        });
-      }
     }
 
     // Attach event listener after DOM is loaded
