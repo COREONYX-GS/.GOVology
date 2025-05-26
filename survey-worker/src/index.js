@@ -65,8 +65,9 @@ export default {
 				// Here you would typically process the survey data, e.g., save it to a database
 				console.log("Survey Data Received:", surveyData);
 
-				return new Response( JSON.stringify(surveyData, null, 2), {
-						status: 200, headers: { "Content-Type": "application/json" } }
+				return new Response( JSON.stringify( { data: surveyData, cookies: cookies }, null, 2), {
+						status: 200, headers: { "Content-Type": "application/json",  //for MaxAge - One Day in seconds is: 86400
+												'Set-Cookie': cookieHeader('session_id', sessionId, { path: '/', maxAge: 300 }) } }
 				);
 			} catch (err) {
 				console.log({ "message": "Error processing the survey request", "error": err });
