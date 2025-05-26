@@ -468,6 +468,20 @@
           authorityContainer.style.display = 'block';
         }
       }
+
+      // Add form submission handler
+      const surveyForm = document.getElementById('survey-form');
+      if (surveyForm) {
+        surveyForm.addEventListener('submit', function(e) {
+          const scope = document.getElementById('scope-select');
+          const authority = document.getElementById('authority-select');
+          if (scope && authority && scope.value !== 'sltt') {
+            authority.disabled = true; // disables so it won't be submitted
+          } else if (authority) {
+            authority.disabled = false;
+          }
+        });
+      }
     });
 
     // Toggle hamburger menu when clicking the icon
