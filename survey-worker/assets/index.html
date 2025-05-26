@@ -393,41 +393,75 @@
       d3.csv("https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-full.csv").then(data => {
         domainData = data;
 
-      const scopeSelect = document.getElementById('scope-select');
-      const authorityContainer = document.getElementById('authority-container');
-      
-      if (scopeSelect) {
+        // Extract unique values from 'domain type' column
+        const uniqueDomainTypes = Array.from(
+          new Set(domainData.map(row => row['Domain type']).filter(Boolean))
+        ).map(type => ({ value: type, name: type }));
 
+        populateScopeOptions(uniqueDomainTypes);
+
+        const scopeSelect = document.getElementById('scope-select');
         scopeSelect.addEventListener('change', function() {
-          if (this.value === 'sltt') {
-            authorityContainer.style.display = 'block';
-            authority.disabled = false;
-          } else {
-            authorityContainer.style.display = 'none';
-            authority.disabled = true;
-          }
+          const filter = this.value;
+          const domain_count = domainData.filter(row => row['Domain type'] === filter).length;
+          document.getElementById('count').textContent = domain_count + " domains";
         });
+        domain_count = domainData.filter(row => row['Domain type'] === document.getElementById('scope-select').value).length;
+        document.getElementById('count').textContent = domain_count + " domains";
 
-        // If "sltt" is selected by default, show and populate authority
-        if (scopeSelect.value === 'sltt') {
-          authorityContainer.style.display = 'block';
-          authority.disabled = false;
+        // Add form submission handler
+        const surveyForm = document.getElementById('survey-form');
+        if (surveyForm) {
+          surveyForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            const scope = document.getElementById('scope-select').value;
+            const formData = new FormData();
+            formData.append('scope', scope);
+
+            surveyData = domainData.filter(row => row['Domain type'] === scope);
+            
+            // Submit the form data via fetch
+            fetch(surveyForm.action, {
+              method: 'POST',
+              body: formData
+            }).then(response => {
+              if (response.ok) {
+                // delete the current elements in the  `#content` div and star the survey
+                document.getElementById('survey-welcome').style.display = 'none';
+
+                document.getElementById('card-title').textContent = ""; // Clear existing title
+                document.getElementById('card-content').textContent = ""; // Clear existing content
+                
+                // Populate the survey card with the first domain
+                const surveyCard = document.getElementById('detail-card');
+                const cardTitle = document.getElementById('card-title');
+                const cardContent = document.getElementById('card-content');
+
+                if (surveyData.length > 0) {
+                  showDomain();
+                  // Find the first domain without a "VOTE" value
+                  let firstDomain = surveyData.find(domain => !domain["VOTE"]);
+                  if (firstDomain) {
+                    showDomain(firstDomain);
+                    document.getElementById('detail-card').style.display = 'block';
+                  }
+                } else {
+                  alert("No unvoted domains found for this scope.");
+                }
+                
+              } else {
+                alert("Error submitting survey. Please try again.");
+              }
+            }).catch(error => {
+              console.error("Error submitting survey:", error);
+              alert("Error submitting survey. Please try again.");
+            });
+          });
         }
-      }
 
-      // Add form submission handler
-      const surveyForm = document.getElementById('survey-form');
-      if (surveyForm) {
-        surveyForm.addEventListener('submit', function(e) {
-          const scope = document.getElementById('scope-select');
-          const authority = document.getElementById('authority-select');
-          if (scope && authority && scope.value !== 'sltt') {
-            authority.disabled = true; // disables so it won't be submitted
-          } else if (authority) {
-            authority.disabled = false;
-          }
-        });
-      }
+      }).catch(error => {
+        console.error("Error loading data:", error);
+      });
     });
       
     // Toggle hamburger menu when clicking the icon
