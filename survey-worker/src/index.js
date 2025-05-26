@@ -7,6 +7,24 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
+function parseCookies(header) {
+  const cookies = {};
+  if (!header) return cookies;
+  header.split(';').forEach(part => {
+    const [key, ...v] = part.split('=');
+    cookies[key.trim()] = v.join('=').trim();
+  });
+  return cookies;
+}
+
+function cookieHeader(name, value, opts = {}) {
+  let cookie = `${name}=${value}`;
+  if (opts.path) cookie += `; Path=${opts.path}`;
+  if (opts.maxAge !== undefined) cookie += `; Max-Age=${opts.maxAge}`;
+  if (opts.httpOnly) cookie += '; HttpOnly';
+  if (opts.sameSite) cookie += `; SameSite=${opts.sameSite}`;
+  return cookie;
+}
 
 export default {
 	async fetch(request, env, ctx) {
