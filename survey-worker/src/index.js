@@ -46,6 +46,13 @@ export default {
 			}
 
 		} // end if GET '/'
+		else if (request.method.toUpperCase() === "GET" && url.pathname === "/logout") {
+			return Response.redirect(url.origin + '/', 302, {
+				headers: {
+					"Set-Cookie": cookieHeader('session_id', '', { path: '/', maxAge: 0 })
+				}
+			});
+		} // end if GET '/logout'
 		else if (request.method.toUpperCase() === "POST" && url.pathname === "/survey") {
 
 			try {
