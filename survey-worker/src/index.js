@@ -17,7 +17,7 @@ export default {
 		if (request.method.toUpperCase() === "GET" && url.pathname === "/") { 
 
 			try {
-				const htmlContent = await env.ASSETS.fetch('https://assets.local/survey.html');
+				const htmlContent = await env.ASSETS.fetch('https://assets.local/index.html');
 
 				return new Response(await htmlContent.text(), {
 					headers: { "Content-Type": "text/html" },
