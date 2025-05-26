@@ -417,6 +417,20 @@
       "District of Columbia"
     ];
 
+    // Populate scope-select with GOV_SCOPE
+    function populateScopeOptions() {
+      const scopeSelect = document.getElementById('scope-select');
+      if (scopeSelect) {
+        scopeSelect.innerHTML = ""; // Clear existing options
+        GOV_SCOPE.forEach(scope => {
+          const option = document.createElement('option');
+          option.value = scope.value;
+          option.textContent = scope.name;
+          scopeSelect.appendChild(option);
+        });
+      }
+    }
+
     // Populate authority-select with GOV_STATES
     function populateAuthorityOptions() {
       const authoritySelect = document.getElementById('authority-select');
@@ -433,13 +447,17 @@
 
     // Attach event listener after DOM is loaded
     window.addEventListener('DOMContentLoaded', function() {
+      populateAuthorityOptions();
+      populateScopeOptions();
+
       const scopeSelect = document.getElementById('scope-select');
       const authorityContainer = document.getElementById('authority-container');
+      
       if (scopeSelect) {
+
         scopeSelect.addEventListener('change', function() {
           if (this.value === 'sltt') {
-            authorityContainer.style.display = '';
-            populateAuthorityOptions();
+            authorityContainer.style.display = 'block';
           } else {
             authorityContainer.style.display = 'none';
           }
@@ -447,8 +465,7 @@
 
         // If "sltt" is selected by default, show and populate authority
         if (scopeSelect.value === 'sltt') {
-          authorityContainer.style.display = '';
-          populateAuthorityOptions();
+          authorityContainer.style.display = 'block';
         }
       }
     });
