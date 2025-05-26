@@ -54,6 +54,9 @@ export default {
 			});
 		} // end if GET '/logout'
 		else if (request.method.toUpperCase() === "POST" && url.pathname === "/survey") {
+			if (!sessionId) {
+				sessionId = crypto.randomUUID();
+			}
 
 			try {
 				const formData = await request.formData();
