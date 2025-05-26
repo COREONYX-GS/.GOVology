@@ -389,6 +389,9 @@
 
     // Attach event listener after DOM is loaded
     window.addEventListener('DOMContentLoaded', function() {
+      // Load data and initialize.
+      d3.csv("https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-full.csv").then(data => {
+        domainData = data;
 
       const scopeSelect = document.getElementById('scope-select');
       const authorityContainer = document.getElementById('authority-container');
