@@ -331,9 +331,6 @@
         <form id="survey-form" action="/survey" method="POST">
           <label for="scope-select">Scope:</label>
           <select id="scope-select" name="scope">
-            <option value="federal">Federal - Executive</option>
-            <option value="sltt">State/Local/Tribal/Territorial</option>
-            <option value="other">Other</option>
           </select>
           <br>
           <div id="authority-container">
@@ -358,67 +355,10 @@
 <!-- d3.js from a CDN -->
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script defer>
-    const GOV_SCOPE = [
-      { name: "Federal - Executive", value: "federal" },
-      { name: "State/Local/Tribal/Territorial", value: "sltt" },
-      { name: "Other", value: "other" }
-    ];
-    const GOV_STATES = [
-      "Alabama",
-      "Alaska",
-      "Arizona",
-      "Arkansas",
-      "California",
-      "Colorado",
-      "Connecticut",
-      "Delaware",
-      "Florida",
-      "Georgia",
-      "Hawaii",
-      "Idaho",
-      "Illinois",
-      "Indiana",
-      "Iowa",
-      "Kansas",
-      "Kentucky",
-      "Louisiana",
-      "Maine",
-      "Maryland",
-      "Massachusetts",
-      "Michigan",
-      "Minnesota",
-      "Mississippi",
-      "Missouri",
-      "Montana",
-      "Nebraska",
-      "Nevada",
-      "New Hampshire",
-      "New Jersey",
-      "New Mexico",
-      "New York",
-      "North Carolina",
-      "North Dakota",
-      "Ohio",
-      "Oklahoma",
-      "Oregon",
-      "Pennsylvania",
-      "Rhode Island",
-      "South Carolina",
-      "South Dakota",
-      "Tennessee",
-      "Texas",
-      "Utah",
-      "Vermont",
-      "Virginia",
-      "Washington",
-      "West Virginia",
-      "Wisconsin",
-      "Wyoming",
-      "District of Columbia"
-    ];
+    let domainData = null;
+    let surveyData = null;
 
-    // Populate scope-select with GOV_SCOPE
-    function populateScopeOptions() {
+    function populateScopeOptions(GOV_SCOPE) {
       const scopeSelect = document.getElementById('scope-select');
       if (scopeSelect) {
         scopeSelect.innerHTML = ""; // Clear existing options
