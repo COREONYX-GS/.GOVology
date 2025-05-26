@@ -464,6 +464,50 @@
       countObserver.observe(countElem, { childList: true, characterData: true, subtree: true });
       updateDomainsLeftText();  // Initial check
     }
+
+    // Close Domain Detail Modal when pop-out "Close" is clicked
+    d3.select("#close-card").on("click", () => {
+        d3.select("#detail-card").style("display", "none");
+        d3.select("#survey-welcome").style("display", "block");
+    });
+
+    function handleGesture() {
+      let diffX = touchEndX - touchStartX;
+      let diffY = touchEndY - touchStartY;
+  
+      if (Math.abs(diffX) > Math.abs(diffY)) {
+          if (touchEndX < touchStartX) { domainNext(); }
+          if (touchEndX > touchStartX) { domainPrev(); }
+      } else if (diffY > 50) {
+          domainVoteNo();
+      } else if (diffY > 50) {
+          domainVoteYes();
+      }
+      showDomain()
+    }
+
+    document.addEventListener('keydown', function(event) {
+      switch(event.key) {
+          case 'ArrowUp':
+            domainVoteNo();
+            break;
+          case 'ArrowDown':
+            domainVoteYes();
+            break;
+          case 'ArrowLeft':
+            domainPrev();
+            break;
+          case 'ArrowRight':
+            domainNext();
+            break;
+        }
+        showDomain()
+      });
+
+          document.addEventListener("DOMContentLoaded", async () => {
+      await fetchImages();
+      showImage();
+  });
 </script>  
   
 </body>
