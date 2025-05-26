@@ -11,6 +11,8 @@
 export default {
 	async fetch(request, env, ctx) {
 		const url = new URL(request.url);
+		console.log("URL PATH:", url.pathname);
+		console.log("FETCH REQUEST:", request.method, request.url);
 
 		if (request.method.toUpperCase() === "GET" && url.pathname === "/") { 
 
