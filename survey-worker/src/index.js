@@ -53,6 +53,15 @@ export default {
 				}
 			});
 		} // end if GET '/logout'
+		else if (request.method.toUpperCase() === "GET" && url.pathname === "/votes") {
+						
+			const sql = `SELECT domain, votes_y, votes_n FROM votes ORDER BY domain;`;
+			const { results } = await env.DB.prepare(sql).all();
+			
+			return new Response( JSON.stringify(results, null, 2),
+								{ status: 200, headers: { "Content-Type": "application/json" } } );
+
+		} // end if GET '/votes' for stats
 		else if (request.method.toUpperCase() === "POST" && url.pathname === "/vote") {
 			console.log("Processing vote request...");
 			const voteData = await request.json();
