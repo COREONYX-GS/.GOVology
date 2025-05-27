@@ -450,7 +450,7 @@
       const currentDomain = document.getElementById('card-title').textContent;
       const currentIndex = surveyData.findIndex(d => d['Domain name'] === currentDomain);
       const prevIndex = (currentIndex - 1 + surveyData.length) % surveyData.length; // Wrap backwards to end if necessary
-      showDomain(nextIndex);
+      showDomain(prevIndex);
     }
 
     function domainVoteYes() {
