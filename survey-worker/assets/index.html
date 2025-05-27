@@ -751,17 +751,21 @@
       // Next and Prev - explicitly call ShowDomain w/ an index so that's why they're not calling it here
       switch(event.key) {
         case 'ArrowUp':
+          console.log("Voting No");
           domainVoteNo();
           showDomain();
           break;
         case 'ArrowDown':
+          console.log("Voting Yes");
           domainVoteYes();
           showDomain();
           break;
         case 'ArrowLeft':
+          console.log("Domain Prev");
           domainPrev();
           break;
         case 'ArrowRight':
+          console.log("Domain Next");
           domainNext();
           break;
         default:
