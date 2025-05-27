@@ -554,21 +554,21 @@
 
     document.addEventListener('keydown', function(event) {
       switch(event.key) {
-          case 'ArrowUp':
-            domainVoteNo();
-            break;
-          case 'ArrowDown':
-            domainVoteYes();
-            break;
-          case 'ArrowLeft':
-            domainPrev();
-            break;
-          case 'ArrowRight':
-            domainNext();
-            break;
-        }
-        showDomain()
-      });
+        case 'ArrowUp':
+          domainVoteNo();
+          break;
+        case 'ArrowDown':
+          domainVoteYes();
+          break;
+        case 'ArrowLeft':
+          domainPrev();
+          break;
+        case 'ArrowRight':
+          domainNext();
+          break;
+      }
+      showDomain()
+    });
 
           document.addEventListener("DOMContentLoaded", async () => {
       await fetchImages();
