@@ -478,23 +478,9 @@
                 document.getElementById('card-title').textContent = ""; // Clear existing title
                 document.getElementById('card-content').textContent = ""; // Clear existing content
                 
-                // Populate the survey card with the first domain
-                const surveyCard = document.getElementById('detail-card');
-                const cardTitle = document.getElementById('card-title');
-                const cardContent = document.getElementById('card-content');
-
-                if (surveyData.length > 0) {
-                  showDomain();
-                  // Find the first domain without a "VOTE" value
-                  let firstDomain = surveyData.find(domain => !domain["VOTE"]);
-                  if (firstDomain) {
-                    showDomain(firstDomain);
-                    document.getElementById('detail-card').style.display = 'block';
-                  }
-                } else {
-                  alert("No unvoted domains found for this scope.");
-                }
+                showDomain();
                 
+                document.getElementById('detail-card').style.display = 'block';
               } else {
                 alert("Error submitting survey. Please try again.");
               }
