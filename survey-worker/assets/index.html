@@ -442,8 +442,6 @@
           const domain_count = domainData.filter(row => row['Domain type'] === filter).length;
           document.getElementById('count').textContent = domain_count + " domains";
         });
-        domain_count = domainData.filter(row => row['Domain type'] === document.getElementById('scope-select').value).length;
-        document.getElementById('count').textContent = domain_count + " domains";
 
         // Add form submission handler
         const surveyForm = document.getElementById('survey-form');
