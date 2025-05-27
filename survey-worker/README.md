@@ -11,6 +11,7 @@ The following wrangler commands assume that the [`wrangler`](https://developers.
 wrangler d1 create govology
 wrangler d1 migrations apply govology ## Note: not clear if this works
 npx wrangler d1 execute govology --local --file="./migrations/0001_init.sql"
+npx wrangler d1 execute govology --local --command="DROP table votes"
 
 # Test the database exists, --local can be swapped with --remote
  npx wrangler d1 execute govology --local --command="SELECT * from votes"
