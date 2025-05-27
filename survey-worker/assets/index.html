@@ -730,7 +730,11 @@
       touchStartY = event.touches[0].screenY;
     }, false);
 
-    document.getElementById('detail-card').addEventListener('touchend', function(event) {
+    //document.getElementById('detail-card').addEventListener('touchend', function(event) {
+    document.addEventListener('touchend', function(event) {
+      const detailCard = document.getElementById('detail-card');
+      if (detailCard.style.display !== 'block') return; // Ignore key events if detail card is not visible
+
       if (isMultiTouch) return; // Ignore if a pinch gesture occurred
 
       touchEndX = event.changedTouches[0].screenX;
