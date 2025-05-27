@@ -547,10 +547,11 @@
           if (touchEndX > touchStartX) { domainPrev(); }
       } else if (diffY > 50) {
           domainVoteNo();
+          showDomain();
       } else if (diffY > 50) {
           domainVoteYes();
+          showDomain();
       }
-      showDomain()
     }
 
     document.getElementById('detail-card').addEventListener('touchstart', function(event) {
