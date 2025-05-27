@@ -55,10 +55,11 @@ export default {
 		} // end if GET '/logout'
 		else if (request.method.toUpperCase() === "POST" && url.pathname === "/vote") {
 			console.log("Processing vote request...");
+			const voteData = await request.json();
 			try {
-				const formData = await request.formData();
+				
+				console.log("Vote Data Received:", voteData);
 
-				console.log("Vote Data Received:", Object.fromEntries(formData.entries()));
 
 				return new Response( JSON.stringify( { data: formData }, null, 2), {
 						status: 200, headers: { "Content-Type": "application/json" } });
