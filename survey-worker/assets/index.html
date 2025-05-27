@@ -465,7 +465,7 @@
 
     function domainVoteNo() {
       const currentDomain = document.getElementById('card-title').textContent;
-      const domain_idx = surveyData.findIndex(d => d['Domain name'] === currentDomain['Domain name']);
+      const domain_idx = surveyData.findIndex(d => d['Domain name'] === currentDomain);
 
       if (domain_idx !== -1) {
         surveyData[domain_idx]["VOTE"] = false;
