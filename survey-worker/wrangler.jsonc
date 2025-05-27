@@ -30,13 +30,19 @@
 	 * databases, object storage, AI inference, real-time communication and more.
 	 * https://developers.cloudflare.com/workers/runtime-apis/bindings/
 	 */
-
+     "d1_databases": [
+       {
+         "binding": "DB",
+         "database_name": "govology",
+         "database_id": "3fb90213-7509-47a8-9289-6b0d479480ec"
+       }
+     ],
 	/**
 	 * Environment Variables
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
 	 */
 	// "vars": { "MY_VARIABLE": "production_value" },
-	
+
 	/**
 	 * Note: Use secrets to store sensitive data.
 	 * https://developers.cloudflare.com/workers/configuration/secrets/
