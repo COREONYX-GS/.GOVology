@@ -501,14 +501,72 @@
       document.getElementById('card-title').textContent = domain['Domain name'];
 
       const { ['Domain name']: _, ...metaData } = domain; // metaData is domain minus 'Domain name'
-      Object.entries(metaData).map(([key, value]) => [key, value || "N/A"]).map(
-        // add key: value to #card-content
-        ([key, value]) => {
-          const p = document.createElement('p');
-          p.textContent = `${key}: ${value}`;
-          cardContent.appendChild(p);
+      Object.keys(metaData).forEach(key => {
+        const value = metaData[key];
+
+        if (false && key === 'VOTE') {
+        // —— build a thumbs-up/down widget ——
+        const voteContainer = document.createElement('div');
+        voteContainer.classList.add('vote-container');
+
+        const upBtn = document.createElement('button');
+        upBtn.type = 'button';
+        upBtn.innerText = '👍';
+        upBtn.title = 'Vote Yes';
+        upBtn.classList.toggle('selected', value === true);
+        upBtn.addEventListener('click', () => {
+          domainVoteYes();
+          showDomain();
+        });
+
+        const downBtn = document.createElement('button');
+        downBtn.type = 'button';
+        downBtn.innerText = '👎';
+        downBtn.title = 'Vote No';
+        downBtn.classList.toggle('selected', value === false);
+        downBtn.addEventListener('click', () => {
+          domainVoteNo();
+          showDomain();
+        });
+
+        voteContainer.append(upBtn, downBtn);
+        cardContent.append(voteContainer);
+      } else if (key === 'VOTE') { 
+        const p = document.createElement('p');
+
+        const display = value == null || value === ''
+          ? ''
+          : value === true ? "Yes - Keep" : "No - Sunset";
+
+        p.textContent = `${key}: ${display}`;
+
+        if (value === false) {
+          p.classList.add('voteChoiceNo');
+        } else if (value === true) {
+          p.classList.add('voteChoiceYes');
         }
-      );
+        cardContent.appendChild(p);
+
+      } else { // —— default: show other metadata, with friendly fallback —— 
+        const p = document.createElement('p');
+        // treat null|undefined|'' as "Pending" instead of "N/A"
+        const display = value == null || value === ''
+          ? ''
+          : String(value);
+        p.textContent = `${key}: ${display}`;
+        cardContent.appendChild(p);
+      } 
+
+      });
+      //Object.entries(metaData).map(([key, value]) => [key, value || "N/A"]).map(
+      //  // add key: value to #card-content
+      //  ([key, value]) => {
+      //    const p = document.createElement('p');
+      //    p.textContent = `${key}: ${value}`;
+      //    cardContent.appendChild(p);
+      //  }
+      //);
+
     } // end of showDomain()
 
     // Attach event listener after DOM is loaded
