@@ -743,7 +743,12 @@
       handleGesture();
     }, false);
 
-    document.getElementById('detail-card').addEventListener('keydown', function(event) {
+    //document.getElementById('detail-card').addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', function(event) {
+      const detailCard = document.getElementById('detail-card');
+      if (detailCard.style.display !== 'block') return; // Ignore key events if detail card is not visible
+
+      // Next and Prev - explicitly call ShowDomain w/ an index so that's why they're not calling it here
       switch(event.key) {
         case 'ArrowUp':
           domainVoteNo();
