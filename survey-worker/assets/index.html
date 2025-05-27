@@ -365,6 +365,9 @@
     let domainData = null;
     let surveyData = null;
 
+    let touchStartX = 0, touchStartY = 0, touchEndX = 0, touchEndY = 0;
+    let isMultiTouch = false;
+
     // Get `name` from cookies 
     function getCookie(name) {
       const value = `; ${document.cookie}`;
