@@ -567,6 +567,9 @@
       //  }
       //);
 
+      // Update count of remaining domains
+      document.getElementById('count').textContent = surveyData.filter(row => !row.hasOwnProperty("VOTE")).length + " domains";
+
     } // end of showDomain()
 
     // Attach event listener after DOM is loaded
