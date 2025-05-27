@@ -696,16 +696,22 @@
     function handleGesture() {
       let diffX = touchEndX - touchStartX;
       let diffY = touchEndY - touchStartY;
+      const absX = Math.abs(diffX);
+      const absY = Math.abs(diffY);
+      const threshold = 30; // minimum swipe px
+
+      const detailCard = document.getElementById('detail-card');
+      if (detailCard.style.display !== 'block') return; // Ignore key events if detail card is not visible
   
-      if (Math.abs(diffX) > Math.abs(diffY)) {
-          if (touchEndX < touchStartX) { domainNext(); }
-          if (touchEndX > touchStartX) { domainPrev(); }
-      } else if (diffY > 50) {
-          domainVoteNo();
-          showDomain();
-      } else if (diffY > 50) {
-          domainVoteYes();
-          showDomain();
+      if (absX > absY && absX > threshold) {
+        // horizontal swipe
+        if (diffX < 0) { domainNext(); }
+        else          { domainPrev(); }
+      } 
+      else if (absY > threshold) {
+        // vertical swipe
+        if (diffY < 0) { domainVoteYes(); showDomain(); } // swipe up
+        else           { domainVoteNo();  showDomain(); } // swipe down
       }
     }
 
