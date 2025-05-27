@@ -389,21 +389,34 @@
       }
     }
 
-    function showDomain(domain) {
-        document.getElementById('card-title').textContent = domain['Domain name'];
-        let cardContent = document.getElementById('card-content');
+    function showDomain() {
+      const cardTitle = document.getElementById('card-content');
+      const cardContent = document.getElementById('card-content');
 
-        const { ['Domain name']: _, ...metaData } = domain; // metaData is domain minus 'Domain name'
+      const sessionId = getCookie('session_id');
 
-        Object.entries(metaData).map(([key, value]) => [key, value || "N/A"]).map(
-          // add key: value to #card-content
-          ([key, value]) => {
-            const p = document.createElement('p');
-            p.textContent = `${key}: ${value}`;
-            cardContent.appendChild(p);
-          }
-        );
-    }
+      if ( surveyData.length <= 0 || !surveyData.some(domain => domain["VOTE"]) ) {
+        cardTitle.textContent = "Voting Complete!";
+        cardContent.innerHTML = `No remaining domains found for this scope.`;
+        cardContent.innerHTML += "<p>Thank you for your participation!</p>";
+        cardContent.innerHTML += `<p>Your session ID: ${sessionId}</p>`;
+        return;
+      }
+        
+      domain = surveyData.find(domain => !domain["VOTE"]);
+
+      document.getElementById('card-title').textContent = domain['Domain name'];
+
+      const { ['Domain name']: _, ...metaData } = domain; // metaData is domain minus 'Domain name'
+      Object.entries(metaData).map(([key, value]) => [key, value || "N/A"]).map(
+        // add key: value to #card-content
+        ([key, value]) => {
+          const p = document.createElement('p');
+          p.textContent = `${key}: ${value}`;
+          cardContent.appendChild(p);
+        }
+      );
+    } // end of showDomain()
 
     // Attach event listener after DOM is loaded
     window.addEventListener('DOMContentLoaded', function() {
