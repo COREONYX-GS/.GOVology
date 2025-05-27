@@ -764,6 +764,11 @@
       updateDomainsLeftText();  // Initial check
     }
 
+    // Close Stats Modal when pop-out "Close" is clicked
+    d3.select("#close-stats").on("click", () => {
+        d3.select("#menu-stats").dispatch("click"); // Trigger the click handler to toggle visibility
+    });
+
     // Close Domain Detail Modal when pop-out "Close" is clicked
     d3.select("#close-card").on("click", () => {
         d3.select("#detail-card").style("display", "none");
