@@ -404,9 +404,15 @@
         cardContent.innerHTML += `<p>Your session ID: ${sessionId}</p>`;
         return;
       }
-        
-      domain = surveyData.find(domain => !domain["VOTE"]);
-
+      
+      let domain = null;
+      if (idx < 0) {
+        domain = surveyData.find(domain => !domain["VOTE"]);
+      }
+      else if (idx) {
+        domain = surveyData[idx];
+      }
+      
       document.getElementById('card-title').textContent = domain['Domain name'];
 
       const { ['Domain name']: _, ...metaData } = domain; // metaData is domain minus 'Domain name'
