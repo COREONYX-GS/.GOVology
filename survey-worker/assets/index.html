@@ -417,19 +417,13 @@
     }
 
     function postVote(domain) {
-      const formData = new FormData();
-      formData.append('domain', domain['Domain name']);
-      formData.append('vote', domain['VOTE']);
-
       const sessionId = getCookie('session_id');
-      if (sessionId) {
-        formData.append('session_id', sessionId);
-      }
-            
+
       // Post vote to the server
       fetch('/vote', {
         method: 'POST',
-        body: formData
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify( { domain: domain['Domain name'], vote: domain['VOTE'], session_id: sessionId } )
       }).then(response => {
         if (!response.ok) {
           console.error("Error posting vote:", response.statusText);
