@@ -450,6 +450,11 @@
             const formData = new FormData();
             formData.append('scope', scope);
 
+            const sessionId = getCookie('session_id');
+            if (sessionId) {
+              formData.append('session_id', sessionId);
+            }
+
             surveyData = domainData.filter(row => row['Domain type'] === scope);
             
             // Submit the form data via fetch
