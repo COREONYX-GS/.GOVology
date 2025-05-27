@@ -445,6 +445,7 @@
         if (surveyForm) { // Add form submission handler
           surveyForm.addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent default form submission
+            
             const scope = document.getElementById('scope-select').value;
             const formData = new FormData();
             formData.append('scope', scope);
