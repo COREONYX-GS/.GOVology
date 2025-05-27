@@ -53,6 +53,20 @@ export default {
 				}
 			});
 		} // end if GET '/logout'
+		else if (request.method.toUpperCase() === "POST" && url.pathname === "/vote") {
+			console.log("Processing vote request...");
+			try {
+				const formData = await request.formData();
+
+				console.log("Vote Data Received:", Object.fromEntries(formData.entries()));
+
+				return new Response( JSON.stringify( { data: formData }, null, 2), {
+						status: 200, headers: { "Content-Type": "application/json" } });
+			} catch (err) {
+				console.log({ "message": "Error processing the vote", "data": formData, "error": err });
+				return new Response("Error processing the vote	 request.", { status: 500 });
+			}
+		}
 		else if (request.method.toUpperCase() === "POST" && url.pathname === "/survey") {
 			if (!sessionId) {
 				sessionId = crypto.randomUUID();
