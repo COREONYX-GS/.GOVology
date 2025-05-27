@@ -389,6 +389,63 @@
       }
     }
 
+    function postVote(domain) {
+      const formData = new FormData();
+      formData.append('domain', domain['Domain name']);
+      formData.append('vote', domain['VOTE']);
+
+      const sessionId = getCookie('session_id');
+      if (sessionId) {
+        formData.append('session_id', sessionId);
+      }
+            
+      // Post vote to the server
+      fetch('/vote', {
+        method: 'POST',
+        body: formData
+      }).then(response => {
+        if (!response.ok) {
+          console.error("Error posting vote:", response.statusText);
+        }
+      }).catch(error => {
+        console.error("Error posting vote:", error);
+      });
+    }
+
+    function domainNext() {
+      const currentDomain = document.getElementById('card-title').textContent;
+      const currentIndex = surveyData.findIndex(d => d['Domain name'] === currentDomain);
+      const nextIndex = (currentIndex + 1) % surveyData.length; // Wrap around to the start
+      showDomain(nextIndex);
+    }
+
+    function domainPrev() {
+      const currentDomain = document.getElementById('card-title').textContent;
+      const currentIndex = surveyData.findIndex(d => d['Domain name'] === currentDomain);
+      const prevIndex = (currentIndex - 1 + surveyData.length) % surveyData.length; // Wrap backwards to end if necessary
+      showDomain(nextIndex);
+    }
+
+    function domainVoteYes() {
+      const currentDomain = document.getElementById('card-title').textContent;
+      const domain_idx = surveyData.findIndex(d => d['Domain name'] === currentDomain['Domain name']);
+
+      if (domain_idx !== -1) {
+        surveyData[domain_idx]["VOTE"] = true;
+        postVote(surveyData[domain_idx]); // Post the vote to the server
+      }
+    }
+
+    function domainVoteNo() {
+      const currentDomain = document.getElementById('card-title').textContent;
+      const domain_idx = surveyData.findIndex(d => d['Domain name'] === currentDomain['Domain name']);
+
+      if (domain_idx !== -1) {
+        surveyData[domain_idx]["VOTE"] = false;
+        postVote(surveyData[domain_idx]); // Post the vote to the server
+      }
+    }
+
     function showDomain(idx = -1) {
       const cardTitle = document.getElementById('card-content');
       const cardContent = document.getElementById('card-content');
