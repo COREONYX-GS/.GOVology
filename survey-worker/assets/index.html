@@ -715,7 +715,11 @@
       }
     }
 
-    document.getElementById('detail-card').addEventListener('touchstart', function(event) {
+    //document.getElementById('detail-card').addEventListener('touchstart', function(event) {
+    document.addEventListener('touchstart', function(event) {
+      const detailCard = document.getElementById('detail-card');
+      if (detailCard.style.display !== 'block') return; // Ignore key events if detail card is not visible
+
       if (event.touches.length > 1) {
           isMultiTouch = true; // Prevent swipe detection when multitouch is active (pinch zoom)
           return;
