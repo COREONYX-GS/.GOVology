@@ -64,8 +64,8 @@ export default {
 				return new Response( JSON.stringify( { data: formData }, null, 2), {
 						status: 200, headers: { "Content-Type": "application/json" } });
 			} catch (err) {
-				console.log({ "message": "Error processing the vote", "data": formData, "error": err });
-				return new Response("Error processing the vote	 request.", { status: 500 });
+				console.log({ "message": "Error processing the vote", "data": voteData, "error": err });
+				return new Response("Error processing the vote.", { status: 500 });
 			}
 		}
 		else if (request.method.toUpperCase() === "POST" && url.pathname === "/survey") {
