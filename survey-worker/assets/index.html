@@ -557,18 +557,24 @@
       switch(event.key) {
         case 'ArrowUp':
           domainVoteNo();
+          showDomain();
           break;
         case 'ArrowDown':
           domainVoteYes();
+          showDomain();
           break;
         case 'ArrowLeft':
           domainPrev();
+          showDomain();
           break;
         case 'ArrowRight':
           domainNext();
+          showDomain();
+          break;
+        default:
+          console.log(`Unhandled key: ${event.key}`);
           break;
       }
-      showDomain()
     });
 
 </script>  
