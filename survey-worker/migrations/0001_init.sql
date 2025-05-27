@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS votes (
+  domain TEXT PRIMARY KEY,
+  votes_y INTEGER DEFAULT 0,
+  votes_n INTEGER DEFAULT 0
+);
