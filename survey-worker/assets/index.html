@@ -431,6 +431,11 @@
 
         populateScopeOptions(uniqueDomainTypes);
 
+        // Initialize the count of domains
+        domain_count = domainData.filter(row => row['Domain type'] === document.getElementById('scope-select').value).length;
+        document.getElementById('count').textContent = domain_count + " domains";
+
+        // Set a listener for scope selection changes to update domain count
         const scopeSelect = document.getElementById('scope-select');
         scopeSelect.addEventListener('change', function() {
           const filter = this.value;
