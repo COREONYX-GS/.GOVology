@@ -709,6 +709,40 @@
       event.preventDefault();
     });
 
+    // Callback for the "Stats" menu item
+    let previousPanel = null; // Track the previous panel for toggling
+    d3.select("#menu-stats").on("click", function(event) {
+      function isVisible(sel) {
+        // sel.style("display") returns "" if not set, so treat anything but "none" as visible
+        return sel.style("display") !== "none";
+      }
+
+      const stats = d3.select("#stats-container");
+      const welcome = d3.select("#survey-welcome");
+      const detail = d3.select("#detail-card");
+
+      const statsShowing = isVisible(stats);
+      if (!statsShowing) { // Means we're opening Stats
+        if (isVisible(welcome)) {
+          previousPanel = welcome;
+        } else if (isVisible(detail)) {
+          previousPanel = detail;
+        }
+        previousPanel.style("display", "none");
+        stats.style("display", "block");
+      }
+      else { // Means we're closing Stats
+        stats.style("display", "none");
+        if (previousPanel) {
+          previousPanel.style("display", "block");
+          previousPanel = null; // Reset previous panel
+        }
+      }
+      
+      d3.select("#hamburger-menu").style("display", "none");
+      event.preventDefault();
+    });
+
     // Show/hide "domains left" text based on #count value
     function updateDomainsLeftText() {
       const count = document.getElementById('count');
