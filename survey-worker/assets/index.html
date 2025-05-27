@@ -394,7 +394,10 @@
       const cardContent = document.getElementById('card-content');
       const sessionId = getCookie('session_id');
 
-      if ( surveyData.length <= 0 || !surveyData.some(domain => domain["VOTE"]) ) {
+      document.getElementById('card-title').textContent = ""; // Clear existing title
+      document.getElementById('card-content').textContent = ""; // Clear existing content
+
+      if ( surveyData.length <= 0 || !surveyData.some(domain => !domain["VOTE"]) ) {
         cardTitle.textContent = "Voting Complete!";
         cardContent.innerHTML = `No remaining domains found for this scope.`;
         cardContent.innerHTML += "<p>Thank you for your participation!</p>";
