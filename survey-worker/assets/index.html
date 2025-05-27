@@ -689,6 +689,8 @@
     d3.select("#close-card").on("click", () => {
         d3.select("#detail-card").style("display", "none");
         d3.select("#survey-welcome").style("display", "block");
+        document.getElementById('detail-card').blur();
+        document.getElementById('survey-welcome').focus();
     });
 
     function handleGesture() {
