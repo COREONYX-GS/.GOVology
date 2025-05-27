@@ -60,9 +60,39 @@ export default {
 				
 				console.log("Vote Data Received:", voteData);
 
+				try { // Insert or update the vote in the database
+					const domain = voteData['domain'];
+					const vote = voteData['vote']; 
+					
+					if (!domain || typeof domain !== "string" || !(vote === true || vote === false)) {
+						throw new Error("Invalid vote data");
+					}
+					else {
+						const voteY = vote ? 1 : 0;
+    					const voteN = vote ? 0 : 1;
+						
+						const sql = `
+							INSERT INTO votes(domain, votes_y, votes_n)
+							VALUES (?, ?, ?)
+							ON CONFLICT(domain) DO UPDATE
+								SET
+								votes_y = votes_y + excluded.votes_y,
+								votes_n = votes_n + excluded.votes_n
+							RETURNING votes_y, votes_n;
+							`;
+						const { results } = await env.DB.prepare(sql)
+      													.bind(domain, voteY, voteN)
+      													.all();
+						
+						return new Response(
+								JSON.stringify({ domain: domain, yourVote: vote, result: results[0] }, null, 2),
+								{ status: 200, headers: { "Content-Type": "application/json" } } );
+					}
+				} catch (err) {
+					console.log({ "message": "Error processing the vote", "error": err });
+					return new Response("Error processing the vote request.", { status: 500 });
+				}
 
-				return new Response( JSON.stringify( { data: formData }, null, 2), {
-						status: 200, headers: { "Content-Type": "application/json" } });
 			} catch (err) {
 				console.log({ "message": "Error processing the vote", "data": voteData, "error": err });
 				return new Response("Error processing the vote.", { status: 500 });
