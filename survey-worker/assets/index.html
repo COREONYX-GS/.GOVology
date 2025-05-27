@@ -553,7 +553,27 @@
       showDomain()
     }
 
-    document.addEventListener('keydown', function(event) {
+    document.getElementById('detail-card').addEventListener('touchstart', function(event) {
+      if (event.touches.length > 1) {
+          isMultiTouch = true; // Prevent swipe detection when multitouch is active (pinch zoom)
+          return;
+      }
+
+      isMultiTouch = false; // Reset flag
+      touchStartX = event.touches[0].screenX;
+      touchStartY = event.touches[0].screenY;
+    }, false);
+
+    document.getElementById('detail-card').addEventListener('touchend', function(event) {
+      if (isMultiTouch) return; // Ignore if a pinch gesture occurred
+
+      touchEndX = event.changedTouches[0].screenX;
+      touchEndY = event.changedTouches[0].screenY;
+
+      handleGesture();
+    }, false);
+
+    document.getElementById('detail-card').addEventListener('keydown', function(event) {
       switch(event.key) {
         case 'ArrowUp':
           domainVoteNo();
