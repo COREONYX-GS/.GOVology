@@ -55,7 +55,8 @@
     }
     /* Push the grid down so it's not overlapped by the search bar */
     #content {
-      margin-top: 75px;
+      /* margin-top: 75px; */
+      margin-top: calc(48px + var(--safe-top, var(--safe-top-fallback)) + 16px);
       display: flex;
       flex-direction: column;
       gap: 20px;
