@@ -34,6 +34,7 @@
       --safe-right: env(safe-area-inset-right);
       /* fallback if env() isn’t supported */
       --safe-top-fallback: 20px; 
+      --content-padding: 80px; 
     }
     * {
       box-sizing: border-box;
@@ -61,7 +62,7 @@
     /* Push the grid down so it's not overlapped by the search bar */
     #content {
       /* margin-top: 75px; */
-      margin-top: calc(48px + var(--safe-top, var(--safe-top-fallback)) + 16px);
+      margin-top: calc(48px + var(--safe-top, var(--safe-top-fallback)) + 16px + var(--content-padding));
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -92,7 +93,7 @@
       /* height: 85vh; */
       /* max-height: 90vh; */
       height: calc(var(--vh, 1vh) * 85);
-      max-height: calc(100% - calc(48px + var(--safe-top, var(--safe-top-fallback))));
+      max-height: calc(100% - calc(48px + var(--safe-top, var(--safe-top-fallback)) + var(--content-padding)));
       
       z-index: 2000;
       overflow: auto;
@@ -175,8 +176,8 @@
       right: 0;
 
       /* padding: 10px; */
-      padding-top: var(--safe-top, var(--safe-top-fallback)); /* push contents below the notch */
-      height: calc(48px + var(--safe-top, var(--safe-top-fallback))); /* 48px header + inset */      
+      /* padding-top: var(--safe-top, var(--safe-top-fallback)); /* push contents below the notch */
+      /* height: calc(48px + var(--safe-top, var(--safe-top-fallback))); /* 48px header + inset */
       
       background: var(--background);
 
