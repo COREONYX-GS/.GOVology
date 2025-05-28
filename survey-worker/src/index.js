@@ -32,7 +32,7 @@ export default {
 		const cookies = parseCookies(request.headers.get('Cookie'));
 		let sessionId = cookies['session_id'];
 
-		if (request.method.toUpperCase() === "GET" && url.pathname === "/") { 
+		if (request.method.toUpperCase() === "GET" && url.pathname === "/survey") { 
 
 			try {
 				const htmlContent = await env.ASSETS.fetch('https://assets.local/index.html');
@@ -46,14 +46,14 @@ export default {
 			}
 
 		} // end if GET '/'
-		else if (request.method.toUpperCase() === "GET" && url.pathname === "/logout") {
+		else if (request.method.toUpperCase() === "GET" && url.pathname === "/survey/logout") {
 			return Response.redirect(url.origin + '/', 302, {
 				headers: {
 					"Set-Cookie": cookieHeader('session_id', '', { path: '/', maxAge: 0 })
 				}
 			});
 		} // end if GET '/logout'
-		else if (request.method.toUpperCase() === "GET" && url.pathname === "/votes") {
+		else if (request.method.toUpperCase() === "GET" && url.pathname === "/survey/votes") {
 						
 			const sql = `SELECT domain, votes_y, votes_n FROM votes ORDER BY domain;`;
 			const { results } = await env.DB.prepare(sql).all();
@@ -62,7 +62,7 @@ export default {
 								{ status: 200, headers: { "Content-Type": "application/json" } } );
 
 		} // end if GET '/votes' for stats
-		else if (request.method.toUpperCase() === "POST" && url.pathname === "/vote") {
+		else if (request.method.toUpperCase() === "POST" && url.pathname === "/survey/vote") {
 			console.log("Processing vote request...");
 			const voteData = await request.json();
 			try {
