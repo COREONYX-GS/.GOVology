@@ -102,6 +102,7 @@ export default {
 									vote = excluded.vote
 								`;
 								await env.DB.prepare(sql_user).bind(sessionId, domain, vote ? 1 : 0).run();
+								await env.DB.prepare("SELECT * FROM user_votes").run();
 							}
 						} catch (err) {
 							console.log({ "message": "Error inserting/updating user vote", "error": err, 
