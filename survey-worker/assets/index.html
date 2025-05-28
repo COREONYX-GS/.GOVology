@@ -27,6 +27,13 @@
       --tooltip-background: rgba(255, 255, 255, 0.95); /* unused */
       --background: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
       --shadow: rgba(0, 0, 0, 0.2);
+
+      /* expose the notch/status-bar inset to CSS */
+      --safe-top: env(safe-area-inset-top);
+      --safe-left: env(safe-area-inset-left);
+      --safe-right: env(safe-area-inset-right);
+      /* fallback if env() isn’t supported */
+      --safe-top-fallback: 20px; 
     }
     * {
       box-sizing: border-box;
