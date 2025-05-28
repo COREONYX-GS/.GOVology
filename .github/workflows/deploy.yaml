@@ -33,11 +33,13 @@ jobs:
         id: deploy-page
         uses: cloudflare/wrangler-action@v3
         env:
-          projectName: "YOUR_PROJECT_NAME" # e.g. 'my-project'
-          projectDir: "YOUR_DIRECTORY_OF_STATIC_ASSETS" # e.g. 'dist'
+          projectName: "gov0logy"
+          projectDir: "periodic-table"
         with: ## https://github.com/cloudflare/wrangler-action?tab=readme-ov-file#deploy-your-pages-site-production--preview
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}   ## Maybe should be called cloudflare-api-token
-          command: pages deploy ${projectDir} --project-name=${projectName}
+          command: |
+            pages project list 
+            pages deploy ${projectDir} --project-name=${projectName}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           
       - name: print wrangler command output
