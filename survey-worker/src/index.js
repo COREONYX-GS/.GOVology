@@ -80,7 +80,7 @@ export default {
 						const voteY = vote ? 1 : 0;
     					const voteN = vote ? 0 : 1;
 						
-						const sql = `
+						const sql_vote = `
 							INSERT INTO votes(domain, votes_y, votes_n)
 							VALUES (?, ?, ?)
 							ON CONFLICT(domain) DO UPDATE
@@ -89,7 +89,7 @@ export default {
 								votes_n = votes_n + excluded.votes_n
 							RETURNING votes_y, votes_n;
 							`;
-						const { results } = await env.DB.prepare(sql)
+						const { results } = await env.DB.prepare(sql_vote)
       													.bind(domain, voteY, voteN)
       													.all();
 
