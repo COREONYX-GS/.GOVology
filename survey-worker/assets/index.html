@@ -786,7 +786,7 @@
       // Clear previous visualization
       d3.select("#visualization").selectAll("*").remove();
 
-      d3.json('/votes').then(data => {
+      d3.json('/survey/votes').then(data => {
         
         const totalVotedDomains = data.length;
         const totalYes     = d3.sum(data, d => d.votes_y);
