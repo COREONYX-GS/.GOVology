@@ -95,12 +95,10 @@ export default {
 						try {
 							if (sessionId) {
 								const sql_user = `
-								INSERT INTO votes_by_user(session_id, domain, vote)
-								VALUES (?, ?, ?)
-								ON CONFLICT(session_id, domain) DO UPDATE
-									SET
-									vote = excluded.vote
+									INSERT INTO votes_by_user(session_id, domain, vote)
+									VALUES (?, ?, ?)
 								`;
+								// ON CONFLICT(session_id, domain) DO UPDATE SET vote = excluded.vote; // This wasn't working
 								await env.DB.prepare(sql_user).bind(sessionId, domain, vote ? 1 : 0).run();
 							}
 						} catch (err) {
