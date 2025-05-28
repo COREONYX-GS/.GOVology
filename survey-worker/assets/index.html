@@ -757,11 +757,11 @@
       d3.json('/votes').then(data => {
         
         const totalDomains = data.length;
-        const totalYes = d3.sum(data, d => d.votes_y);
-        const totalNo  = d3.sum(data, d => d.votes_n);
+        const totalYes     = d3.sum(data, d => d.votes_y);
+        const totalNo      = d3.sum(data, d => d.votes_n);
         const totalVotes   = totalYes + totalNo;
-        const pctYes  = totalVotes ? totalYes / totalVotes : 0;
-        const pctNo   = totalVotes ? totalNo  / totalVotes : 0;
+        const pctYes       = totalVotes ? totalYes / totalVotes : 0;
+        const pctNo        = totalVotes ? totalNo  / totalVotes : 0;
 
         // Update metrics
         d3.select("#total-domains .metric-value").text(totalDomains);
