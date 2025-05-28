@@ -105,7 +105,7 @@ export default {
 								`;
 								query_results = await env.DB.prepare(sql)
 															.bind(sessionId, domain, vote ? 1 : 0)
-															.execute();
+															.run();
 							}
 						} catch (err) {
 							console.log({ "message": "Error inserting/updating user vote", "error": err, 
