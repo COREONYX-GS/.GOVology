@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS votes (
 CREATE TABLE IF NOT EXISTS user (
   session_id TEXT PRIMARY KEY,
   domain TEXT,
-  votes BOOLEAN,
+  votes BOOLEAN
 );
