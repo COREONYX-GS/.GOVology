@@ -10,6 +10,24 @@
 	"observability": {
 		"enabled": true
 	},
+	"routes": [
+		{
+			"pattern": "gov0logy.us/survey*",
+			"zone_name": "gov0logy.us"
+		},
+		{
+			"pattern": "g0vology.us/survey*",
+			"zone_name": "g0vology.us"
+		},
+				{
+			"pattern": "gov0logy.us/survey/*",
+			"zone_name": "gov0logy.us"
+		},
+		{
+			"pattern": "g0vology.us/survey/*",
+			"zone_name": "g0vology.us"
+		}  
+	],
 	/**
 	 * Static Assets
 	 * https://developers.cloudflare.com/workers/static-assets/binding/
