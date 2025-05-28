@@ -47,7 +47,7 @@ export default {
 
 		} // end if GET '/'
 		else if (request.method.toUpperCase() === "GET" && url.pathname === "/survey/logout") {
-			return Response.redirect(url.origin + '/', 302, {
+			return Response.redirect(url.origin + '/survey', 302, {
 				headers: {
 					"Set-Cookie": cookieHeader('session_id', '', { path: '/', maxAge: 0 })
 				}
