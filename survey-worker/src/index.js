@@ -95,7 +95,6 @@ export default {
 
 						let query_results = null;
 						try {
-							sessionId = voteData['session_id'] || null;
 							if (sessionId) {
 								const sql = `
 								INSERT INTO user(session_id, domain, vote)
