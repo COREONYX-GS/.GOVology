@@ -770,10 +770,11 @@
     });
       
     // Toggle hamburger menu when clicking the icon
-    d3.select("#hamburger-menu-icon").on("click", function() {
+    d3.select("#hamburger-menu-icon").on("click", function(event) {
       const menu = d3.select("#hamburger-menu");
       const currentDisplay = menu.style("display");
       menu.style("display", currentDisplay === "none" || currentDisplay === "" ? "block" : "none");
+      event.preventDefault();
     });
 
     // Callback for the "About" menu item
@@ -988,16 +989,18 @@
     }
 
     // Close Stats Modal when pop-out "Close" is clicked
-    d3.select("#close-stats").on("click", () => {
+    d3.select("#close-stats").on("click", (event) => {
         d3.select("#menu-stats").dispatch("click"); // Trigger the click handler to toggle visibility
+        event.preventDefault();
     });
 
     // Close Domain Detail Modal when pop-out "Close" is clicked
-    d3.select("#close-card").on("click", () => {
+    d3.select("#close-card").on("click", (event) => {
         d3.select("#detail-card").style("display", "none");
         d3.select("#survey-welcome").style("display", "block");
         //document.getElementById('detail-card').blur();
         //document.getElementById('survey-welcome').focus();
+        event.preventDefault();
     });
 
     function handleGesture() {
