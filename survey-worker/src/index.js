@@ -94,16 +94,14 @@ export default {
       													.all();
 						try {
 							if (sessionId) {
-								const sql = `
+								const sql_user = `
 								INSERT INTO user_votes(session_id, domain, vote)
 								VALUES (?, ?, ?)
 								ON CONFLICT(session_id, domain) DO UPDATE
 									SET
 									vote = excluded.vote
 								`;
-								query_results = await env.DB.prepare(sql)
-															.bind(sessionId, domain, vote ? 1 : 0)
-															.run();
+								await env.DB.prepare(sql_user).bind(sessionId, domain, vote ? 1 : 0).run();
 							}
 						} catch (err) {
 							console.log({ "message": "Error inserting/updating user vote", "error": err, 
