@@ -99,7 +99,7 @@ export default {
 								const sql = `
 								INSERT INTO user(session_id, domain, vote)
 								VALUES (?, ?, ?)
-								ON CONFLICT(domain) DO UPDATE
+								ON CONFLICT(session_id, domain) DO UPDATE
 									SET
 									vote = excluded.vote
 								`;
