@@ -750,6 +750,87 @@
       event.preventDefault();
     });
 
+    function drawStats() {
+      // Clear previous visualization
+      d3.select("#visualization").selectAll("*").remove();
+
+      d3.json('/votes').then(data => {
+        
+        const totalDomains = data.length;
+        const totalYes = d3.sum(data, d => d.votes_y);
+        const totalNo  = d3.sum(data, d => d.votes_n);
+        const totalVotes   = totalYes + totalNo;
+        const pctYes  = totalVotes ? totalYes / totalVotes : 0;
+        const pctNo   = totalVotes ? totalNo  / totalVotes : 0;
+
+        // Update metrics
+        d3.select("#total-domains .metric-value").text(totalDomains);
+        d3.select("#total-votes .metric-value").text(totalVotes);
+
+        const viz = d3.select('#visualization');
+        const width = Math.min(window.innerWidth, 400);
+        const height = width * 0.7;
+        viz.attr('viewBox', `0 0 ${width} ${height + 150}`);
+        //.attr('width', gaugeWidth)
+        //.attr('height', gaugeHeight);
+
+        // Draw the "fuel gague" for votes
+        const gaugeWidth  = width - 20; // 10px padding on each side
+        const gaugeHeight = height * .40;
+        const transitionDuration = 600; // ms
+            
+        // Draw the grey background bar
+        viz.append('rect')
+            .attr('class', 'bg')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', gaugeWidth)
+            .attr('height', gaugeHeight)
+            .attr('fill', '#ddd');
+
+        // Draw the “No” bar (red), anchored at left
+        viz.append('rect')
+            .attr('class', 'no-bar')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', 0)                       // start at zero
+            .attr('height', gaugeHeight)
+            .attr('fill', 'red');
+
+        // Draw the “Yes” bar (green), anchored at right
+        viz.append('rect')
+            .attr('class', 'yes-bar')
+            .attr('x', gaugeWidth)                 // start off-canvas
+            .attr('y', 0)
+            .attr('width', 0)
+            .attr('height', gaugeHeight)
+            .attr('fill', 'green');
+
+        // Update function to animate fills
+        function updateGauge(svg, pctYes, pctNo) {
+          // “No” grows from the left
+          svg.select('.no-bar')
+            .transition().duration(transitionDuration)
+            .attr('width', gaugeWidth * pctNo);
+
+          // “Yes” grows from the right
+          svg.select('.yes-bar')
+            .transition().duration(transitionDuration)
+            .attr('width', gaugeWidth * pctYes)
+            .attr('x', gaugeWidth - gaugeWidth * pctYes);
+        }
+
+        // 7) Kick it off with your data
+        // Assuming you already have pctYes and pctNo calculated:
+        updateGauge(viz, pctYes, pctNo);
+
+                
+      }).catch(error => {
+          console.error("Error loading stats on voting data:", error);
+      });
+      
+    } // end of drawStats()
+
     // Callback for the "Stats" menu item
     let previousPanel = null; // Track the previous panel for toggling
     d3.select("#menu-stats").on("click", function(event) {
@@ -764,105 +845,7 @@
 
       const statsShowing = isVisible(stats);
       if (!statsShowing) { // Means we're opening Stats
-        d3.json('/votes').then(data => {
-          const svg = d3.select('#visualization');
-          const width = Math.min(window.innerWidth, 400);
-          const height = width * 0.7;
-          svg.attr('viewBox', `0 0 ${width} ${height + 150}`);
-
-          const totalYes = d3.sum(data, d => d.votes_y);
-          const totalNo  = d3.sum(data, d => d.votes_n);
-          const total   = totalYes + totalNo;
-          const pctYes  = total ? totalYes / total : 0;
-          const pctNo   = total ? totalNo  / total : 0;
-
-           // 2) Draw overall gauge
-          const arc = d3.arc()
-            .innerRadius(width*0.3)
-            .outerRadius(width*0.45)
-            .startAngle(-Math.PI/2);
-          const gauge = svg.append('g')
-            .attr('transform', `translate(${width/2}, ${height/2})`);
-
-          // Grey background
-          gauge.append('path')
-            .datum({ endAngle: Math.PI/2 })
-            .attr('d', arc)
-            .attr('fill', 'var(--cell-fill)');
-
-          // Red slice (No)
-          gauge.append('path')
-            .datum({ startAngle: -Math.PI/2, endAngle: -Math.PI/2 + pctNo * Math.PI })
-            .attr('d', arc)
-            .attr('fill', 'var(--voteChoiceNo)');
-
-          // Green slice (Yes)
-          gauge.append('path')
-            .datum({ startAngle: -Math.PI/2 + pctNo * Math.PI,
-                    endAngle:   -Math.PI/2 + (pctNo + pctYes) * Math.PI })
-            .attr('d', arc)
-            .attr('fill', 'var(--voteChoiceYes)');
-
-          // Center text
-          gauge.append('text')
-            .attr('text-anchor', 'middle')
-            .attr('dy', '0.35em')
-            .style('font-size', '16px')
-            .text(`${Math.round(pctYes*100)}% Yes`);
-
-          // 3) Prepare worst-domain list
-          const worst = data.filter(d => d.votes_y + d.votes_n > 0)
-                            .sort((a,b) => (b.votes_n/(b.votes_y+b.votes_n)) - (a.votes_n/(a.votes_y+a.votes_n)))
-                            .slice(0, 5);
-
-          // 4) Draw bars for worst domains
-          const barGroup = svg.append('g')
-            .attr('transform', `translate(20, ${height + 20})`);
-          const barWidth = width - 40;
-          const yScale = d3.scaleBand()
-            .domain(worst.map(d => d.domain))
-            .range([0, worst.length * 25])
-            .padding(0.2);
-          const xScale = d3.scaleLinear()
-            .domain([0,1])
-            .range([0, barWidth]);
-
-          // Domain names
-          barGroup.selectAll('text.domain')
-            .data(worst)
-            .enter()
-            .append('text')
-              .attr('class', 'domain')
-              .attr('x', 0)
-              .attr('y', d => yScale(d.domain) + yScale.bandwidth()/2)
-              .attr('dy', '0.35em')
-              .text(d => d.domain);
-
-          // No-vote bars
-          barGroup.selectAll('rect.bar')
-            .data(worst)
-            .enter()
-            .append('rect')
-              .attr('class', 'bar')
-              .attr('x', 0)
-              .attr('y', d => yScale(d.domain))
-              .attr('width', d => xScale(d.votes_n / (d.votes_y + d.votes_n)))
-              .attr('height', yScale.bandwidth())
-              .attr('fill', 'var(--voteChoiceNo)');
-
-          // %No labels
-          barGroup.selectAll('text.pct')
-            .data(worst)
-            .enter()
-            .append('text')
-              .attr('x', d => xScale(d.votes_n / (d.votes_y + d.votes_n)) + 5)
-              .attr('y', d => yScale(d.domain) + yScale.bandwidth()/2)
-              .attr('dy', '0.35em')
-              .text(d => `${Math.round(100 * d.votes_n / (d.votes_y + d.votes_n))}%`);
-                
-        }).catch(error => {
-          console.error("Error loading stats on voting data:", error);
-        });
+        drawStats();
 
         if (isVisible(welcome)) {
           previousPanel = welcome;
