@@ -815,12 +815,10 @@
             .attr('width', gaugeWidth * pctYes)
             .attr('x', gaugeWidth - gaugeWidth * pctYes);
         }
+        updateGauge(svg, pctYes, pctNo);
 
-        // 7) Kick it off with your data
-        // Assuming you already have pctYes and pctNo calculated:
-        updateGauge(viz, pctYes, pctNo);
 
-                
+
       }).catch(error => {
         console.error("Error loading stats on voting data:", error);
       });
