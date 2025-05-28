@@ -165,11 +165,19 @@
       position: fixed;
       align-items: center;
       top: 0;
-      left: 40px; /* Offset by the hamburger container width plus a little margin */
+      /* left: 40px; /* Offset by the hamburger container width plus a little margin */
+      left: 0;
       right: 0;
+
+      /* padding: 10px; */
+      padding-top: var(--safe-top, var(--safe-top-fallback)); /* push contents below the notch */
+      height: calc(48px + var(--safe-top, var(--safe-top-fallback))); /* 48px header + inset */      
+      
+      background: var(--background);
+
       width: calc(100% - 11%); /* Adjust width accordingly */
       margin-bottom: 10px;
-      padding: 10px;
+      
       box-sizing: border-box;
       border-bottom: 1px solid var(--border-color);
       /* background: #fff; */
