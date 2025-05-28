@@ -578,7 +578,7 @@
         cardTitle.textContent = "Voting Complete!";
         cardContent.innerHTML = `No remaining domains found for this scope.`;
         cardContent.innerHTML += "<p>Thank you for your participation!</p>";
-        cardContent.innerHTML += `<p>Your session ID: ${sessionId}</p>`;
+        //cardContent.innerHTML += `<p>Your session ID: ${sessionId}</p>`;
         document.getElementById('count').textContent = surveyData.filter(row => !row.hasOwnProperty("VOTE")).length + " domains";
         return;
       }
