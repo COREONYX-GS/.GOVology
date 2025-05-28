@@ -779,14 +779,13 @@
             
         // Draw the grey background bar
         viz.append('rect')
-            .attr('class', 'bg')
-            .attr('x', 0)
-            .attr('y', 0)
-            .attr('width', gaugeWidth)
-            .attr('height', gaugeHeight)
-            .attr('fill', '#ddd');
-
         // Draw the “No” bar (red), anchored at left
+          .attr('class', 'bg')
+          .attr('x', 0).attr('y', 0)
+          .attr('width', gaugeWidth)
+          .attr('height', gaugeHeight)
+          .attr('fill', '#ddd');
+
         viz.append('rect')
             .attr('class', 'no-bar')
             .attr('x', 0)
