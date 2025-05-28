@@ -816,11 +816,12 @@
           .style('font-size','18px')
           .text(`${totalVotedDomains} of ${totalDomains} domains have votes!`);0
 
+        const offsetY = gaugeHeight + 60;  // push below first gauge + labels
             
         // Draw the grey background bar
         viz.append('rect')
           .attr('class', 'bg')
-          .attr('x', 0).attr('y', 0)
+          .attr('x', 0).attr('y', offsetY)
           .attr('width', gaugeWidth)
           .attr('height', gaugeHeight)
           .attr('fill', '#ddd');
@@ -828,7 +829,7 @@
         // Draw the “No” bar (red), anchored at left
         viz.append('rect')
           .attr('class', 'no-bar')
-          .attr('x', 0).attr('y', 0)
+          .attr('x', 0).attr('y', offsetY)
           .attr('width', 0)             // start at zero
           .attr('height', gaugeHeight)
           .attr('fill', 'red');
@@ -884,7 +885,7 @@
         // Yes count below green fill
         labels.append('text')
           .attr('x', gaugeWidth - (gaugeWidth * pctYes) / 2)
-          .attr('y', gaugeHeight + 20)
+          .attr('y', offsetY + gaugeHeight + 20)
           .attr('text-anchor', 'middle')
           .style('font-family', 'Arial, sans-serif')
           .style('font-size', '18px')
