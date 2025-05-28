@@ -97,7 +97,7 @@ export default {
 						try {
 							if (sessionId) {
 								const sql = `
-								INSERT INTO user(session_id, domain, vote)
+								INSERT INTO user_votes(session_id, domain, vote)
 								VALUES (?, ?, ?)
 								ON CONFLICT(session_id, domain) DO UPDATE
 									SET
