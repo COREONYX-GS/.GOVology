@@ -15,18 +15,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     name: Deploy - Cloudflare
-    defaults:
-      run:
-        working-directory: govology-api
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Deploy Cloudflare Worker
-        id: deploy-worker
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       
       # - name: Publish Cloudflare Pages [Deprecated]
         # uses: cloudflare/pages-action@v1
@@ -45,7 +37,6 @@ jobs:
           projectDir: "YOUR_DIRECTORY_OF_STATIC_ASSETS" # e.g. 'dist'
         with: ## https://github.com/cloudflare/wrangler-action?tab=readme-ov-file#deploy-your-pages-site-production--preview
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}   ## Maybe should be called cloudflare-api-token
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }} ## Maybe should be called cloudflare-account-id
           command: pages deploy ${projectDir} --project-name=${projectName}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           
@@ -53,3 +44,21 @@ jobs:
         env:
           CMD_OUTPUT: ${{ steps.deploy-page.outputs.command-output }}
         run: echo $CMD_OUTPUT
+
+      - name: Deploy Cloudflare Worker
+        id: deploy-worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: "survey-worker"
+          preCommands: |
+            echo "*** pre commandS ***"
+            echo `pwd`
+            npx wrangler --version
+            npm install wrangler@latest
+            npm install
+            echo "******"
+          postCommands: |
+            echo "*** post commands ***"
+            cat /home/runner/.config/.wrangler/logs/*.log
+            echo "******"
