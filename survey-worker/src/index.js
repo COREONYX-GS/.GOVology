@@ -92,8 +92,6 @@ export default {
 						const { results } = await env.DB.prepare(sql_vote)
       													.bind(domain, voteY, voteN)
       													.all();
-
-						let query_results = null;
 						try {
 							if (sessionId) {
 								const sql = `
@@ -109,7 +107,7 @@ export default {
 							}
 						} catch (err) {
 							console.log({ "message": "Error inserting/updating user vote", "error": err, 
-										"results": query_results, sessionId: sessionId, domain: domain, vote: vote, bool: vote ? 1 : 0 });
+										sessionId: sessionId, domain: domain, vote: vote, bool: vote ? 1 : 0 });
 							}
 						
 						return new Response(
