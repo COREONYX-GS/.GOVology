@@ -543,7 +543,7 @@
       const sessionId = getCookie('session_id');
 
       // Post vote to the server
-      fetch('/vote', {
+      fetch('/survey/vote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify( { domain: domain['Domain name'], vote: domain['VOTE'], session_id: sessionId } )
