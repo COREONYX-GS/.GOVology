@@ -771,10 +771,51 @@
         const height = width * 0.7;
         viz.attr('viewBox', `0 0 ${width} ${height + 200}`);
 
+        // Draw a gague for "unvoted" domains
+        const totalDomains = domainData.length;
+        const pctVoted     = totalDomains ? totalVotedDomains / totalDomains : 0;
+        
         // Draw the "fuel gague" for votes
         const gaugeWidth  = width - 20;  // 10px padding each side
         const gaugeHeight = height * 0.40;
         const transitionDuration = 600;  // ms
+
+        // BG (grey)
+        viz.append('rect').attr('class','bg2')
+          .attr('x', 0).attr('y', 0)
+          .attr('width',gaugeWidth).attr('height',gaugeHeight)
+          .attr('fill', '#ddd');
+
+        // Voted-bar (blue)
+        viz.append('rect').attr('class','voted-bar')
+          .attr('x', 0).attr('y', 0)
+          .attr('width', 0).attr('height',gaugeHeight)
+          .attr('fill', 'steelblue');
+        
+        viz.select('.voted-bar')
+         .transition().duration(transitionDuration)
+         .attr('width', gaugeWidth * pctVoted);
+
+        const voted_labels = viz.append('g').attr('class','voted_labels');
+
+         // percent
+        voted_labels.append('text')
+          .attr('x', gaugeWidth/2)
+          .attr('y', gaugeHeight/2)
+          .attr('dy','0.35em')
+          .attr('text-anchor','middle')
+          .style('font-family', 'Arial, sans-serif')
+          .style('font-size','22px').style('font-weight','bold')
+          .text(`${(pctVoted*100).toFixed(1)}%`);
+
+        voted_labels.append('text')
+          .attr('x', gaugeWidth/2)
+          .attr('y', gaugeHeight + 20)
+          .attr('text-anchor','middle')
+          .style('font-family', 'Arial, sans-serif')
+          .style('font-size','18px')
+          .text(`${totalVotedDomains} of ${totalDomains} domains have votes!`);0
+
             
         // Draw the grey background bar
         viz.append('rect')
