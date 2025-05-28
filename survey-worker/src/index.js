@@ -108,7 +108,8 @@ export default {
 															.execute();
 							}
 						} catch (err) {
-							console.log({ "message": "Error inserting/updating user vote", "error": err, "results": query_results });
+							console.log({ "message": "Error inserting/updating user vote", "error": err, 
+										"results": query_results, sessionId: sessionId, domain: domain, vote: vote, bool: vote ? 1 : 0 });
 							}
 						
 						return new Response(
