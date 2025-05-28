@@ -779,21 +779,21 @@
             
         // Draw the grey background bar
         viz.append('rect')
-        // Draw the “No” bar (red), anchored at left
           .attr('class', 'bg')
           .attr('x', 0).attr('y', 0)
           .attr('width', gaugeWidth)
           .attr('height', gaugeHeight)
           .attr('fill', '#ddd');
 
+        // Draw the “No” bar (red), anchored at left
         viz.append('rect')
-        // Draw the “Yes” bar (green), anchored at right
           .attr('class', 'no-bar')
           .attr('x', 0).attr('y', 0)
           .attr('width', 0)             // start at zero
           .attr('height', gaugeHeight)
           .attr('fill', 'red');
 
+        // Draw the “Yes” bar (green), anchored at right
         viz.append('rect')
             .attr('class', 'yes-bar')
             .attr('x', gaugeWidth)                 // start off-canvas
