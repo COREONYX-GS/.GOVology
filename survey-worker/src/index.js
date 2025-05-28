@@ -92,6 +92,25 @@ export default {
 						const { results } = await env.DB.prepare(sql)
       													.bind(domain, voteY, voteN)
       													.all();
+
+						let query_results = null;
+						try {
+							sessionId = voteData['session_id'] || null;
+							if (sessionId) {
+								const sql = `
+								INSERT INTO user(session_id, domain, vote)
+								VALUES (?, ?, ?)
+								ON CONFLICT(domain) DO UPDATE
+									SET
+									vote = excluded.vote
+								`;
+							{ query_results } = await env.DB.prepare(sql)
+															.bind(sessionId, domain, vote)
+															.execute();
+							}
+						} catch (err) {
+							console.log({ "message": "Error inserting/updating user vote", "error": err, "results": query_results });
+							}
 						
 						return new Response(
 								JSON.stringify({ domain: domain, yourVote: vote, result: results[0] }, null, 2),
