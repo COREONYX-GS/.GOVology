@@ -818,7 +818,37 @@
 
         updateGauge(viz, pctYes, pctNo);
 
+        // ---- NEW: draw the labels ----
+        const labels = viz.append('g').attr('class', 'labels');
 
+        // Percent in center
+        labels.append('text')
+          .attr('x', gaugeWidth / 2)
+          .attr('y', gaugeHeight / 2)
+          .attr('dy', '0.35em')
+          .attr('text-anchor', 'middle')
+          .style('font-family', 'Arial, sans-serif')
+          .style('font-size', '22px')
+          .style('font-weight', 'bold')
+          .text(`Total: ${(pctYes * 100).toFixed(1)}%`);
+
+        // No count below red fill
+        labels.append('text')
+          .attr('x', (gaugeWidth * pctNo) / 2)
+          .attr('y', gaugeHeight + 20)
+          .attr('text-anchor', 'middle')
+          .style('font-family', 'Arial, sans-serif')
+          .style('font-size', '18px')
+          .text(`'No' Votes: ${totalNo}`);
+
+        // Yes count below green fill
+        labels.append('text')
+          .attr('x', gaugeWidth - (gaugeWidth * pctYes) / 2)
+          .attr('y', gaugeHeight + 20)
+          .attr('text-anchor', 'middle')
+          .style('font-family', 'Arial, sans-serif')
+          .style('font-size', '18px')
+          .text(`'Yes' Votes: ${totalYes}`);
 
       }).catch(error => {
         console.error("Error loading stats on voting data:", error);
