@@ -5,6 +5,14 @@
   <title>.GOVology - .gov Domain Survey</title>
   <link rel="icon" href="https://raw.githubusercontent.com/COREONYX-GS/.GOVology/refs/heads/main/static/favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <script>
+    // Run this in your <head> so --vh gets set to 1% of the real viewport height
+    const setVh = () => {
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    };
+    window.addEventListener('resize', setVh);
+    setVh();
+  </script>
   <style>
     :root {
       --text-color: #000;
