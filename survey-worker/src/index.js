@@ -104,7 +104,7 @@ export default {
 									SET
 									vote = excluded.vote
 								`;
-							{ query_results } = await env.DB.prepare(sql)
+							query_results = await env.DB.prepare(sql)
 															.bind(sessionId, domain, vote)
 															.execute();
 							}
