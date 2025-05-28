@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "deploy": "npx wrangler pages deploy --project-name gov0logy periodic-table && cd survey-worker && npm run deploy"
+  },
   "devDependencies": {
     "wrangler": "^4.16.1"
   }
