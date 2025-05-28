@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS votes (
+  domain TEXT PRIMARY KEY,
+  votes_y INTEGER DEFAULT 0,
+  votes_n INTEGER DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS user (
+  session_id TEXT PRIMARY KEY,
+  domain TEXT,
+  votes BOOLEAN,
+);
