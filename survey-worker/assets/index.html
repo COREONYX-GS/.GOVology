@@ -303,9 +303,9 @@
       display: none; /* Hidden by default */
       border-radius: 8px; /* Added for a modern look */
       width: 90vw;
-      height: 85vh;
       max-width: 90vw;
-      max-height: 90vh;
+      height: calc(var(--vh, 1vh) * 85);
+      max-height: calc(100% - calc(48px + var(--safe-top, var(--safe-top-fallback)) + var(--content-padding)));
       z-index: 2000;
       overflow: auto;
     }
