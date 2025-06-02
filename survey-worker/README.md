@@ -9,7 +9,7 @@ The following wrangler commands assume that the [`wrangler`](https://developers.
 ```bash
 # Create the D1 database and apply the initial schema
 wrangler d1 create govology
-wrangler d1 migrations apply govology ## Note: not clear if this works
+wrangler d1 migrations apply govology --remote
 npx wrangler d1 execute govology --local --file="./migrations/0001_init.sql"
 npx wrangler d1 execute govology --local --command="DROP table votes"
 npx wrangler d1 execute govology --remote --file="./migrations/0002_init.sql"
