@@ -4,9 +4,9 @@ CREATE TABLE IF NOT EXISTS votes (
   votes_n INTEGER DEFAULT 0
 );
 
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS user_votes;
 
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS user_votes (
   session_id TEXT PRIMARY KEY,
   domain TEXT,
   vote BOOLEAN
