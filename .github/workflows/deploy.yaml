@@ -40,7 +40,10 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}   ## Maybe should be called cloudflare-api-token
           command: |
             pages project list 
-            pages deploy $projectDir --project-name=$projectName
+            echo "Deploying: $projectName from $projectDir"
+            echo "Deploying: ${{ env.projectName }} from ${{ env.projectDir }}"
+            echo "pages deploy $projectDir --project-name=$projectName"
+            echo "pages deploy ${{ env.projectDir }} --project-name=${{ env.projectName }}"
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           
       - name: print wrangler command output
