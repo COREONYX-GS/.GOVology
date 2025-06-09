@@ -37,7 +37,7 @@ jobs:
           projectDir: "periodic-table"
         with: ## https://github.com/cloudflare/wrangler-action?tab=readme-ov-file#deploy-your-pages-site-production--preview
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}  
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}   ## Maybe should be called cloudflare-api-token
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_TEST }}   ## Maybe should be called cloudflare-api-token
           command: |
             pages project list 
             pages deploy ${{ env.projectDir }} --project-name=${{ env.projectName }}
@@ -53,7 +53,7 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}  
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}   ## Maybe should be called cloudflare-api-token
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_TEST }}   ## Maybe should be called cloudflare-api-token
           workingDirectory: "survey-worker"
           preCommands: |
             echo "*** pre commandS ***"
