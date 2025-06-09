@@ -64,5 +64,6 @@ jobs:
             echo "******"
           postCommands: |
             echo "*** post commands ***"
-            cat /home/runner/.config/.wrangler/logs/*.log
+            echo "DONE!"
+            # cat /home/runner/.config/.wrangler/logs/*.log
             echo "******"
