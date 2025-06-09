@@ -38,10 +38,9 @@ jobs:
         with: ## https://github.com/cloudflare/wrangler-action?tab=readme-ov-file#deploy-your-pages-site-production--preview
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}  
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}   ## Maybe should be called cloudflare-api-token
-          workingDirectory: ${{ env.projectDir }}
           command: |
             pages project list 
-            pages deploy --project-name=${{ env.projectName }}
+            pages deploy ${{ env.projectDir }} --project-name=${{ env.projectName }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           
       - name: print wrangler command output
