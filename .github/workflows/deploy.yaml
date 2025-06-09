@@ -41,10 +41,7 @@ jobs:
           workingDirectory: ${{ env.projectDir }}
           command: |
             pages project list 
-            echo "Deploying: $projectName from $projectDir"
-            echo "Deploying: ${{ env.projectName }} from ${{ env.projectDir }}"
-            echo "pages deploy $projectDir --project-name=$projectName"
-            echo "pages deploy ${{ env.projectDir }} --project-name=${{ env.projectName }}"
+            echo "pages deploy --project-name=${{ env.projectName }}"
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           
       - name: print wrangler command output
