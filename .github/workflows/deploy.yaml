@@ -1,4 +1,4 @@
-name: Cloudflare - .GOVology Deploy (not working yet - needs to be updated for Pagesgo)
+name: Cloudflare - .GOVology Deploy
 ## https://github.com/cloudflare/wrangler-action
 
 on:
