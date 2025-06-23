@@ -144,7 +144,7 @@ def grid_dimensions(count, aspect_ratio=(16, 9), buffer=1.0):
 
 def generate_data(FILE_IN):
     data = []
-    df = pd.read_csv(FILE_IN)
+    df = pd.read_csv(FILE_IN, dtype=str, keep_default_na=False)
     count, _ = df.shape
     max_x, max_y = grid_dimensions(count, aspect_ratio=(16, 9), buffer=1.2)
     cur_x, cur_y = 0, 0
