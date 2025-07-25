@@ -64,7 +64,7 @@ jobs:
         echo $ISSUE_BODY
 
     - name: Create Issue
-      if: steps.commit-and-push.outputs.CHANGES_DETECTED == 'true'
+      if: ${{ 'false' == 'true' }} # This condition is always false so the step will not run, because Issues are disabled for this repo
       continue-on-error: true ## Note, issues are disabled for .GOVology repo so this step will fail but shouldn't kill the analysis
       uses: actions/github-script@v7
       id: my-create-issue-script
