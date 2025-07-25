@@ -3,6 +3,8 @@ name: Analyze Download - GET.gov Data (CISA)
 on:
     workflow_dispatch:
     workflow_call:
+    schedule:
+      - cron: '0 12 */2 * *' # Every other day at noon UTC
 
 concurrency:
     group: gov.gov-analysis
